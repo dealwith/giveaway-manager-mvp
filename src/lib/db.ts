@@ -1,0 +1,297 @@
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  orderBy,
+  limit,
+  Timestamp,
+  addDoc,
+} from 'firebase/firestore';
+import { db } from '@/config/firebase';
+import { User } from '@/types/user';
+import { Giveaway, GiveawayStatus, GiveawayWinner } from '@/types/giveaway';
+import { Subscription, SubscriptionPlan } from '@/types/subscription';
+
+// User functions
+export async function getUser(userId: string): Promise<User | null> {
+  const docRef = doc(db, 'users', userId);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    return null;
+  }
+
+  const data = docSnap.data();
+  return {
+    id: docSnap.id,
+    email: data.email,
+    name: data.name,
+    image: data.image,
+    createdAt: data.createdAt?.toDate(),
+    updatedAt: data.updatedAt?.toDate(),
+    stripeCustomerId: data.stripeCustomerId,
+  };
+}
+
+export async function createUser(user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Promise<User> {
+  const userRef = doc(db, 'users', user.email);
+  const now = new Date();
+
+  const newUser: Omit<User, 'id'> = {
+    ...user,
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  await setDoc(userRef, {
+    ...newUser,
+    createdAt: Timestamp.fromDate(now),
+    updatedAt: Timestamp.fromDate(now),
+  });
+
+  return {
+    id: userRef.id,
+    ...newUser,
+  };
+}
+
+export async function updateUser(userId: string, data: Partial<User>): Promise<void> {
+  const userRef = doc(db, 'users', userId);
+  const now = new Date();
+
+  await updateDoc(userRef, {
+    ...data,
+    updatedAt: Timestamp.fromDate(now),
+  });
+}
+
+// Subscription functions
+export async function getUserSubscription(userId: string): Promise<Subscription | null> {
+  const q = query(collection(db, 'subscriptions'), where('userId', '==', userId), where('status', '==', 'active'), limit(1));
+  const querySnapshot = await getDocs(q);
+
+  if (querySnapshot.empty) {
+    return null;
+  }
+
+  const data = querySnapshot.docs[0].data();
+  return {
+    id: querySnapshot.docs[0].id,
+    userId: data.userId,
+    status: data.status,
+    plan: data.plan,
+    priceId: data.priceId,
+    quantity: data.quantity,
+    cancelAtPeriodEnd: data.cancelAtPeriodEnd,
+    createdAt: data.createdAt?.toDate(),
+    currentPeriodStart: data.currentPeriodStart?.toDate(),
+    currentPeriodEnd: data.currentPeriodEnd?.toDate(),
+    endedAt: data.endedAt?.toDate(),
+    canceledAt: data.canceledAt?.toDate(),
+    trialStart: data.trialStart?.toDate(),
+    trialEnd: data.trialEnd?.toDate(),
+  };
+}
+
+export async function createSubscription(subscription: Omit<Subscription, 'id'>): Promise<Subscription> {
+  const subscriptionRef = collection(db, 'subscriptions');
+  const now = new Date();
+
+  const subscriptionWithDates = {
+    ...subscription,
+    createdAt: Timestamp.fromDate(now),
+    currentPeriodStart: Timestamp.fromDate(subscription.currentPeriodStart),
+    currentPeriodEnd: Timestamp.fromDate(subscription.currentPeriodEnd),
+    endedAt: subscription.endedAt ? Timestamp.fromDate(subscription.endedAt) : null,
+    canceledAt: subscription.canceledAt ? Timestamp.fromDate(subscription.canceledAt) : null,
+    trialStart: subscription.trialStart ? Timestamp.fromDate(subscription.trialStart) : null,
+    trialEnd: subscription.trialEnd ? Timestamp.fromDate(subscription.trialEnd) : null,
+  };
+
+  const docRef = await addDoc(subscriptionRef, subscriptionWithDates);
+
+  return {
+    id: docRef.id,
+    ...subscription,
+  };
+}
+
+export async function updateSubscription(subscriptionId: string, data: Partial<Subscription>): Promise<void> {
+  const subscriptionRef = doc(db, 'subscriptions', subscriptionId);
+
+  const dataWithDates = {
+    ...data,
+    updatedAt: Timestamp.fromDate(new Date()),
+    currentPeriodStart: data.currentPeriodStart ? Timestamp.fromDate(data.currentPeriodStart) : undefined,
+    currentPeriodEnd: data.currentPeriodEnd ? Timestamp.fromDate(data.currentPeriodEnd) : undefined,
+    endedAt: data.endedAt ? Timestamp.fromDate(data.endedAt) : undefined,
+    canceledAt: data.canceledAt ? Timestamp.fromDate(data.canceledAt) : undefined,
+    trialStart: data.trialStart ? Timestamp.fromDate(data.trialStart) : undefined,
+    trialEnd: data.trialEnd ? Timestamp.fromDate(data.trialEnd) : undefined,
+  };
+
+  await updateDoc(subscriptionRef, dataWithDates);
+}
+
+// Giveaway functions
+export async function getUserGiveaways(userId: string): Promise<Giveaway[]> {
+  const q = query(
+    collection(db, 'giveaways'),
+    where('userId', '==', userId),
+    orderBy('createdAt', 'desc')
+  );
+
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      userId: data.userId,
+      title: data.title,
+      description: data.description,
+      postUrl: data.postUrl,
+      documentUrl: data.documentUrl,
+      keyword: data.keyword,
+      startTime: data.startTime.toDate(),
+      endTime: data.endTime.toDate(),
+      status: data.status,
+      createdAt: data.createdAt.toDate(),
+      updatedAt: data.updatedAt.toDate(),
+      winnerCount: data.winnerCount,
+    };
+  });
+}
+
+export async function getGiveaway(giveawayId: string): Promise<Giveaway | null> {
+  const docRef = doc(db, 'giveaways', giveawayId);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    return null;
+  }
+
+  const data = docSnap.data();
+  return {
+    id: docSnap.id,
+    userId: data.userId,
+    title: data.title,
+    description: data.description,
+    postUrl: data.postUrl,
+    documentUrl: data.documentUrl,
+    keyword: data.keyword,
+    startTime: data.startTime.toDate(),
+    endTime: data.endTime.toDate(),
+    status: data.status,
+    createdAt: data.createdAt.toDate(),
+    updatedAt: data.updatedAt.toDate(),
+    winnerCount: data.winnerCount,
+  };
+}
+
+export async function createGiveaway(giveaway: Omit<Giveaway, 'id' | 'createdAt' | 'updatedAt' | 'winners'>): Promise<Giveaway> {
+  const giveawayRef = collection(db, 'giveaways');
+  const now = new Date();
+
+  const giveawayWithDates = {
+    ...giveaway,
+    status: giveaway.status || GiveawayStatus.DRAFT,
+    createdAt: Timestamp.fromDate(now),
+    updatedAt: Timestamp.fromDate(now),
+    startTime: Timestamp.fromDate(giveaway.startTime),
+    endTime: Timestamp.fromDate(giveaway.endTime),
+  };
+
+  const docRef = await addDoc(giveawayRef, giveawayWithDates);
+
+  return {
+    id: docRef.id,
+    ...giveaway,
+    createdAt: now,
+    updatedAt: now,
+  };
+}
+
+export async function updateGiveaway(giveawayId: string, data: Partial<Giveaway>): Promise<void> {
+  const giveawayRef = doc(db, 'giveaways', giveawayId);
+  const now = new Date();
+
+  const dataWithDates = {
+    ...data,
+    updatedAt: Timestamp.fromDate(now),
+    startTime: data.startTime ? Timestamp.fromDate(data.startTime) : undefined,
+    endTime: data.endTime ? Timestamp.fromDate(data.endTime) : undefined,
+  };
+
+  await updateDoc(giveawayRef, dataWithDates);
+}
+
+export async function deleteGiveaway(giveawayId: string): Promise<void> {
+  await deleteDoc(doc(db, 'giveaways', giveawayId));
+}
+
+// Giveaway Winners functions
+export async function getGiveawayWinners(giveawayId: string): Promise<GiveawayWinner[]> {
+  const q = query(
+    collection(db, 'giveaway-winners'),
+    where('giveawayId', '==', giveawayId),
+    orderBy('createdAt', 'desc')
+  );
+
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      giveawayId: data.giveawayId,
+      username: data.username,
+      commentId: data.commentId,
+      messageStatus: data.messageStatus,
+      likeStatus: data.likeStatus,
+      createdAt: data.createdAt.toDate(),
+    };
+  });
+}
+
+export async function createGiveawayWinner(winner: Omit<GiveawayWinner, 'id' | 'createdAt'>): Promise<GiveawayWinner> {
+  const winnerRef = collection(db, 'giveaway-winners');
+  const now = new Date();
+
+  const winnerWithDate = {
+    ...winner,
+    createdAt: Timestamp.fromDate(now),
+  };
+
+  const docRef = await addDoc(winnerRef, winnerWithDate);
+
+  return {
+    id: docRef.id,
+    ...winner,
+    createdAt: now,
+  };
+}
+
+export async function updateGiveawayWinner(winnerId: string, data: Partial<GiveawayWinner>): Promise<void> {
+  const winnerRef = doc(db, 'giveaway-winners', winnerId);
+  await updateDoc(winnerRef, data);
+}
+
+// Count functions
+export async function countUserGiveaways(userId: string): Promise<number> {
+  const q = query(collection(db, 'giveaways'), where('userId', '==', userId));
+  const snapshot = await getDocs(q);
+  return snapshot.size;
+}
+
+export async function hasReachedGiveawayLimit(userId: string, plan: SubscriptionPlan): Promise<boolean> {
+  const count = await countUserGiveaways(userId);
+  const { PLANS } = await import('@/constants/plans');
+  const limit = PLANS[plan].giveawayLimit;
+
+  return count >= limit;
+}
