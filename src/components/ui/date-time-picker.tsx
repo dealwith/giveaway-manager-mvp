@@ -58,7 +58,7 @@ export function DateTimePicker({ control, name, disabled = false }: DateTimePick
                 }}
                 initialFocus
               />
-              <div className="p-3 border-t border-border">
+              <div className="p-3 border-t">
                 <div className="flex items-center justify-between space-x-2">
                   <Input
                     type="time"
