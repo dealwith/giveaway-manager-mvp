@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { Firestore, getFirestore } from 'firebase/firestore';
+import { Auth, getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -17,8 +17,8 @@ const isFirebaseConfigured =
   firebaseConfig.projectId;
 
 let app: FirebaseApp;
-let db;
-let auth;
+let db: Firestore;
+let auth: Auth;
 let analytics = null;
 
 if (isFirebaseConfigured) {
