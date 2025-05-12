@@ -1,4 +1,4 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
@@ -11,15 +11,29 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
-const auth = getAuth(app);
+const isFirebaseConfigured =
+  firebaseConfig.apiKey &&
+  firebaseConfig.authDomain &&
+  firebaseConfig.projectId;
 
+let app: FirebaseApp;
+let db;
+let auth;
 let analytics = null;
-if (typeof window !== 'undefined') {
-  import('firebase/analytics').then(({ getAnalytics }) => {
-    analytics = getAnalytics(app);
-  });
+
+if (isFirebaseConfigured) {
+  app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+  db = getFirestore(app);
+  auth = getAuth(app);
+
+  // Initialize analytics on client-side only
+  if (typeof window !== 'undefined') {
+    import('firebase/analytics').then(({ getAnalytics }) => {
+      analytics = getAnalytics(app);
+    });
+  }
+} else {
+  console.warn('Firebase not initialized. Missing config values.');
 }
 
 export { app, db, auth, analytics };

@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { FirestoreAdapter } from "@next-auth/firebase-adapter";
-import { db, auth } from "@/config/firebase";
+import { db, auth } from "@config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getUser } from "@/lib/db";
 import { SubscriptionPlan } from "@/types/subscription";
@@ -20,7 +20,6 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
-          // Authenticate with Firebase
           const userCredential = await signInWithEmailAndPassword(
             auth,
             credentials.email,
@@ -31,7 +30,6 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          // Get user from Firestore
           const user = await getUser(userCredential.user.uid);
 
           if (!user) {
