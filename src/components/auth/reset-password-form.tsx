@@ -10,7 +10,7 @@ import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
 import { Alert, AlertDescription } from "@components/ui/alert";
 import { ROUTES } from "@constants/routes";
-import { AUTH_SUCCESS } from "@constants/auth";
+import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
 import { confirmPasswordReset } from "firebase/auth";
 import { auth } from "@config/firebase";
 

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "@config/firebase";
 import useSWRMutation from "swr/mutation";
+import { sendPasswordResetEmail as firebaseSendPasswordResetEmail } from "firebase/auth";
 
 const forgotPasswordSchema = z.object({
 	email: z.string().email("Please enter a valid email address"),
