@@ -1,4 +1,4 @@
-import { stripe } from '@lib/stripe';
+import Stripe from "stripe";
 import { db } from '@/config/firebase';
 import { getUser, getUserSubscription, updateSubscription, createSubscription } from '@/lib/db';
 import { SubscriptionPlan } from '@/types/subscription';
@@ -9,6 +9,9 @@ interface CreateCheckoutSessionOptions {
   priceId: string;
   returnUrl: string;
 }
+
+
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 /**
  * Creates a Stripe checkout session for a subscription
@@ -193,7 +196,7 @@ export async function handleStripeWebhook(event: any) {
 
     case 'customer.subscription.deleted': {
       const stripeSubscription = event.data.object;
-      const userId = stripeSubscription.metadata.userId;
+      let userId = stripeSubscription.metadata.userId;
 
       if (!userId) {
         // Try to get userId from customer metadata
