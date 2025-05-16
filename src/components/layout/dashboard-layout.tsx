@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ROUTES } from "@constants/routes";
 import { cn } from "@lib/utils";
-import { Button } from "@components/ui/button";
+import { Button } from "@components/ui/Button";
 import { GiftIcon, HomeIcon, SettingsIcon, DollarSignIcon } from "lucide-react";
 
 interface DashboardLayoutProps {
