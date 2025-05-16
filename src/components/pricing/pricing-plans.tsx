@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Button } from "@components/ui/button";
+import { Button } from "@components/ui/Button";
 import {
 	Card,
 	CardContent,
@@ -11,10 +11,10 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@components/ui/card";
+} from "@components/ui/Card";
 import { PLANS } from "@constants/plans";
 import { SubscriptionPlan } from "@types/subscription";
-import { Alert, AlertDescription } from "@components/ui/alert";
+import { Alert, AlertDescription } from "@components/ui/Alert";
 import { ROUTES } from "@constants/routes";
 import { CheckIcon } from "lucide-react";
 import { createCheckoutSession } from "@lib/stripe";
@@ -110,10 +110,10 @@ export function PricingPlans() {
 									{isLoading === planType
 										? "Loading..."
 										: isCurrentPlan
-										? "Current Plan"
-										: isFreePlan
-										? "Get Started"
-										: "Subscribe"}
+											? "Current Plan"
+											: isFreePlan
+												? "Get Started"
+												: "Subscribe"}
 								</Button>
 							</CardFooter>
 						</Card>

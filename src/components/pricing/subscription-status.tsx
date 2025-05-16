@@ -8,15 +8,15 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from "@components/ui/Card";
+import { Button } from "@components/ui/Button";
 import { PLANS } from "@/constants/plans";
 import { SubscriptionPlan } from "@/types/subscription";
 import Link from "next/link";
 import { ROUTES } from "@constants/routes";
 import { useState } from "react";
 import { cancelSubscription } from "@lib/stripe";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@components/ui/Alert";
 
 export function SubscriptionStatus() {
 	const { data: session } = useSession();
