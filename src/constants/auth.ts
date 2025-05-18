@@ -7,4 +7,5 @@ export const AUTH_ERRORS = {
 export const AUTH_SUCCESS = {
 	PASSWORD_RESET: "A password reset email has been sent. Please check your inbox.",
 	PASSWORD_UPDATED: "Your password has been successfully updated.",
+	ACCOUNT_CREATED: 'Account has been created successfully'
 };

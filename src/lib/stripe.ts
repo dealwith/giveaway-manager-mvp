@@ -10,19 +10,14 @@ interface CreateCheckoutSessionOptions {
   returnUrl: string;
 }
 
-
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-/**
- * Creates a Stripe checkout session for a subscription
- */
 export async function createCheckoutSession({
   userId,
   priceId,
   returnUrl
 }: CreateCheckoutSessionOptions) {
   try {
-    // Get or create customer
     const user = await getUser(userId);
 
     if (!user) {
@@ -32,7 +27,6 @@ export async function createCheckoutSession({
     let customerId = user.stripeCustomerId;
 
     if (!customerId) {
-      // Create a new customer
       const customer = await stripe.customers.create({
         email: user.email,
         name: user.name,
@@ -153,7 +147,7 @@ export async function handleStripeWebhook(event: any) {
 
     case 'customer.subscription.updated': {
       const stripeSubscription = event.data.object;
-      const userId = stripeSubscription.metadata.userId;
+      let userId = stripeSubscription.metadata.userId;
 
       if (!userId) {
         // Try to get userId from customer metadata

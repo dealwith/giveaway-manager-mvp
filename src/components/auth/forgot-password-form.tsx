@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from "@components/ui/alert";
 import { ROUTES } from "@constants/routes";
 import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
 import Link from "next/link";
-import { sendPasswordResetEmail as firebaseSendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "@config/firebase";
 
 const forgotPasswordSchema = z.object({
@@ -39,7 +39,7 @@ export function ForgotPasswordForm() {
 		setSuccess(null);
 
 		try {
-			await firebaseSendPasswordResetEmail(auth, data.email);
+			await sendPasswordResetEmail(auth, data.email);
 			setSuccess(AUTH_SUCCESS.PASSWORD_RESET);
 		} catch (error: any) {
 			console.error("Error sending password reset email:", error);

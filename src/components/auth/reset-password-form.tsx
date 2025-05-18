@@ -10,7 +10,7 @@ import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
 import { Alert, AlertDescription } from "@components/ui/alert";
 import { ROUTES } from "@constants/routes";
-import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
+import { AUTH_SUCCESS } from "@constants/auth";
 import { confirmPasswordReset } from "firebase/auth";
 import { auth } from "@config/firebase";
 
@@ -26,13 +26,17 @@ const resetPasswordSchema = z
 
 type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
+const DEFAULT_ERROR_STATE = null;
+const DEFAULT_SUCCESS_STATE = null;
+
+
 export function ResetPasswordForm() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const token = searchParams.get("token");
 
-	const [error, setError] = useState<string | null>(null);
-	const [success, setSuccess] = useState<string | null>(null);
+	const [error, setError] = useState<string | null>(DEFAULT_ERROR_STATE);
+	const [success, setSuccess] = useState<string | null>(DEFAULT_SUCCESS_STATE);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const {
@@ -50,8 +54,8 @@ export function ResetPasswordForm() {
 		}
 
 		setIsLoading(true);
-		setError(null);
-		setSuccess(null);
+		setError(DEFAULT_ERROR_STATE);
+		setSuccess(DEFAULT_SUCCESS_STATE);
 
 		try {
 			await confirmPasswordReset(auth, token, data.password);
