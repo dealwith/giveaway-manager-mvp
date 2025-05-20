@@ -14,9 +14,9 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
-import { User } from '@/types/user';
-import { Giveaway, GiveawayStatus, GiveawayWinner } from '@/types/giveaway';
-import { Subscription, SubscriptionPlan } from '@/types/subscription';
+import { User } from '@app-types/user';
+import { Giveaway, GiveawayStatus, GiveawayWinner } from '@app-types/giveaway';
+import { Subscription, SubscriptionPlan } from '@app-types/subscription';
 
 // User functions
 export async function getUser(userId: string): Promise<User | null> {

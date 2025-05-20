@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { formatDistanceToNow, format } from "date-fns";
-import { Giveaway, GiveawayStatus } from "@/types/giveaway";
+import { Giveaway, GiveawayStatus } from "@app-types/giveaway";
 import { ROUTES } from "@/constants/routes";
 import {
 	GIVEAWAY_STATUS_LABELS,

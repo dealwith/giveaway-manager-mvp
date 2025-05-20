@@ -1,4 +1,4 @@
-import { GiveawayWinner } from "@/types/giveaway";
+import { GiveawayWinner } from "@app-types/giveaway";
 import {
 	Table,
 	TableCaption,

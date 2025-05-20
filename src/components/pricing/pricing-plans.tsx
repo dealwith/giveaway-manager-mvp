@@ -13,7 +13,7 @@ import {
 	CardTitle,
 } from "@components/ui/Card";
 import { PLANS } from "@constants/plans";
-import { SubscriptionPlan } from "@types/subscription";
+import { SubscriptionPlan } from "@app-types/subscription";
 import { Alert, AlertDescription } from "@components/ui/Alert";
 import { ROUTES } from "@constants/routes";
 import { CheckIcon } from "lucide-react";

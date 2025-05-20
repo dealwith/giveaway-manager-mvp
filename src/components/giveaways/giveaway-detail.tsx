@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Giveaway, GiveawayStatus, GiveawayWinner } from "@/types/giveaway";
+import { Giveaway, GiveawayStatus, GiveawayWinner } from "@app-types/giveaway";
 import { ROUTES } from "@/constants/routes";
 import {
 	GIVEAWAY_STATUS_LABELS,
 	GIVEAWAY_STATUS_COLORS,
 } from "@/constants/giveaway";
 import { formatDistanceToNow, format } from "date-fns";
-import { Button } from "@components/ui/Button";
+import { Button } from "@components/ui/button";
 import { Badge } from "@components/ui/Badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/Card";
 import {
@@ -31,7 +31,7 @@ import {
 	AlertDialogFooter,
 	AlertDialogCancel,
 	AlertDialogAction,
-} from "@components/ui/AlertDialog";
+} from "@components/ui/alert-dialog";
 import { Alert, AlertDescription } from "@components/ui/Alert";
 import { updateGiveaway, deleteGiveaway } from "@/lib/db";
 import { GiveawayWinnersList } from "./giveaway-winners-list";

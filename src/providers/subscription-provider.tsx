@@ -2,7 +2,7 @@
 
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { Subscription, SubscriptionPlan } from '@/types/subscription';
+import { Subscription, SubscriptionPlan } from '@app-types/subscription';
 
 type SubscriptionProviderState = {
   subscription: Subscription | null;

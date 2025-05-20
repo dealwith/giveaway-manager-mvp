@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { createGiveaway, getUserGiveaways, hasReachedGiveawayLimit } from '@/lib/db';
-import { GiveawayStatus } from '@/types/giveaway';
-import { ApiResponse } from '@/types/api';
+import { GiveawayStatus } from '@app-types/giveaway';
+import { ApiResponse } from '@app-types/api';
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);

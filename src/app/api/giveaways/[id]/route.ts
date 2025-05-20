@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { getGiveaway, updateGiveaway, deleteGiveaway } from '@/lib/db';
-import { ApiResponse } from '@/types/api';
+import { ApiResponse } from '@app-types/api';
 
 interface RouteParams {
   params: {

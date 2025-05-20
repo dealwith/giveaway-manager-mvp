@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { ROUTES } from "@constants/routes";
 import { SITE } from "@constants/site";
-import { Button } from "@components/ui/Button";
+import { Button } from "@components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@components/ui/DropdownMenu";
-import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { MobileMenu } from "./mobile-menu";
 
 export function Header() {

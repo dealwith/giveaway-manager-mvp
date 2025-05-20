@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
-import { ApiResponse } from '@/types/api';
+import { ApiResponse } from '@app-types/api';
 import { createCheckoutSession } from '@/lib/stripe';
 
 export async function POST(req: NextRequest) {

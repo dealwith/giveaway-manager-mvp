@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { db } from '@/config/firebase';
 import { getUser, getUserSubscription, updateSubscription, createSubscription } from '@/lib/db';
-import { SubscriptionPlan } from '@/types/subscription';
+import { SubscriptionPlan } from '@app-types/subscription';
 import { doc, updateDoc } from 'firebase/firestore';
 
 interface CreateCheckoutSessionOptions {

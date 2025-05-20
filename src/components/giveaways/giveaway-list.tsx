@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Giveaway, GiveawayStatus } from "@/types/giveaway";
+import { Giveaway, GiveawayStatus } from "@app-types/giveaway";
 import { GiveawayCard } from "./giveaway-card";
 import { Button } from "@components/ui/Button";
 import { PlusIcon } from "lucide-react";
@@ -7,7 +7,7 @@ import { ROUTES } from "@/constants/routes";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { PLANS } from "@/constants/plans";
-import { SubscriptionPlan } from "@/types/subscription";
+import { SubscriptionPlan } from "@app-types/subscription";
 
 interface GiveawayListProps {
 	giveaways: Giveaway[];

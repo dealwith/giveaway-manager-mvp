@@ -11,7 +11,7 @@ import {
 } from "@components/ui/Card";
 import { Button } from "@components/ui/Button";
 import { PLANS } from "@/constants/plans";
-import { SubscriptionPlan } from "@/types/subscription";
+import { SubscriptionPlan } from "@app-types/subscription";
 import Link from "next/link";
 import { ROUTES } from "@constants/routes";
 import { useState } from "react";

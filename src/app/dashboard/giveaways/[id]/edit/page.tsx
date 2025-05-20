@@ -5,7 +5,7 @@ import { authOptions } from '@/lib/auth';
 import { ROUTES } from '@/constants/routes';
 import { getGiveaway } from '@/lib/db';
 import { GiveawayForm } from '@/components/giveaways/giveaway-form';
-import { GiveawayStatus } from '@/types/giveaway';
+import { GiveawayStatus } from '@app-types/giveaway';
 
 interface EditGiveawayPageProps {
   params: {

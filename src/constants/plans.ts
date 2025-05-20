@@ -1,4 +1,4 @@
-import { SubscriptionPlan } from '@types/subscription';
+import { SubscriptionPlan } from '@app-types/subscription';
 
 export const PLANS = {
   [SubscriptionPlan.FREE]: {

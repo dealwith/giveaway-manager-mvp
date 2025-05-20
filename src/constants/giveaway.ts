@@ -1,4 +1,4 @@
-import { GiveawayStatus } from '@/types/giveaway';
+import { GiveawayStatus } from '@app-types/giveaway';
 
 export const GIVEAWAY_STATUS_LABELS = {
   [GiveawayStatus.DRAFT]: 'Draft',

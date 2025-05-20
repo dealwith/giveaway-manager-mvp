@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { getGiveaway, getGiveawayWinners, createGiveawayWinner } from '@/lib/db';
-import { ApiResponse } from '@/types/api';
+import { ApiResponse } from '@app-types/api';
 import { processGiveaway } from '@/lib/instagram';
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {

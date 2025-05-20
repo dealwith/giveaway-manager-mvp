@@ -1,6 +1,6 @@
 // src/lib/instagram.ts
 import { INSTAGRAM_API } from '@/constants/instagram';
-import { InstagramComment, InstagramPost } from '@/types/instagram';
+import { InstagramComment, InstagramPost } from '@app-types/instagram';
 
 // Extract Instagram post ID from URL
 export function extractPostId(postUrl: string): string | null {

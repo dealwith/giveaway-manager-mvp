@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { updateGiveaway } from '@/lib/db';
-import { GiveawayStatus } from '@/types/giveaway';
+import { GiveawayStatus } from '@app-types/giveaway';
 import { processGiveaway } from '@/lib/instagram';
 import { EmailTemplates } from '@/lib/email';
 import { getUser } from '@/lib/db';

@@ -5,21 +5,21 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/ui/Button";
+import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/Input";
-import { Textarea } from "@components/ui/Textarea";
+import { Textarea } from "@components/ui/textarea";
 import { Label } from "@components/ui/Label";
 import { Alert, AlertDescription } from "@components/ui/Alert";
 import { ROUTES } from "@constants/routes";
-import { GiveawayStatus } from "@types/giveaway";
+import { GiveawayStatus } from "@app-types/giveaway";
 import { GIVEAWAY_VALIDATION } from "@constants/giveaway";
 import { createGiveaway, updateGiveaway } from "@lib/db";
 import { useSession } from "next-auth/react";
 import { hasReachedGiveawayLimit } from "@lib/db";
-import { DateTimePicker } from "@components/ui/DateTimePicker";
+import { DateTimePicker } from "@components/ui/date-time-picker";
 import { isValidInstagramPostUrl } from "@lib/instagram";
 import { PLANS } from "@constants/plans";
-import { SubscriptionPlan } from "@types/subscription";
+import { SubscriptionPlan } from "@app-types/subscription";
 
 const giveawaySchema = z
 	.object({

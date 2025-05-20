@@ -4,7 +4,7 @@ import { FirestoreAdapter } from "@next-auth/firebase-adapter";
 import { db, auth } from "@config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getUser } from "@/lib/db";
-import { SubscriptionPlan } from "@/types/subscription";
+import { SubscriptionPlan } from "@app-types/subscription";
 
 export const authOptions: NextAuthOptions = {
   providers: [

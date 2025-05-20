@@ -16,7 +16,7 @@ import { ROUTES } from "@/constants/routes";
 import { getUserGiveaways, countUserGiveaways } from "@/lib/db";
 import { GiftIcon, PlusIcon, SettingsIcon } from "lucide-react";
 import { PLANS } from "@/constants/plans";
-import { GiveawayStatus } from "@/types/giveaway";
+import { GiveawayStatus } from "@app-types/giveaway";
 
 export const metadata: Metadata = {
 	title: "Dashboard",
