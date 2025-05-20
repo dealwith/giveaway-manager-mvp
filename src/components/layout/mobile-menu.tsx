@@ -4,14 +4,14 @@ import Link from "next/link";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { ROUTES } from "@constants/routes";
-import { Button } from "@components/ui/Button";
+import { Button } from "@components/ui/button";
 import {
 	Sheet,
 	SheetContent,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
-} from "@components/ui/Sheet";
+} from "@components/ui/sheet";
 import { Menu } from "lucide-react";
 
 interface MobileMenuProps {
