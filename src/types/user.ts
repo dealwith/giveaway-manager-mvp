@@ -5,5 +5,5 @@ export interface User {
 	image?: string;
 	createdAt: Date;
 	updatedAt: Date;
-	stipeCustomerId?: string;
+	stripeCustomerId?: string;
 }

@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { SessionProvider } from '@/providers/session-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
+import { SWRProvider } from '@/providers/swr-provider';
 import './globals.css';
 
 const inter = Inter({
@@ -37,11 +38,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <SessionProvider>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
+            <SWRProvider>
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+            </SWRProvider>
           </SessionProvider>
         </ThemeProvider>
       </body>
