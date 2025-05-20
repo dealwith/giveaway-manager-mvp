@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +12,7 @@ import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
 import Link from "next/link";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "@config/firebase";
+import useSWRMutation from "swr/mutation";
 
 const forgotPasswordSchema = z.object({
 	email: z.string().email("Please enter a valid email address"),
@@ -20,11 +20,17 @@ const forgotPasswordSchema = z.object({
 
 type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
-export function ForgotPasswordForm() {
-	const [error, setError] = useState<string | null>(null);
-	const [success, setSuccess] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
+async function resetPasswordRequest(_key: string, { arg }: { arg: string }) {
+	try {
+		await sendPasswordResetEmail(auth, arg);
+		return { success: AUTH_SUCCESS.PASSWORD_RESET };
+	} catch (error) {
+		console.error("Error sending password reset email:", error);
+		throw new Error(AUTH_ERRORS.DEFAULT);
+	}
+}
 
+export function ForgotPasswordForm() {
 	const {
 		register,
 		handleSubmit,
@@ -33,19 +39,16 @@ export function ForgotPasswordForm() {
 		resolver: zodResolver(forgotPasswordSchema),
 	});
 
-	const onSubmit = async (data: ForgotPasswordFormValues) => {
-		setIsLoading(true);
-		setError(null);
-		setSuccess(null);
+	const { trigger, data, error, isMutating } = useSWRMutation(
+		"resetPassword",
+		resetPasswordRequest
+	);
 
+	const onSubmit = async (data: ForgotPasswordFormValues) => {
 		try {
-			await sendPasswordResetEmail(auth, data.email);
-			setSuccess(AUTH_SUCCESS.PASSWORD_RESET);
-		} catch (error: any) {
-			console.error("Error sending password reset email:", error);
-			setError(AUTH_ERRORS.DEFAULT);
-		} finally {
-			setIsLoading(false);
+			await trigger(data.email);
+		} catch (error) {
+			console.error("Error in form submission:", error);
 		}
 	};
 
@@ -61,13 +64,13 @@ export function ForgotPasswordForm() {
 
 			{error && (
 				<Alert variant="destructive">
-					<AlertDescription>{error}</AlertDescription>
+					<AlertDescription>{error.message}</AlertDescription>
 				</Alert>
 			)}
 
-			{success && (
+			{data?.success && (
 				<Alert variant="success">
-					<AlertDescription>{success}</AlertDescription>
+					<AlertDescription>{data.success}</AlertDescription>
 				</Alert>
 			)}
 
@@ -78,7 +81,7 @@ export function ForgotPasswordForm() {
 						id="email"
 						placeholder="name@example.com"
 						{...register("email")}
-						disabled={isLoading || !!success}
+						disabled={isMutating || !!data?.success}
 					/>
 					{errors.email && (
 						<p className="text-sm text-red-500">{errors.email.message}</p>
@@ -88,9 +91,9 @@ export function ForgotPasswordForm() {
 				<Button
 					type="submit"
 					className="w-full"
-					disabled={isLoading || !!success}
+					disabled={isMutating || !!data?.success}
 				>
-					{isLoading ? "Sending..." : "Send Reset Link"}
+					{isMutating ? "Sending..." : "Send Reset Link"}
 				</Button>
 			</form>
 
