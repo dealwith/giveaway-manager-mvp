@@ -3,16 +3,17 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Label } from "@components/ui/label";
-import { Alert, AlertDescription } from "@components/ui/alert";
+import { Button } from "@components/ui/Button";
+import { Input } from "@components/ui/Input";
+import { Label } from "@components/ui/Label";
+import { Alert, AlertDescription } from "@components/ui/Alert";
 import { ROUTES } from "@constants/routes";
 import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
 import Link from "next/link";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "@config/firebase";
 import useSWRMutation from "swr/mutation";
+import { sendPasswordResetEmail as firebaseSendPasswordResetEmail } from "firebase/auth";
 
 const forgotPasswordSchema = z.object({
 	email: z.string().email("Please enter a valid email address"),

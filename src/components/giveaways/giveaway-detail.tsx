@@ -9,9 +9,9 @@ import {
 	GIVEAWAY_STATUS_COLORS,
 } from "@/constants/giveaway";
 import { formatDistanceToNow, format } from "date-fns";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@components/ui/Button";
+import { Badge } from "@components/ui/Badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/Card";
 import {
 	PencilIcon,
 	TrashIcon,
@@ -31,8 +31,8 @@ import {
 	AlertDialogFooter,
 	AlertDialogCancel,
 	AlertDialogAction,
-} from "@/components/ui/alert-dialog";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+} from "@components/ui/AlertDialog";
+import { Alert, AlertDescription } from "@components/ui/Alert";
 import { updateGiveaway, deleteGiveaway } from "@/lib/db";
 import { GiveawayWinnersList } from "./giveaway-winners-list";
 import Link from "next/link";
