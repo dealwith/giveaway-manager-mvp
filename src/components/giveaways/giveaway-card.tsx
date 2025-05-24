@@ -12,8 +12,9 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@components/ui/Card";
-import { Badge } from "@components/ui/Badge";
+} from "@components/ui/card";
+import { Badge } from "@components/ui/badge";
+import { Button } from "@components/ui/button";
 
 interface GiveawayCardProps {
 	giveaway: Giveaway;

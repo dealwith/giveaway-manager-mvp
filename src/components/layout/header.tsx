@@ -12,7 +12,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@components/ui/DropdownMenu";
+} from "@components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { MobileMenu } from "./mobile-menu";
 

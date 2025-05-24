@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Giveaway, GiveawayStatus } from "@app-types/giveaway";
 import { GiveawayCard } from "./giveaway-card";
-import { Button } from "@components/ui/Button";
+import { Button } from "@components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import Link from "next/link";

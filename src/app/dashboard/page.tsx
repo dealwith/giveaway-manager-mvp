@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
-import { Button } from "@components/ui/Button";
+import { Button } from "@components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -11,7 +11,7 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@components/ui/Card";
+} from "@components/ui/card";
 import { ROUTES } from "@/constants/routes";
 import { getUserGiveaways, countUserGiveaways } from "@/lib/db";
 import { GiftIcon, PlusIcon, SettingsIcon } from "lucide-react";

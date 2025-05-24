@@ -9,7 +9,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@components/ui/popover";
-import { Input } from "@components/ui/Input";
+import { Input } from "@components/ui/input";
 
 interface DateTimePickerProps {
 	control: Control;

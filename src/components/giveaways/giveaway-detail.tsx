@@ -11,7 +11,7 @@ import {
 import { formatDistanceToNow, format } from "date-fns";
 import { Button } from "@components/ui/button";
 import { Badge } from "@components/ui/Badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/Card";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import {
 	PencilIcon,
 	TrashIcon,
@@ -32,7 +32,7 @@ import {
 	AlertDialogCancel,
 	AlertDialogAction,
 } from "@components/ui/alert-dialog";
-import { Alert, AlertDescription } from "@components/ui/Alert";
+import { Alert, AlertDescription } from "@components/ui/alert";
 import { updateGiveaway, deleteGiveaway } from "@/lib/db";
 import { GiveawayWinnersList } from "./giveaway-winners-list";
 import Link from "next/link";

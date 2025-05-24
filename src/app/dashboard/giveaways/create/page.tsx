@@ -5,8 +5,8 @@ import { authOptions } from "@/lib/auth";
 import { ROUTES } from "@/constants/routes";
 import { GiveawayForm } from "@/components/giveaways/giveaway-form";
 import { hasReachedGiveawayLimit } from "@/lib/db";
-import { Alert, AlertDescription } from "@components/ui/Alert";
-import { Button } from "@components/ui/Button";
+import { Alert, AlertDescription } from "@components/ui/alert";
+import { Button } from "@components/ui/button";
 import Link from "next/link";
 
 export const metadata: Metadata = {

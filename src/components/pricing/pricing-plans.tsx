@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Button } from "@components/ui/Button";
+import { Button } from "@components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -11,10 +11,10 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@components/ui/Card";
+} from "@components/ui/card";
 import { PLANS } from "@constants/plans";
 import { SubscriptionPlan } from "@app-types/subscription";
-import { Alert, AlertDescription } from "@components/ui/Alert";
+import { Alert, AlertDescription } from "@components/ui/alert";
 import { ROUTES } from "@constants/routes";
 import { CheckIcon } from "lucide-react";
 import { createCheckoutSession } from "@lib/stripe";
