@@ -32,7 +32,7 @@ export default async function DashboardPage() {
 
 	const giveaways = await getUserGiveaways(session.user.id);
 	const giveawayCount = await countUserGiveaways(session.user.id);
-	const planDetails = PLANS[session.user.plan];
+	const planDetails = PLANS[session.user.subscriptionPlan];
 
 	const activeGiveaways = giveaways.filter(
 		(giveaway) => giveaway.status === GiveawayStatus.ACTIVE

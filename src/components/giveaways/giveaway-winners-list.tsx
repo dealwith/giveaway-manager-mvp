@@ -7,8 +7,8 @@ import {
 	TableHead,
 	TableBody,
 	TableCell,
-} from "@components/ui/Table";
-import { Badge } from "@components/ui/Badge";
+} from "@components/ui/table";
+import { Badge } from "@components/ui/badge";
 import { format } from "date-fns";
 
 interface GiveawayWinnersListProps {
@@ -47,10 +47,10 @@ export function GiveawayWinnersList({ winners }: GiveawayWinnersListProps) {
 							<TableCell>
 								<Badge
 									variant={
-										winner.likeStatus === "liked" ? "success" : "destructive"
+										winner.likeStatus === "sent" ? "success" : "destructive"
 									}
 								>
-									{winner.likeStatus === "liked" ? "Liked" : "Failed"}
+									{winner.likeStatus === "sent" ? "Sent" : "Failed"}
 								</Badge>
 							</TableCell>
 						</TableRow>

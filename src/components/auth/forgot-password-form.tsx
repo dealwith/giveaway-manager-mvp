@@ -23,6 +23,9 @@ type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
 async function resetPasswordRequest(_key: string, { arg }: { arg: string }) {
 	try {
+		if (!auth) {
+			throw new Error('Authentication not initialized');
+		}
 		await sendPasswordResetEmail(auth, arg);
 		return { success: AUTH_SUCCESS.PASSWORD_RESET };
 	} catch (error) {

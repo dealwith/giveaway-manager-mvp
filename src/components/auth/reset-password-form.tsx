@@ -58,6 +58,9 @@ export function ResetPasswordForm() {
 		setSuccess(DEFAULT_SUCCESS_STATE);
 
 		try {
+			if (!auth) {
+				throw new Error('Authentication not initialized');
+			}
 			await confirmPasswordReset(auth, token, data.password);
 			setSuccess(AUTH_SUCCESS.PASSWORD_UPDATED);
 

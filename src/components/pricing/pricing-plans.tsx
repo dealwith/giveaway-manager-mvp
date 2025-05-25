@@ -59,7 +59,7 @@ export function PricingPlans() {
 		}
 	};
 
-	const userCurrentPlan = session?.user?.plan || null;
+	const userCurrentPlan = session?.user?.subscriptionPlan || null;
 
 	return (
 		<div className="container">

@@ -2,6 +2,7 @@ export const AUTH_ERRORS = {
 	DEFAULT: "Something went wrong. Please try again later.",
 	INVALID_EMAIL: "The email address is not valid.",
 	USER_NOT_FOUND: "There is no user corresponding to this email.",
+	EMAIL_EXISTS: "An account with this email already exists.",
 };
 
 export const AUTH_SUCCESS = {

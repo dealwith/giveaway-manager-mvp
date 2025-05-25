@@ -28,7 +28,7 @@ export function SubscriptionStatus() {
 		return null;
 	}
 
-	const plan = session.user.plan || SubscriptionPlan.FREE;
+	const plan = session.user.subscriptionPlan || SubscriptionPlan.FREE;
 	const planDetails = PLANS[plan];
 
 	const handleCancelSubscription = async () => {
@@ -83,7 +83,7 @@ export function SubscriptionStatus() {
 				<div className="space-y-1">
 					<div className="font-medium">Features</div>
 					<ul className="list-disc pl-5 space-y-1">
-						{planDetails.features.map((feature, i) => (
+						{planDetails.features.map((feature: string, i: number) => (
 							<li key={i}>{feature}</li>
 						))}
 					</ul>

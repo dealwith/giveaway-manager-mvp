@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
   // Check if user has reached their limit
   const reachedLimit = await hasReachedGiveawayLimit(
     session.user.id,
-    session.user.plan
+    session.user.subscriptionPlan
   );
 
   if (reachedLimit) {

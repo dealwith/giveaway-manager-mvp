@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { FirestoreAdapter } from "@next-auth/firebase-adapter";
-import { db, auth } from "@config/firebase";
+import { db, auth, firebaseConfig } from "@config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getUser } from "@/lib/db";
 import { SubscriptionPlan } from "@app-types/subscription";
@@ -16,6 +16,11 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+
+        if (!auth) {
+          console.error("Firebase auth not initialized");
           return null;
         }
 
@@ -50,9 +55,7 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
-  adapter: FirestoreAdapter({
-    db
-  }),
+  ...(db ? { adapter: FirestoreAdapter(firebaseConfig) } : {}),
   session: {
     strategy: "jwt"
   },
@@ -74,7 +77,7 @@ export const authOptions: NextAuthOptions = {
       if (token && session.user) {
         session.user.id = token.id as string;
         session.user.email = token.email as string;
-        session.user.plan = token.plan as SubscriptionPlan;
+        session.user.subscriptionPlan = token.plan as SubscriptionPlan;
       }
       return session;
     }

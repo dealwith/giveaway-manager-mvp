@@ -23,7 +23,7 @@ export default async function CreateGiveawayPage() {
 
 	const reachedLimit = await hasReachedGiveawayLimit(
 		session.user.id,
-		session.user.plan
+		session.user.subscriptionPlan
 	);
 
 	if (reachedLimit) {

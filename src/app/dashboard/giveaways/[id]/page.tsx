@@ -7,15 +7,16 @@ import { getGiveaway, getGiveawayWinners } from '@/lib/db';
 import { GiveawayDetail } from '@/components/giveaways/giveaway-detail';
 
 interface GiveawayDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: GiveawayDetailPageProps): Promise<Metadata> {
-  const giveaway = await getGiveaway(params.id);
+  const { id } = await params;
+  const giveaway = await getGiveaway(id);
 
   if (!giveaway) {
     return {
@@ -38,7 +39,8 @@ export default async function GiveawayDetailPage({
     redirect(ROUTES.SIGNIN);
   }
 
-  const giveaway = await getGiveaway(params.id);
+  const { id } = await params;
+  const giveaway = await getGiveaway(id);
 
   if (!giveaway) {
     notFound();
@@ -49,7 +51,7 @@ export default async function GiveawayDetailPage({
     redirect(ROUTES.GIVEAWAYS);
   }
 
-  const winners = await getGiveawayWinners(params.id);
+  const winners = await getGiveawayWinners(id);
 
   return (
     <div className="space-y-6">

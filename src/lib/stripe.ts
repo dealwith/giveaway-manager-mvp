@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { db } from '@/config/firebase';
 import { getUser, getUserSubscription, updateSubscription, createSubscription } from '@/lib/db';
-import { SubscriptionPlan } from '@app-types/subscription';
+import { SubscriptionPlan, SubscriptionStatus } from '@app-types/subscription';
 import { doc, updateDoc } from 'firebase/firestore';
 
 interface CreateCheckoutSessionOptions {
@@ -12,11 +12,31 @@ interface CreateCheckoutSessionOptions {
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
+// Map Stripe subscription status to our SubscriptionStatus enum
+function mapStripeStatus(stripeStatus: Stripe.Subscription.Status): SubscriptionStatus {
+  const statusMap: Record<Stripe.Subscription.Status, SubscriptionStatus> = {
+    'active': SubscriptionStatus.ACTIVE,
+    'canceled': SubscriptionStatus.CANCELED,
+    'incomplete': SubscriptionStatus.INCOMPLETE,
+    'incomplete_expired': SubscriptionStatus.INCOMPLETE_EXPIRED,
+    'past_due': SubscriptionStatus.PAST_DUE,
+    'trialing': SubscriptionStatus.TRIALING,
+    'unpaid': SubscriptionStatus.UNPAID,
+    'paused': SubscriptionStatus.UNPAID, // Map paused to unpaid as we don't have a paused status
+  };
+
+  return statusMap[stripeStatus] || SubscriptionStatus.CANCELED;
+}
+
 export async function createCheckoutSession({
   userId,
   priceId,
   returnUrl
 }: CreateCheckoutSessionOptions) {
+  if (!db) {
+    throw new Error('Database not initialized');
+  }
+
   try {
     const user = await getUser(userId);
 
@@ -118,10 +138,10 @@ export async function handleStripeWebhook(event: any) {
       // Create or update subscription in database
       const subscriptionData = {
         userId,
-        status: stripeSubscription.status,
+        status: mapStripeStatus(stripeSubscription.status),
         plan: SubscriptionPlan.PRO,
         priceId: stripeSubscription.items.data[0].price.id,
-        quantity: stripeSubscription.items.data[0].quantity,
+        quantity: stripeSubscription.items.data[0].quantity || 1,
         cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
         createdAt: new Date(stripeSubscription.created * 1000),
         currentPeriodStart: new Date(stripeSubscription.current_period_start * 1000),
@@ -172,7 +192,7 @@ export async function handleStripeWebhook(event: any) {
       if (subscription) {
         // Update subscription in database
         await updateSubscription(subscription.id, {
-          status: stripeSubscription.status,
+          status: mapStripeStatus(stripeSubscription.status),
           cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
           currentPeriodStart: new Date(stripeSubscription.current_period_start * 1000),
           currentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
@@ -215,7 +235,7 @@ export async function handleStripeWebhook(event: any) {
       if (subscription) {
         // Update subscription in database
         await updateSubscription(subscription.id, {
-          status: 'canceled',
+          status: SubscriptionStatus.CANCELED,
           cancelAtPeriodEnd: false,
           endedAt: new Date(),
         });

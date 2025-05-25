@@ -8,15 +8,16 @@ import { GiveawayForm } from '@/components/giveaways/giveaway-form';
 import { GiveawayStatus } from '@app-types/giveaway';
 
 interface EditGiveawayPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: EditGiveawayPageProps): Promise<Metadata> {
-  const giveaway = await getGiveaway(params.id);
+  const { id } = await params;
+  const giveaway = await getGiveaway(id);
 
   if (!giveaway) {
     return {
@@ -39,7 +40,8 @@ export default async function EditGiveawayPage({
     redirect(ROUTES.SIGNIN);
   }
 
-  const giveaway = await getGiveaway(params.id);
+  const { id } = await params;
+  const giveaway = await getGiveaway(id);
 
   if (!giveaway) {
     notFound();
@@ -52,7 +54,7 @@ export default async function EditGiveawayPage({
 
   // Check if the giveaway is editable (only draft or scheduled)
   if (giveaway.status !== GiveawayStatus.SCHEDULED) {
-    redirect(ROUTES.VIEW_GIVEAWAY(params.id));
+    redirect(ROUTES.VIEW_GIVEAWAY(id));
   }
 
   return (

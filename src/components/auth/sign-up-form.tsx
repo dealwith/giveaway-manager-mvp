@@ -52,6 +52,9 @@ export function SignUpForm() {
 
 		try {
 			// Create user in Firebase Auth
+			if (!auth) {
+				throw new Error('Authentication not initialized');
+			}
 			const userCredential = await createUserWithEmailAndPassword(
 				auth,
 				data.email,

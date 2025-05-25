@@ -20,6 +20,9 @@ import { Subscription, SubscriptionPlan } from '@app-types/subscription';
 
 // User functions
 export async function getUser(userId: string): Promise<User | null> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const docRef = doc(db, 'users', userId);
   const docSnap = await getDoc(docRef);
 
@@ -40,6 +43,9 @@ export async function getUser(userId: string): Promise<User | null> {
 }
 
 export async function createUser(user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Promise<User> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const userRef = doc(db, 'users', user.email);
   const now = new Date();
 
@@ -62,6 +68,9 @@ export async function createUser(user: Omit<User, 'id' | 'createdAt' | 'updatedA
 }
 
 export async function updateUser(userId: string, data: Partial<User>): Promise<void> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const userRef = doc(db, 'users', userId);
   const now = new Date();
 
@@ -73,6 +82,9 @@ export async function updateUser(userId: string, data: Partial<User>): Promise<v
 
 // Subscription functions
 export async function getUserSubscription(userId: string): Promise<Subscription | null> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const q = query(collection(db, 'subscriptions'), where('userId', '==', userId), where('status', '==', 'active'), limit(1));
   const querySnapshot = await getDocs(q);
 
@@ -100,6 +112,9 @@ export async function getUserSubscription(userId: string): Promise<Subscription 
 }
 
 export async function createSubscription(subscription: Omit<Subscription, 'id'>): Promise<Subscription> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const subscriptionRef = collection(db, 'subscriptions');
   const now = new Date();
 
@@ -123,6 +138,9 @@ export async function createSubscription(subscription: Omit<Subscription, 'id'>)
 }
 
 export async function updateSubscription(subscriptionId: string, data: Partial<Subscription>): Promise<void> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const subscriptionRef = doc(db, 'subscriptions', subscriptionId);
 
   const dataWithDates = {
@@ -141,6 +159,9 @@ export async function updateSubscription(subscriptionId: string, data: Partial<S
 
 // Giveaway functions
 export async function getUserGiveaways(userId: string): Promise<Giveaway[]> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const q = query(
     collection(db, 'giveaways'),
     where('userId', '==', userId),
@@ -169,6 +190,9 @@ export async function getUserGiveaways(userId: string): Promise<Giveaway[]> {
 }
 
 export async function getGiveaway(giveawayId: string): Promise<Giveaway | null> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const docRef = doc(db, 'giveaways', giveawayId);
   const docSnap = await getDoc(docRef);
 
@@ -195,6 +219,9 @@ export async function getGiveaway(giveawayId: string): Promise<Giveaway | null> 
 }
 
 export async function createGiveaway(giveaway: Omit<Giveaway, 'id' | 'createdAt' | 'updatedAt' | 'winners'>): Promise<Giveaway> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const giveawayRef = collection(db, 'giveaways');
   const now = new Date();
 
@@ -218,6 +245,9 @@ export async function createGiveaway(giveaway: Omit<Giveaway, 'id' | 'createdAt'
 }
 
 export async function updateGiveaway(giveawayId: string, data: Partial<Giveaway>): Promise<void> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const giveawayRef = doc(db, 'giveaways', giveawayId);
   const now = new Date();
 
@@ -232,11 +262,17 @@ export async function updateGiveaway(giveawayId: string, data: Partial<Giveaway>
 }
 
 export async function deleteGiveaway(giveawayId: string): Promise<void> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   await deleteDoc(doc(db, 'giveaways', giveawayId));
 }
 
 // Giveaway Winners functions
 export async function getGiveawayWinners(giveawayId: string): Promise<GiveawayWinner[]> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const q = query(
     collection(db, 'giveaway-winners'),
     where('giveawayId', '==', giveawayId),
@@ -259,6 +295,9 @@ export async function getGiveawayWinners(giveawayId: string): Promise<GiveawayWi
 }
 
 export async function createGiveawayWinner(winner: Omit<GiveawayWinner, 'id' | 'createdAt'>): Promise<GiveawayWinner> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const winnerRef = collection(db, 'giveaway-winners');
   const now = new Date();
 
@@ -277,12 +316,18 @@ export async function createGiveawayWinner(winner: Omit<GiveawayWinner, 'id' | '
 }
 
 export async function updateGiveawayWinner(winnerId: string, data: Partial<GiveawayWinner>): Promise<void> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const winnerRef = doc(db, 'giveaway-winners', winnerId);
   await updateDoc(winnerRef, data);
 }
 
 // Count functions
 export async function countUserGiveaways(userId: string): Promise<number> {
+  if (!db) {
+    throw new Error('Firebase database not initialized');
+  }
   const q = query(collection(db, 'giveaways'), where('userId', '==', userId));
   const snapshot = await getDocs(q);
   return snapshot.size;

@@ -2,7 +2,7 @@
 
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { Subscription, SubscriptionPlan } from '@app-types/subscription';
+import { Subscription, SubscriptionPlan, SubscriptionStatus } from '@app-types/subscription';
 
 type SubscriptionProviderState = {
   subscription: Subscription | null;
@@ -37,8 +37,8 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
         setSubscription({
           id: '',
           userId: session.user.id,
-          status: 'active',
-          plan: session.user.plan || SubscriptionPlan.FREE,
+          status: SubscriptionStatus.ACTIVE,
+          plan: session.user.subscriptionPlan || SubscriptionPlan.FREE,
           priceId: '',
           quantity: 1,
           cancelAtPeriodEnd: false,
@@ -56,7 +56,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     fetchSubscription();
   }, [session, status]);
 
-  const isSubscribed = subscription?.status === 'active' && subscription?.plan === SubscriptionPlan.PRO;
+  const isSubscribed = subscription?.status === SubscriptionStatus.ACTIVE && subscription?.plan === SubscriptionPlan.PRO;
   const plan = subscription?.plan || SubscriptionPlan.FREE;
 
   return (

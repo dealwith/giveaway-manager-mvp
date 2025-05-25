@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '@/config/firebase';
-import { updateGiveaway } from '@/lib/db';
+import { updateGiveaway, createGiveawayWinner } from '@/lib/db';
 import { GiveawayStatus } from '@app-types/giveaway';
 import { processGiveaway } from '@/lib/instagram';
 import { EmailTemplates } from '@/lib/email';
@@ -21,7 +21,14 @@ export async function GET(req: NextRequest) {
   try {
     const now = new Date();
 
-    // Find giveaways that should start
+    if (!db) {
+      console.error('Error processing giveaways, database not connected');
+      return NextResponse.json(
+        { success: false, error: 'Failed to process giveaways' },
+        { status: 500 }
+      );
+    }
+
     const startingGiveaways = query(
       collection(db, 'giveaways'),
       where('status', '==', GiveawayStatus.SCHEDULED),
@@ -30,7 +37,6 @@ export async function GET(req: NextRequest) {
 
     const startingSnapshot = await getDocs(startingGiveaways);
 
-    // Find giveaways that should end
     const endingGiveaways = query(
       collection(db, 'giveaways'),
       where('status', '==', GiveawayStatus.ACTIVE),

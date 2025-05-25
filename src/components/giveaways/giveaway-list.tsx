@@ -40,7 +40,7 @@ export function GiveawayList({ giveaways, giveawayCount }: GiveawayListProps) {
 		return { active, scheduled, completed, other };
 	}, [giveaways]);
 
-	const plan = session?.user?.plan || SubscriptionPlan.FREE;
+	const plan = session?.user?.subscriptionPlan || SubscriptionPlan.FREE;
 	const giveawayLimit = PLANS[plan].giveawayLimit;
 	const canCreateMore = giveawayCount < giveawayLimit;
 

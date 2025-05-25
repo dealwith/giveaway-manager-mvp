@@ -5,9 +5,9 @@ import { getGiveaway, updateGiveaway, deleteGiveaway } from '@/lib/db';
 import { ApiResponse } from '@app-types/api';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function GET(req: NextRequest, { params }: RouteParams) {
@@ -21,7 +21,8 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   }
 
   try {
-    const giveaway = await getGiveaway(params.id);
+    const { id } = await params;
+    const giveaway = await getGiveaway(id);
 
     if (!giveaway) {
       return NextResponse.json<ApiResponse>(
@@ -59,7 +60,8 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
   }
 
   try {
-    const giveaway = await getGiveaway(params.id);
+    const { id } = await params;
+    const giveaway = await getGiveaway(id);
 
     if (!giveaway) {
       return NextResponse.json<ApiResponse>(
@@ -77,9 +79,9 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     }
 
     const data = await req.json();
-    await updateGiveaway(params.id, data);
+    await updateGiveaway(id, data);
 
-    const updatedGiveaway = await getGiveaway(params.id);
+    const updatedGiveaway = await getGiveaway(id);
     return NextResponse.json<ApiResponse>({ success: true, data: updatedGiveaway });
   } catch (error) {
     console.error('Error updating giveaway:', error);
@@ -101,7 +103,8 @@ export async function DELETE(req: NextRequest, { params }: RouteParams) {
   }
 
   try {
-    const giveaway = await getGiveaway(params.id);
+    const { id } = await params;
+    const giveaway = await getGiveaway(id);
 
     if (!giveaway) {
       return NextResponse.json<ApiResponse>(
@@ -118,7 +121,7 @@ export async function DELETE(req: NextRequest, { params }: RouteParams) {
       );
     }
 
-    await deleteGiveaway(params.id);
+    await deleteGiveaway(id);
     return NextResponse.json<ApiResponse>({ success: true });
   } catch (error) {
     console.error('Error deleting giveaway:', error);

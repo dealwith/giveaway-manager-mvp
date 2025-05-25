@@ -135,13 +135,13 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 				// Check if user has reached their giveaway limit
 				const reachedLimit = await hasReachedGiveawayLimit(
 					session.user.id,
-					session.user.plan || SubscriptionPlan.FREE
+					session.user.subscriptionPlan || SubscriptionPlan.FREE
 				);
 
 				if (reachedLimit) {
 					setError(
 						`You've reached your limit of ${
-							PLANS[session.user.plan || SubscriptionPlan.FREE].giveawayLimit
+							PLANS[session.user.subscriptionPlan || SubscriptionPlan.FREE].giveawayLimit
 						} giveaways. Please upgrade your plan to create more.`
 					);
 					setIsLoading(false);
@@ -152,7 +152,7 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 				const newGiveaway = await createGiveaway({
 					userId: session.user.id,
 					title: data.title,
-					description: data.description,
+					description: data.description || '',
 					postUrl: data.postUrl,
 					documentUrl: data.documentUrl,
 					keyword: data.keyword,

@@ -93,7 +93,7 @@ export async function processWinner(
   username: string,
   commentId: string,
   documentUrl: string
-): Promise<{ messageStatus: 'sent' | 'failed', likeStatus: 'liked' | 'failed' }> {
+): Promise<{ messageStatus: 'sent' | 'failed', likeStatus: 'sent' | 'failed' }> {
   // Send direct message with document link
   const message = `Congratulations! You've won our giveaway. Here's your prize: ${documentUrl}`;
   const messageResult = await sendDirectMessage(username, message);
@@ -103,7 +103,7 @@ export async function processWinner(
 
   return {
     messageStatus: messageResult ? 'sent' : 'failed',
-    likeStatus: likeResult ? 'liked' : 'failed',
+    likeStatus: likeResult ? 'sent' : 'failed',
   };
 }
 
@@ -138,7 +138,7 @@ export async function processGiveaway(
   keyword: string,
   documentUrl: string
 ): Promise<{
-  winners: Array<{ username: string, commentId: string, messageStatus: 'sent' | 'failed', likeStatus: 'liked' | 'failed' }>,
+  winners: Array<{ username: string, commentId: string, messageStatus: 'sent' | 'failed', likeStatus: 'sent' | 'failed' }>,
   totalComments: number,
 }> {
   // Extract post ID
