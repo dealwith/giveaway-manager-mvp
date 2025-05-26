@@ -10,7 +10,7 @@ import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
 import { Alert, AlertDescription } from "@components/ui/alert";
 import { ROUTES } from "@constants/routes";
-import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
+import { AUTH_SUCCESS } from "@constants/auth";
 import { confirmPasswordReset } from "firebase/auth";
 import { auth } from "@config/firebase";
 
@@ -67,7 +67,7 @@ export function ResetPasswordForm() {
 			setTimeout(() => {
 				router.push(ROUTES.SIGNIN);
 			}, 2000);
-		} catch (error: any) {
+		} catch (error) {
 			console.error("Error resetting password:", error);
 			setError("Invalid or expired reset link. Please request a new one.");
 		} finally {

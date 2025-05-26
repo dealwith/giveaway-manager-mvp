@@ -100,7 +100,7 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 				<div>
 					<h1 className="text-2xl font-bold">{giveaway.title}</h1>
 					<div className="flex items-center gap-2 mt-2">
-						<Badge variant={GIVEAWAY_STATUS_COLORS[giveaway.status] as any}>
+						<Badge variant={GIVEAWAY_STATUS_COLORS[giveaway.status]}>
 							{GIVEAWAY_STATUS_LABELS[giveaway.status]}
 						</Badge>
 

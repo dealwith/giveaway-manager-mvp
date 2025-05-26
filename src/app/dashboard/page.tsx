@@ -37,9 +37,6 @@ export default async function DashboardPage() {
 	const activeGiveaways = giveaways.filter(
 		(giveaway) => giveaway.status === GiveawayStatus.ACTIVE
 	);
-	const completedGiveaways = giveaways.filter(
-		(giveaway) => giveaway.status === GiveawayStatus.COMPLETED
-	);
 
 	const canCreateMore = giveawayCount < planDetails.giveawayLimit;
 

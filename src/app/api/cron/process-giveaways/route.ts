@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 import { updateGiveaway, createGiveawayWinner } from '@/lib/db';
-import { GiveawayStatus } from '@app-types/giveaway';
+import { GiveawayStatus, Giveaway } from '@app-types/giveaway';
 import { processGiveaway } from '@/lib/instagram';
 import { EmailTemplates } from '@/lib/email';
 import { getUser } from '@/lib/db';
@@ -45,9 +45,8 @@ export async function GET(req: NextRequest) {
 
     const endingSnapshot = await getDocs(endingGiveaways);
 
-    // Update starting giveaways
     const startingPromises = startingSnapshot.docs.map(async (doc) => {
-      const giveaway = { id: doc.id, ...doc.data() } as any;
+      const giveaway = { id: doc.id, ...doc.data() } as Giveaway;
       await updateGiveaway(doc.id, { status: GiveawayStatus.ACTIVE });
 
       // Send email notification
@@ -65,7 +64,7 @@ export async function GET(req: NextRequest) {
 
     // Process ending giveaways
     const endingPromises = endingSnapshot.docs.map(async (doc) => {
-      const giveaway = { id: doc.id, ...doc.data() } as any;
+      const giveaway = { id: doc.id, ...doc.data() } as Giveaway;
 
       // Process the giveaway to find winners
       const result = await processGiveaway(

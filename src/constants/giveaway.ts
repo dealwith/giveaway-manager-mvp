@@ -8,12 +8,20 @@ export const GIVEAWAY_STATUS_LABELS = {
   [GiveawayStatus.CANCELED]: 'Canceled',
 };
 
+export enum StatusColors {
+  gray = 'gray',
+  blue = 'blue',
+  green = 'green',
+  purple = 'purple',
+  red = 'red'
+}
+
 export const GIVEAWAY_STATUS_COLORS = {
-  [GiveawayStatus.DRAFT]: 'gray',
-  [GiveawayStatus.SCHEDULED]: 'blue',
-  [GiveawayStatus.ACTIVE]: 'green',
-  [GiveawayStatus.COMPLETED]: 'purple',
-  [GiveawayStatus.CANCELED]: 'red',
+  [GiveawayStatus.DRAFT]: StatusColors.gray,
+  [GiveawayStatus.SCHEDULED]: StatusColors.blue,
+  [GiveawayStatus.ACTIVE]: StatusColors.green,
+  [GiveawayStatus.COMPLETED]: StatusColors.purple,
+  [GiveawayStatus.CANCELED]: StatusColors.red,
 };
 
 export const GIVEAWAY_VALIDATION = {

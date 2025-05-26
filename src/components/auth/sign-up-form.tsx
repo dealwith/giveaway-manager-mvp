@@ -85,10 +85,10 @@ export function SignUpForm() {
 			setTimeout(() => {
 				router.push(ROUTES.SIGNIN);
 			}, 2000);
-		} catch (error: any) {
+		} catch (error) {
 			console.error("Error during sign up:", error);
 
-			if (error.code === "auth/email-already-in-use") {
+			if (error instanceof Error && 'code' in error && error.code === "auth/email-already-in-use") {
 				setError(AUTH_ERRORS.EMAIL_EXISTS);
 			} else {
 				setError(AUTH_ERRORS.DEFAULT);

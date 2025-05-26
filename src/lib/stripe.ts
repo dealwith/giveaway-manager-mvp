@@ -10,6 +10,12 @@ interface CreateCheckoutSessionOptions {
   returnUrl: string;
 }
 
+// Extend Stripe Subscription type to include missing properties
+type StripeSubscriptionWithPeriod = Stripe.Subscription & {
+  current_period_start: number;
+  current_period_end: number;
+};
+
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 // Map Stripe subscription status to our SubscriptionStatus enum
@@ -120,11 +126,11 @@ export async function cancelSubscription(userId: string) {
 /**
  * Handles a webhook event from Stripe
  */
-export async function handleStripeWebhook(event: any) {
+export async function handleStripeWebhook(event: Stripe.Event) {
   switch (event.type) {
     case 'checkout.session.completed': {
-      const session = event.data.object;
-      const userId = session.metadata.userId;
+      const session = event.data.object as Stripe.Checkout.Session;
+      const userId = session.metadata?.userId;
 
       if (!userId) {
         throw new Error('No userId in session metadata');
@@ -132,8 +138,8 @@ export async function handleStripeWebhook(event: any) {
 
       // Get subscription from Stripe
       const stripeSubscription = await stripe.subscriptions.retrieve(
-        session.subscription
-      );
+        session.subscription as string
+      ) as unknown as StripeSubscriptionWithPeriod;
 
       // Create or update subscription in database
       const subscriptionData = {
@@ -166,8 +172,8 @@ export async function handleStripeWebhook(event: any) {
     }
 
     case 'customer.subscription.updated': {
-      const stripeSubscription = event.data.object;
-      let userId = stripeSubscription.metadata.userId;
+      const stripeSubscription = event.data.object as StripeSubscriptionWithPeriod;
+      let userId = stripeSubscription.metadata?.userId;
 
       if (!userId) {
         // Try to get userId from customer metadata
@@ -179,7 +185,7 @@ export async function handleStripeWebhook(event: any) {
           throw new Error('Customer deleted');
         }
 
-        userId = customer.metadata.userId;
+        userId = customer.metadata?.userId;
 
         if (!userId) {
           throw new Error('No userId found in customer metadata');
@@ -210,7 +216,7 @@ export async function handleStripeWebhook(event: any) {
 
     case 'customer.subscription.deleted': {
       const stripeSubscription = event.data.object;
-      let userId = stripeSubscription.metadata.userId;
+      let userId = stripeSubscription.metadata?.userId;
 
       if (!userId) {
         // Try to get userId from customer metadata
@@ -222,7 +228,7 @@ export async function handleStripeWebhook(event: any) {
           throw new Error('Customer deleted');
         }
 
-        userId = customer.metadata.userId;
+        userId = customer.metadata?.userId;
 
         if (!userId) {
           throw new Error('No userId found in customer metadata');

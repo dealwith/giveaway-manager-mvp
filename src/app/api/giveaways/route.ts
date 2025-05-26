@@ -5,7 +5,7 @@ import { createGiveaway, getUserGiveaways, hasReachedGiveawayLimit } from '@/lib
 import { GiveawayStatus } from '@app-types/giveaway';
 import { ApiResponse } from '@app-types/api';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const session = await getServerSession(authOptions);
 
   if (!session) {

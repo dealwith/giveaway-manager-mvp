@@ -13,7 +13,7 @@ import { Alert, AlertDescription } from "@components/ui/alert";
 import { ROUTES } from "@constants/routes";
 import { GiveawayStatus } from "@app-types/giveaway";
 import { GIVEAWAY_VALIDATION } from "@constants/giveaway";
-import { createGiveaway, updateGiveaway } from "@lib/db";
+import { updateGiveaway } from "@lib/db";
 import { useSession } from "next-auth/react";
 import { hasReachedGiveawayLimit } from "@lib/db";
 import { DateTimePicker } from "@components/ui/date-time-picker";
@@ -97,7 +97,6 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 		handleSubmit,
 		formState: { errors },
 		control,
-		setValue,
 	} = useForm<GiveawayFormValues>({
 		resolver: zodResolver(giveawaySchema),
 		defaultValues: giveaway
@@ -147,19 +146,6 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 					setIsLoading(false);
 					return;
 				}
-
-				// Create new giveaway
-				const newGiveaway = await createGiveaway({
-					userId: session.user.id,
-					title: data.title,
-					description: data.description || '',
-					postUrl: data.postUrl,
-					documentUrl: data.documentUrl,
-					keyword: data.keyword,
-					startTime: data.startTime,
-					endTime: data.endTime,
-					status: GiveawayStatus.SCHEDULED,
-				});
 
 				router.push(ROUTES.GIVEAWAYS);
 			} else {

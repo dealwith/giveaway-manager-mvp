@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { cn } from "@lib/utils";
 import { Button } from "@components/ui/button";
 import { Calendar } from "@components/ui/calendar";
@@ -11,17 +11,17 @@ import {
 } from "@components/ui/popover";
 import { Input } from "@components/ui/input";
 
-interface DateTimePickerProps {
-	control: Control;
-	name: string;
+interface DateTimePickerProps<T extends FieldValues = FieldValues> {
+	control: Control<T>;
+	name: Path<T>;
 	disabled?: boolean;
 }
 
-export function DateTimePicker({
+export function DateTimePicker<T extends FieldValues = FieldValues>({
 	control,
 	name,
 	disabled = false,
-}: DateTimePickerProps) {
+}: DateTimePickerProps<T>) {
 	return (
 		<Controller
 			control={control}

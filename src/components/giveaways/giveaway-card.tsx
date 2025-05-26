@@ -23,18 +23,13 @@ interface GiveawayCardProps {
 export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 	const isActive = giveaway.status === GiveawayStatus.ACTIVE;
 	const isCompleted = giveaway.status === GiveawayStatus.COMPLETED;
-	const isCanceled = giveaway.status === GiveawayStatus.CANCELED;
-
-	const getStatusColor = () => {
-		return GIVEAWAY_STATUS_COLORS[giveaway.status];
-	};
 
 	return (
 		<Card className="h-full flex flex-col">
 			<CardHeader>
 				<div className="flex justify-between items-start">
 					<CardTitle className="text-lg font-bold">{giveaway.title}</CardTitle>
-					<Badge variant={getStatusColor() as any}>
+					<Badge variant={GIVEAWAY_STATUS_COLORS[giveaway.status]}>
 						{GIVEAWAY_STATUS_LABELS[giveaway.status]}
 					</Badge>
 				</div>
