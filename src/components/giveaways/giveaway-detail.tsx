@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Giveaway, GiveawayStatus, GiveawayWinner } from "@app-types/giveaway";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from "@constants/routes";
 import {
 	GIVEAWAY_STATUS_LABELS,
 	GIVEAWAY_STATUS_COLORS,
@@ -33,7 +33,7 @@ import {
 	AlertDialogAction,
 } from "@components/ui/alert-dialog";
 import { Alert, AlertDescription } from "@components/ui/alert";
-import { updateGiveaway, deleteGiveaway } from "@/lib/db";
+import { updateGiveaway, deleteGiveaway } from "@lib/db";
 import { GiveawayWinnersList } from "./giveaway-winners-list";
 import Link from "next/link";
 
