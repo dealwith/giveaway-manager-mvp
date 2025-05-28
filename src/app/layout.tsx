@@ -11,41 +11,41 @@ import { getSession } from '@/lib/auth';
 import './globals.css';
 
 const inter = Inter({
-	subsets: ['latin'],
-	display: 'swap',
-	preload: true,
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {
-	title: {
-		default: SITE.NAME,
-		template: `%s | ${SITE.NAME}`,
-	},
-	description: SITE.DESCRIPTION,
+  title: {
+    default: SITE.NAME,
+    template: `%s | ${SITE.NAME}`,
+  },
+  description: SITE.DESCRIPTION,
 };
 
 interface RootLayoutProps {
-	children: ReactNode;
+  children: ReactNode;
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-	const session = await getSession();
+  const session = await getSession();
 
-	return (
-		<html lang="en" suppressHydrationWarning>
-			<body className={inter.className}>
-				<ThemeProvider attribute="class" defaultTheme="system">
-					<SessionProvider session={session}>
-						<SWRProvider>
-							<div className="flex min-h-screen flex-col">
-								<Header />
-								<main className="flex-1">{children}</main>
-								<Footer />
-							</div>
-						</SWRProvider>
-					</SessionProvider>
-				</ThemeProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          <SessionProvider session={session}>
+            <SWRProvider>
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+            </SWRProvider>
+          </SessionProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }
