@@ -1,10 +1,12 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { FirestoreAdapter } from "@next-auth/firebase-adapter";
 import { db, auth, firebaseConfig } from "@config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getUser } from "@/lib/db";
 import { SubscriptionPlan } from "@app-types/subscription";
+import { ROUTES } from "@constants/routes";
+import { ONE_MONTH_IN_SECONDS } from "@constants/values";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -57,12 +59,13 @@ export const authOptions: NextAuthOptions = {
   ],
   ...(db ? { adapter: FirestoreAdapter(firebaseConfig) } : {}),
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: ONE_MONTH_IN_SECONDS
   },
   pages: {
-    signIn: "/auth/signin",
-    signOut: "/",
-    error: "/auth/signin"
+    signIn: ROUTES.SIGNIN,
+    signOut: ROUTES.HOME,
+    error: ROUTES.SIGNIN
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -83,5 +86,8 @@ export const authOptions: NextAuthOptions = {
     }
   },
   debug: process.env.NODE_ENV === "development",
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
+  
 };
+
+export const getSession = () => getServerSession(authOptions);

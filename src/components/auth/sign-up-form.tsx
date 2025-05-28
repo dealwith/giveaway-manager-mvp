@@ -15,7 +15,7 @@ import Link from "next/link";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@config/firebase";
 import { createUser } from "@lib/db";
-import { EmailTemplates } from "@lib/email";
+import { sendWelcomeEmail } from "@lib/sendWelcomeEmail";
 
 const signUpSchema = z
 	.object({
@@ -53,7 +53,7 @@ export function SignUpForm() {
 		try {
 			// Create user in Firebase Auth
 			if (!auth) {
-				throw new Error('Authentication not initialized');
+				throw new Error("Authentication not initialized");
 			}
 			const userCredential = await createUserWithEmailAndPassword(
 				auth,
@@ -77,7 +77,7 @@ export function SignUpForm() {
 			});
 
 			// Send welcome email
-			await EmailTemplates.WELCOME(data.email, data.name);
+			await sendWelcomeEmail(data.email, data.name);
 
 			setSuccess(AUTH_SUCCESS.ACCOUNT_CREATED);
 
@@ -88,7 +88,11 @@ export function SignUpForm() {
 		} catch (error) {
 			console.error("Error during sign up:", error);
 
-			if (error instanceof Error && 'code' in error && error.code === "auth/email-already-in-use") {
+			if (
+				error instanceof Error &&
+				"code" in error &&
+				error.code === "auth/email-already-in-use"
+			) {
 				setError(AUTH_ERRORS.EMAIL_EXISTS);
 			} else {
 				setError(AUTH_ERRORS.DEFAULT);
