@@ -37,7 +37,13 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          const user = await getUser(userCredential.user.uid);
+          const userEmail = userCredential.user.email;
+
+          if (!userEmail) {
+            return null;
+          }
+
+          const user = await getUser(userEmail);
 
           if (!user) {
             return null;
@@ -87,7 +93,6 @@ export const authOptions: NextAuthOptions = {
   },
   debug: process.env.NODE_ENV === "development",
   secret: process.env.NEXTAUTH_SECRET,
-  
 };
 
 export const getSession = () => getServerSession(authOptions);

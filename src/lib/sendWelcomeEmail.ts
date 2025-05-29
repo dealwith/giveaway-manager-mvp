@@ -8,8 +8,16 @@ export const sendWelcomeEmail = async (
   email: string,
   name?: string
 ) => {
+  if (!email || email.trim() === '') {
+    console.error("Error sending email: Email is required");
+    return NextResponse.json(
+      { success: false, error: 'Email is required' },
+      { status: 400 }
+    );
+  }
+
   const data = {
-    to: email,
+    to: email.trim(),
     subject: `Welcome to ${SITE.NAME}!`,
     html: EmailTemplates.WELCOME(name),
   }
