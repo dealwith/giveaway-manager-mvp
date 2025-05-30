@@ -19,11 +19,11 @@ import { Giveaway, GiveawayStatus, GiveawayWinner } from '@app-types/giveaway';
 import { Subscription, SubscriptionPlan } from '@app-types/subscription';
 
 // User functions
-export async function getUser(userId: string): Promise<User | null> {
+export async function getUser(email: string): Promise<User | null> {
   if (!db) {
     throw new Error('Firebase database not initialized');
   }
-  const docRef = doc(db, 'users', userId);
+  const docRef = doc(db, 'users', email);
   const docSnap = await getDoc(docRef);
 
   if (!docSnap.exists()) {
@@ -36,6 +36,7 @@ export async function getUser(userId: string): Promise<User | null> {
     email: data.email,
     name: data.name,
     image: data.image,
+    subscriptionPlan: data.subscriptionPlan || SubscriptionPlan.FREE,
     createdAt: data.createdAt?.toDate(),
     updatedAt: data.updatedAt?.toDate(),
     stripeCustomerId: data.stripeCustomerId,

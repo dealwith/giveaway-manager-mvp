@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/footer';
 import { SessionProvider } from '@/providers/session-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { SWRProvider } from '@/providers/swr-provider';
+import { getSession } from '@/lib/auth';
 import './globals.css';
 
 const inter = Inter({
@@ -27,15 +28,14 @@ interface RootLayoutProps {
   children: ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const session = await getSession();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-        >
-          <SessionProvider>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          <SessionProvider session={session}>
             <SWRProvider>
               <div className="flex min-h-screen flex-col">
                 <Header />

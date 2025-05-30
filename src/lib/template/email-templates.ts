@@ -1,40 +1,7 @@
-import { Resend } from 'resend';
 import { SITE } from '@constants/site';
 
-interface SendEmailOptions {
-  to: string;
-  subject: string;
-  html: string;
-  text?: string;
-}
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
-  try {
-    const { data, error } = await resend.emails.send({
-      from: `${SITE.NAME} <noreply@${process.env.RESEND_DOMAIN || 'example.com'}>`,
-      to,
-      subject,
-      html,
-      text: text || html.replace(/<[^>]*>/g, ''),
-    });
-
-    if (error) {
-      console.error('Error sending email:', error);
-      return { success: false, error };
-    }
-
-    return { success: true, data };
-  } catch (error) {
-    console.error('Exception sending email:', error);
-    return { success: false, error };
-  }
-}
-
-export async function sendWelcomeEmail(email: string, name?: string) {
-  const subject = `Welcome to ${SITE.NAME}!`;
-  const html = `
+export function sendWelcomeEmailTemplate (name?: string) {
+  return `
     <div>
       <h1>Welcome to ${SITE.NAME}!</h1>
       <p>Hi ${name || 'there'},</p>
@@ -45,34 +12,30 @@ export async function sendWelcomeEmail(email: string, name?: string) {
       <p>If you have any questions, feel free to reply to this email.</p>
       <p>Best regards,<br>The ${SITE.NAME} Team</p>
     </div>
-  `;
+  `
+};
 
-  return sendEmail({ to: email, subject, html });
-}
-
-export async function sendPasswordResetEmail(email: string, token: string) {
+export function sendPasswordResetEmailTemplate (token: string) {
   const resetUrl = `${SITE.URL}/auth/reset-password?token=${token}`;
-  const subject = 'Reset your password';
-  const html = `
+
+  return `
     <div>
-      <h1>Reset Your Password</h1>
-      <p>Hello,</p>
-      <p>We received a request to reset your password for your ${SITE.NAME} account.</p>
-      <p>Click the button below to reset your password:</p>
-      <a href="${resetUrl}" style="display: inline-block; background-color: #0070f3; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px;">Reset Password</a>
-      <p>If you didn't request this, you can safely ignore this email.</p>
-      <p>This link will expire in 1 hour.</p>
-      <p>Best regards,<br>The ${SITE.NAME} Team</p>
+        <h1>Reset Your Password</h1>
+        <p>Hello,</p>
+        <p>We received a request to reset your password for your ${SITE.NAME} account.</p>
+        <p>Click the button below to reset your password:</p>
+        <a href="${resetUrl}" style="display: inline-block; background-color: #0070f3; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px;">Reset Password</a>
+        <p>If you didn't request this, you can safely ignore this email.</p>
+        <p>This link will expire in 1 hour.</p>
+        <p>Best regards,<br>The ${SITE.NAME} Team</p>
     </div>
-  `;
+  `
+};
 
-  return sendEmail({ to: email, subject, html });
-}
-
-export async function sendGiveawayStartedEmail(email: string, giveawayTitle: string, giveawayId: string) {
+export function sendGiveawayStartedEmailTemplate (giveawayTitle: string, giveawayId: string) {
   const giveawayUrl = `${SITE.URL}/dashboard/giveaways/${giveawayId}`;
-  const subject = `Your giveaway "${giveawayTitle}" has started!`;
-  const html = `
+
+  return `
     <div>
       <h1>Your Giveaway Has Started!</h1>
       <p>Hello,</p>
@@ -83,19 +46,16 @@ export async function sendGiveawayStartedEmail(email: string, giveawayTitle: str
       <p>Best regards,<br>The ${SITE.NAME} Team</p>
     </div>
   `;
-
-  return sendEmail({ to: email, subject, html });
 }
 
-export async function sendGiveawayCompletedEmail(
-  email: string,
+export function sendGiveawayCompletedEmailTemplate (
   giveawayTitle: string,
   giveawayId: string,
   winnerCount: number
 ) {
   const giveawayUrl = `${SITE.URL}/dashboard/giveaways/${giveawayId}`;
-  const subject = `Your giveaway "${giveawayTitle}" has completed!`;
-  const html = `
+
+  return `
     <div>
       <h1>Your Giveaway Has Completed!</h1>
       <p>Hello,</p>
@@ -112,13 +72,10 @@ export async function sendGiveawayCompletedEmail(
       <p>Best regards,<br>The ${SITE.NAME} Team</p>
     </div>
   `;
-
-  return sendEmail({ to: email, subject, html });
 }
 
-export async function sendSubscriptionConfirmationEmail(email: string, planName: string) {
-  const subject = `Your ${SITE.NAME} ${planName} Subscription is Active`;
-  const html = `
+export function sendSubscriptionConfirmationEmailTemplate (planName: string) {
+  return `
     <div>
       <h1>Thank You for Your Subscription!</h1>
       <p>Hello,</p>
@@ -129,14 +86,12 @@ export async function sendSubscriptionConfirmationEmail(email: string, planName:
       <p>Best regards,<br>The ${SITE.NAME} Team</p>
     </div>
   `;
-
-  return sendEmail({ to: email, subject, html });
 }
 
 export const EmailTemplates = {
-  WELCOME: sendWelcomeEmail,
-  PASSWORD_RESET: sendPasswordResetEmail,
-  GIVEAWAY_STARTED: sendGiveawayStartedEmail,
-  GIVEAWAY_COMPLETED: sendGiveawayCompletedEmail,
-  SUBSCRIPTION_CONFIRMATION: sendSubscriptionConfirmationEmail,
+  WELCOME: sendWelcomeEmailTemplate,
+  PASSWORD_RESET: sendPasswordResetEmailTemplate,
+  GIVEAWAY_STARTED: sendGiveawayStartedEmailTemplate,
+  GIVEAWAY_COMPLETED: sendGiveawayCompletedEmailTemplate,
+  SUBSCRIPTION_CONFIRMATION: sendSubscriptionConfirmationEmailTemplate,
 };
