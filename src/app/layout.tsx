@@ -22,6 +22,25 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.NAME}`,
   },
   description: SITE.DESCRIPTION,
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+    other: [
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '192x192',
+        url: '/icon-192.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '512x512',
+        url: '/icon-512.png',
+      },
+    ],
+  },
+  manifest: '/manifest.json',
 };
 
 interface RootLayoutProps {

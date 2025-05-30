@@ -24,7 +24,7 @@ export function Header() {
 			<div className="container flex h-16 items-center justify-between py-4">
 				<div className="flex items-center gap-6">
 					<Link href={ROUTES.HOME} className="flex items-center">
-						<span className="text-xl font-bold">{SITE.NAME}</span>
+						<span className="text-xl font-bold text-primary">{SITE.NAME}</span>
 					</Link>
 
 					<nav className="hidden md:flex items-center gap-6">
@@ -87,7 +87,7 @@ export function Header() {
 					) : (
 						<div className="hidden md:flex items-center gap-2">
 							<Link href={ROUTES.SIGNIN}>
-								<Button variant="ghost">Sign In</Button>
+								<Button variant="outline">Sign In</Button>
 							</Link>
 							<Link href={ROUTES.SIGNUP}>
 								<Button>Sign Up</Button>

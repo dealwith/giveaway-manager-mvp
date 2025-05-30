@@ -78,7 +78,6 @@ export function SignInForm() {
 					<AlertDescription>{error.message}</AlertDescription>
 				</Alert>
 			)}
-
 			{showSuccess && (
 				<Alert variant="success">
 					<AlertDescription>
@@ -86,7 +85,6 @@ export function SignInForm() {
 					</AlertDescription>
 				</Alert>
 			)}
-
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div className="space-y-2">
 					<Label htmlFor="email">Email</Label>

@@ -32,7 +32,7 @@ export function sendPasswordResetEmailTemplate (token: string) {
   `
 };
 
-export function sendGiveawayStartedEmailTemplate (giveawayTitle: string, giveawayId: string) {
+export function sendGiveawayStartedEmailTemplate (email: string, giveawayTitle: string, giveawayId: string) {
   const giveawayUrl = `${SITE.URL}/dashboard/giveaways/${giveawayId}`;
 
   return `
@@ -49,6 +49,7 @@ export function sendGiveawayStartedEmailTemplate (giveawayTitle: string, giveawa
 }
 
 export function sendGiveawayCompletedEmailTemplate (
+  email: string,
   giveawayTitle: string,
   giveawayId: string,
   winnerCount: number
