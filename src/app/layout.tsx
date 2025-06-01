@@ -8,6 +8,7 @@ import { SessionProvider } from '@/providers/session-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { SWRProvider } from '@/providers/swr-provider';
 import { getSession } from '@/lib/auth';
+import { Analytics } from "@vercel/analytics/next"
 import './globals.css';
 
 const inter = Inter({
@@ -64,6 +65,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             </SWRProvider>
           </SessionProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
