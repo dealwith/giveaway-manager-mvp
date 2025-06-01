@@ -17,7 +17,6 @@ import { SubscriptionPlan } from "@app-types/subscription";
 import { Alert, AlertDescription } from "@components/ui/alert";
 import { ROUTES } from "@constants/routes";
 import { CheckIcon } from "lucide-react";
-import { createCheckoutSession } from "@lib/stripe";
 
 export function PricingPlans() {
 	const router = useRouter();
@@ -40,11 +39,23 @@ export function PricingPlans() {
 		setError(null);
 
 		try {
-			const { url } = await createCheckoutSession({
-				userId: session.user.id,
-				priceId: PLANS[plan].stripePriceId,
-				returnUrl: `${window.location.origin}${ROUTES.DASHBOARD}`,
+			const response = await fetch('/api/subscription/create-checkout', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					userId: session.user.id,
+					priceId: PLANS[plan].stripePriceId,
+					returnUrl: `${window.location.origin}${ROUTES.DASHBOARD}`,
+				}),
 			});
+
+			if (!response.ok) {
+				throw new Error('Failed to create checkout session');
+			}
+
+			const { url } = await response.json();
 
 			if (url) {
 				window.location.href = url;

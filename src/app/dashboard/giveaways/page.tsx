@@ -30,7 +30,11 @@ export default async function GiveawaysPage() {
         </p>
       </div>
 
-      <GiveawayList giveaways={giveaways} giveawayCount={giveawayCount} />
+      <GiveawayList 
+        giveaways={giveaways} 
+        giveawayCount={giveawayCount} 
+        userSubscriptionPlan={session.user.subscriptionPlan}
+      />
     </div>
   );
 }

@@ -15,7 +15,6 @@ import { SubscriptionPlan } from "@app-types/subscription";
 import Link from "next/link";
 import { ROUTES } from "@constants/routes";
 import { useState } from "react";
-import { cancelSubscription } from "@lib/stripe";
 import { Alert, AlertDescription } from "@components/ui/alert";
 
 export function SubscriptionStatus() {
@@ -37,7 +36,20 @@ export function SubscriptionStatus() {
 		setSuccess(null);
 
 		try {
-			await cancelSubscription(session.user.id);
+			const response = await fetch('/api/subscription/cancel', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					userId: session.user.id,
+				}),
+			});
+
+			if (!response.ok) {
+				throw new Error('Failed to cancel subscription');
+			}
+
 			setSuccess(
 				"Your subscription has been canceled. You will continue to have access until the end of your billing period."
 			);

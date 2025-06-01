@@ -235,7 +235,7 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 					<Label htmlFor="keyword">Keyword</Label>
 					<Input
 						id="keyword"
-						placeholder="#winner"
+						placeholder="winner"
 						{...register("keyword")}
 						disabled={isLoading}
 					/>
@@ -273,14 +273,13 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 				<div className="flex gap-4 pt-4">
 					<Button
 						type="button"
-						variant="outline"
+						variant="ghost"
 						onClick={() => router.back()}
 						disabled={isLoading}
 					>
 						Cancel
 					</Button>
-
-					<Button type="submit" disabled={isLoading}>
+					<Button variant='outline' type="submit" disabled={isLoading}>
 						{isLoading
 							? giveaway
 								? "Updating..."

@@ -149,7 +149,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 							</AlertDialogContent>
 						</AlertDialog>
 					)}
-
 					<AlertDialog>
 						<AlertDialogTrigger asChild>
 							<Button variant="destructive" size="sm" disabled={isDeleting}>

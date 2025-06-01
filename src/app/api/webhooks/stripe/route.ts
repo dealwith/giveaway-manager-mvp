@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
-import { stripe } from '@/lib/stripe';
-import { handleStripeWebhook } from '@/lib/stripe';
+import { stripe, handleStripeWebhook } from '@/lib/stripe-server';
 
 export async function POST(req: NextRequest) {
   const body = await req.text();

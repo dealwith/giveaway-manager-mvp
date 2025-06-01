@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from "react";
 import { Giveaway, GiveawayStatus } from "@app-types/giveaway";
 import { GiveawayCard } from "./giveaway-card";
@@ -5,18 +7,16 @@ import { Button } from "@components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { PLANS } from "@/constants/plans";
 import { SubscriptionPlan } from "@app-types/subscription";
 
 interface GiveawayListProps {
 	giveaways: Giveaway[];
 	giveawayCount: number;
+	userSubscriptionPlan?: SubscriptionPlan;
 }
 
-export function GiveawayList({ giveaways, giveawayCount }: GiveawayListProps) {
-	const { data: session } = useSession();
-
+export function GiveawayList({ giveaways, giveawayCount, userSubscriptionPlan }: GiveawayListProps) {
 	const { active, scheduled, completed, other } = useMemo(() => {
 		const active = giveaways.filter(
 			(giveaway) => giveaway.status === GiveawayStatus.ACTIVE
@@ -40,7 +40,7 @@ export function GiveawayList({ giveaways, giveawayCount }: GiveawayListProps) {
 		return { active, scheduled, completed, other };
 	}, [giveaways]);
 
-	const plan = session?.user?.subscriptionPlan || SubscriptionPlan.FREE;
+	const plan = userSubscriptionPlan || SubscriptionPlan.FREE;
 	const giveawayLimit = PLANS[plan].giveawayLimit;
 	const canCreateMore = giveawayCount < giveawayLimit;
 

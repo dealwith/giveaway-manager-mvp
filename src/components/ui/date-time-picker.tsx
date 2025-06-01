@@ -46,57 +46,53 @@ export function DateTimePicker<T extends FieldValues = FieldValues>({
 								)}
 							</Button>
 						</PopoverTrigger>
-						<PopoverContent className="w-auto p-0">
-							<Calendar
-								mode="single"
-								selected={new Date(field.value)}
-								onSelect={(date) => {
-									if (date) {
-										const currentDate = field.value
-											? new Date(field.value)
-											: new Date();
-										date.setHours(currentDate.getHours());
-										date.setMinutes(currentDate.getMinutes());
-										field.onChange(date);
-									}
-								}}
-								initialFocus
-							/>
-							<div className="p-3 border-t">
-								<div className="flex items-center justify-between space-x-2">
-									<Input
-										type="time"
-										value={
-											field.value ? format(new Date(field.value), "HH:mm") : ""
+						<PopoverContent className="w-auto p-0" align="start">
+							<div className="bg-white rounded-md">
+								<Calendar
+									mode="single"
+									selected={field.value ? new Date(field.value) : undefined}
+									onSelect={(date) => {
+										if (date) {
+											const currentDate = field.value
+												? new Date(field.value)
+												: new Date();
+											date.setHours(currentDate.getHours());
+											date.setMinutes(currentDate.getMinutes());
+											field.onChange(date);
 										}
-										onChange={(e) => {
-											if (e.target.value && field.value) {
-												const [hours, minutes] = e.target.value.split(":");
-												const date = new Date(field.value);
-												date.setHours(parseInt(hours));
-												date.setMinutes(parseInt(minutes));
-												field.onChange(date);
+									}}
+									// className="rounded-t-md border-0"
+								/>
+								<div className="p-3 border-t bg-white rounded-b-md">
+									<div className="flex items-center justify-between space-x-2">
+										<Input
+											type="time"
+											value={
+												field.value ? format(new Date(field.value), "HH:mm") : ""
 											}
-										}}
-									/>
-									<Button
-										type="button"
-										variant="outline"
-										size="sm"
-										onClick={() => {
-											const now = new Date();
-											if (field.value) {
-												const date = new Date(field.value);
-												date.setHours(now.getHours());
-												date.setMinutes(now.getMinutes());
-												field.onChange(date);
-											} else {
+											onChange={(e) => {
+												if (e.target.value && field.value) {
+													const [hours, minutes] = e.target.value.split(":");
+													const date = new Date(field.value);
+													date.setHours(parseInt(hours));
+													date.setMinutes(parseInt(minutes));
+													field.onChange(date);
+												}
+											}}
+											className="flex-1"
+										/>
+										<Button
+											type="button"
+											variant="outline"
+											size="sm"
+											onClick={() => {
+												const now = new Date();
 												field.onChange(now);
-											}
-										}}
-									>
-										Now
-									</Button>
+											}}
+										>
+											Now
+										</Button>
+									</div>
 								</div>
 							</div>
 						</PopoverContent>

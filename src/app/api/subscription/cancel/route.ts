@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { ApiResponse } from '@app-types/api';
-import { cancelSubscription } from '@/lib/stripe';
+import { cancelSubscription } from '@/lib/stripe-server';
 
 export async function POST() {
   const session = await getServerSession(authOptions);
