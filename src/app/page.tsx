@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@components/ui/button";
 import { ROUTES } from "@constants/routes";
+import { TextGenerateEffect } from "@components/ui/text-generate-effect";
 
 export default function HomePage() {
 	return (
@@ -12,10 +13,8 @@ export default function HomePage() {
 							<h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
 								Instagram Giveaway Manager
 							</h1>
-							<p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-								Automate your Instagram giveaways with ease. Track keywords,
-								select winners, and send prizes automatically.
-							</p>
+							<TextGenerateEffect words="Automate your Instagram giveaways with ease. Track keywords,
+								select winners, and send prizes automatically." />
 						</div>
 						<div className="space-x-4">
 							<Link href={ROUTES.SIGNUP}>
