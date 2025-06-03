@@ -40,6 +40,7 @@ export async function getUser(email: string): Promise<User | null> {
     createdAt: data.createdAt?.toDate(),
     updatedAt: data.updatedAt?.toDate(),
     stripeCustomerId: data.stripeCustomerId,
+    provider: data.provider,
   };
 }
 

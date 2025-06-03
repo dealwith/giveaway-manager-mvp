@@ -14,6 +14,7 @@ import { Alert, AlertDescription } from "@components/ui/alert";
 import { ROUTES } from "@constants/routes";
 import { AUTH_ERRORS } from "@constants/auth";
 import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 const signInSchema = z.object({
 	email: z.string().email("Please enter a valid email address"),
@@ -71,6 +72,10 @@ export function SignInForm() {
 		await trigger(data);
 	};
 
+	const handleGoogleSignIn = async () => {
+		await signIn("google", { callbackUrl: ROUTES.DASHBOARD });
+	};
+
 	return (
 		<div className="space-y-6">
 			{error && (
@@ -85,6 +90,28 @@ export function SignInForm() {
 					</AlertDescription>
 				</Alert>
 			)}
+
+			<Button
+				type="button"
+				variant="outline"
+				className="w-full flex items-center justify-center gap-2"
+				onClick={handleGoogleSignIn}
+			>
+				<FcGoogle size={20} />
+				Sign in with Google
+			</Button>
+
+			<div className="relative">
+				<div className="absolute inset-0 flex items-center">
+					<span className="w-full border-t" />
+				</div>
+				<div className="relative flex justify-center text-sm">
+					<span className="bg-background px-2 text-muted-foreground">
+						or continue with email
+					</span>
+				</div>
+			</div>
+
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div className="space-y-2">
 					<Label htmlFor="email">Email</Label>

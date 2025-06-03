@@ -9,6 +9,7 @@ declare module 'next-auth' {
 			name: string | null;
 			image: string;
 			subscriptionPlan: SubscriptionPlan;
+			provider: 'google' | 'credentials';
 		};
 	}
 
