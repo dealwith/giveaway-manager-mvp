@@ -13,7 +13,7 @@ import { ROUTES } from "@constants/routes";
 import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import { SignUpSchema } from "@/utils/validate/SignUpSchema";
+import { SignUpSchema } from "@/app/utils/validate/SignUpSchema";
 import { signIn } from "next-auth/react";
 import registerService from "@/app/services/RegisterService";
 

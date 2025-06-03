@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SignUpSchema } from "@/utils/validate/SignUpSchema";
+import { SignUpSchema } from "@/app/utils/validate/SignUpSchema";
 import { API } from "@constants/api";
 import { z } from "zod";
 

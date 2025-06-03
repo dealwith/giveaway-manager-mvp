@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/config/firebase";
 import { createUser } from "@/lib/db";
 import { sendWelcomeEmail } from "@/lib/sendWelcomeEmail";
-import { SignUpSchema } from "@/utils/validate/SignUpSchema";
+import { SignUpSchema } from "@/app/utils/validate/SignUpSchema";
 
 export async function POST(req: NextRequest) {
   try {
