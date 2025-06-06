@@ -1,17 +1,18 @@
 import { Metadata } from "next";
-import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";
-import { ROUTES } from "@/constants/routes";
-import { GiveawayForm } from "@/components/giveaways/giveaway-form";
-import { hasReachedGiveawayLimit } from "@/lib/db";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { Button } from "@components/ui/button";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth/next";
+
+import { GiveawayForm } from "components/giveaways/giveaway-form";
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
+import { ROUTES } from "constants/routes";
+import { authOptions } from "lib/auth";
+import { hasReachedGiveawayLimit } from "lib/db";
 
 export const metadata: Metadata = {
 	title: "Create Giveaway",
-	description: "Create a new Instagram giveaway",
+	description: "Create a new Instagram giveaway"
 };
 
 export default async function CreateGiveawayPage() {

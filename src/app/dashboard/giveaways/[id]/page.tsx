@@ -1,61 +1,62 @@
-import { Metadata } from 'next';
-import { getServerSession } from 'next-auth/next';
-import { redirect, notFound } from 'next/navigation';
-import { authOptions } from '@/lib/auth';
-import { ROUTES } from '@/constants/routes';
-import { getGiveaway, getGiveawayWinners } from '@/lib/db';
-import { GiveawayDetail } from '@/components/giveaways/giveaway-detail';
+import { Metadata } from "next";
+import { notFound, redirect } from "next/navigation";
+import { getServerSession } from "next-auth/next";
+
+import { GiveawayDetail } from "components/giveaways/giveaway-detail";
+import { ROUTES } from "constants/routes";
+import { authOptions } from "lib/auth";
+import { getGiveaway, getGiveawayWinners } from "lib/db";
 
 interface GiveawayDetailPageProps {
-  params: Promise<{
-    id: string;
-  }>;
+	params: Promise<{
+		id: string;
+	}>;
 }
 
 export async function generateMetadata({
-  params,
+	params
 }: GiveawayDetailPageProps): Promise<Metadata> {
-  const { id } = await params;
-  const giveaway = await getGiveaway(id);
+	const { id } = await params;
+	const giveaway = await getGiveaway(id);
 
-  if (!giveaway) {
-    return {
-      title: 'Giveaway Not Found',
-    };
-  }
+	if (!giveaway) {
+		return {
+			title: "Giveaway Not Found"
+		};
+	}
 
-  return {
-    title: giveaway.title,
-    description: `Details for giveaway: ${giveaway.title}`,
-  };
+	return {
+		title: giveaway.title,
+		description: `Details for giveaway: ${giveaway.title}`
+	};
 }
 
 export default async function GiveawayDetailPage({
-  params,
+	params
 }: GiveawayDetailPageProps) {
-  const session = await getServerSession(authOptions);
+	const session = await getServerSession(authOptions);
 
-  if (!session) {
-    redirect(ROUTES.SIGNIN);
-  }
+	if (!session) {
+		redirect(ROUTES.SIGNIN);
+	}
 
-  const { id } = await params;
-  const giveaway = await getGiveaway(id);
+	const { id } = await params;
+	const giveaway = await getGiveaway(id);
 
-  if (!giveaway) {
-    notFound();
-  }
+	if (!giveaway) {
+		notFound();
+	}
 
-  // Check if the giveaway belongs to the current user
-  if (giveaway.userId !== session.user.id) {
-    redirect(ROUTES.GIVEAWAYS);
-  }
+	// Check if the giveaway belongs to the current user
+	if (giveaway.userId !== session.user.id) {
+		redirect(ROUTES.GIVEAWAYS);
+	}
 
-  const winners = await getGiveawayWinners(id);
+	const winners = await getGiveawayWinners(id);
 
-  return (
-    <div className="space-y-6">
-      <GiveawayDetail giveaway={giveaway} winners={winners} />
-    </div>
-  );
+	return (
+		<div className="space-y-6">
+			<GiveawayDetail giveaway={giveaway} winners={winners} />
+		</div>
+	);
 }

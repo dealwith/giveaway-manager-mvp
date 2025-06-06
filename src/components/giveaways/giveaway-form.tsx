@@ -1,25 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Textarea } from "@components/ui/textarea";
-import { Label } from "@components/ui/label";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { ROUTES } from "@constants/routes";
-import { GiveawayStatus } from "@app-types/giveaway";
-import { GIVEAWAY_VALIDATION } from "@constants/giveaway";
-import { updateGiveaway } from "@lib/db";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { hasReachedGiveawayLimit } from "@lib/db";
-import { DateTimePicker } from "@components/ui/date-time-picker";
-import { isValidInstagramPostUrl } from "@lib/instagram";
-import { PLANS } from "@constants/plans";
-import { SubscriptionPlan } from "@app-types/subscription";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { GiveawayStatus } from "app-types/giveaway";
+import { SubscriptionPlan } from "app-types/subscription";
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
+import { DateTimePicker } from "components/ui/date-time-picker";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { Textarea } from "components/ui/textarea";
+import { GIVEAWAY_VALIDATION } from "constants/giveaway";
+import { PLANS } from "constants/plans";
+import { ROUTES } from "constants/routes";
+import { updateGiveaway } from "lib/db";
+import { hasReachedGiveawayLimit } from "lib/db";
+import { isValidInstagramPostUrl } from "lib/instagram";
 
 const giveawaySchema = z
 	.object({
@@ -63,11 +64,11 @@ const giveawaySchema = z
 			.refine((date) => date > new Date(), "Start time must be in the future"),
 		endTime: z
 			.date()
-			.refine((date) => date > new Date(), "End time must be in the future"),
+			.refine((date) => date > new Date(), "End time must be in the future")
 	})
 	.refine((data) => data.endTime > data.startTime, {
 		message: "End time must be after start time",
-		path: ["endTime"],
+		path: ["endTime"]
 	});
 
 type GiveawayFormValues = z.infer<typeof giveawaySchema>;
@@ -96,7 +97,7 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 		register,
 		handleSubmit,
 		formState: { errors },
-		control,
+		control
 	} = useForm<GiveawayFormValues>({
 		resolver: zodResolver(giveawaySchema),
 		defaultValues: giveaway
@@ -107,7 +108,7 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 					documentUrl: giveaway.documentUrl,
 					keyword: giveaway.keyword,
 					startTime: new Date(giveaway.startTime),
-					endTime: new Date(giveaway.endTime),
+					endTime: new Date(giveaway.endTime)
 				}
 			: {
 					title: "",
@@ -116,13 +117,14 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 					documentUrl: "",
 					keyword: "",
 					startTime: new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
-					endTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Next week
-				},
+					endTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // Next week
+				}
 	});
 
 	const onSubmit = async (data: GiveawayFormValues) => {
 		if (!session?.user) {
 			setError("You must be signed in to create a giveaway");
+
 			return;
 		}
 
@@ -140,10 +142,12 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 				if (reachedLimit) {
 					setError(
 						`You've reached your limit of ${
-							PLANS[session.user.subscriptionPlan || SubscriptionPlan.FREE].giveawayLimit
+							PLANS[session.user.subscriptionPlan || SubscriptionPlan.FREE]
+								.giveawayLimit
 						} giveaways. Please upgrade your plan to create more.`
 					);
 					setIsLoading(false);
+
 					return;
 				}
 
@@ -157,7 +161,7 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 					documentUrl: data.documentUrl,
 					keyword: data.keyword,
 					startTime: data.startTime,
-					endTime: data.endTime,
+					endTime: data.endTime
 				});
 
 				router.push(ROUTES.VIEW_GIVEAWAY(giveaway.id));
@@ -279,7 +283,7 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 					>
 						Cancel
 					</Button>
-					<Button variant='outline' type="submit" disabled={isLoading}>
+					<Button variant="outline" type="submit" disabled={isLoading}>
 						{isLoading
 							? giveaway
 								? "Updating..."

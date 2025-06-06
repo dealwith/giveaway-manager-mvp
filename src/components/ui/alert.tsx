@@ -1,6 +1,7 @@
-import { forwardRef, HTMLAttributes } from "react";
-import { cva, type VariantProps } from "cva";
-import { cn } from "@lib/utils";
+import { type VariantProps, cva } from "cva";
+import { HTMLAttributes, forwardRef } from "react";
+
+import { cn } from "lib/utils";
 
 const alertVariants = cva(
 	"relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
@@ -11,12 +12,12 @@ const alertVariants = cva(
 				destructive:
 					"border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
 				success:
-					"border-success/50 text-success dark:border-success [&>svg]:text-success",
-			},
+					"border-success/50 text-success dark:border-success [&>svg]:text-success"
+			}
 		},
 		defaultVariants: {
-			variant: "default",
-		},
+			variant: "default"
+		}
 	}
 );
 

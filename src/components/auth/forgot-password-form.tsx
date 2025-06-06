@@ -1,21 +1,22 @@
 "use client";
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Label } from "@components/ui/label";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { ROUTES } from "@constants/routes";
-import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
-import Link from "next/link";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "@config/firebase";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
 import useSWRMutation from "swr/mutation";
+import { z } from "zod";
+
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { auth } from "config/firebase";
+import { AUTH_ERRORS, AUTH_SUCCESS } from "constants/auth";
+import { ROUTES } from "constants/routes";
 
 const forgotPasswordSchema = z.object({
-	email: z.string().email("Please enter a valid email address"),
+	email: z.string().email("Please enter a valid email address")
 });
 
 type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
@@ -23,9 +24,11 @@ type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 async function resetPasswordRequest(_key: string, { arg }: { arg: string }) {
 	try {
 		if (!auth) {
-			throw new Error('Authentication not initialized');
+			throw new Error("Authentication not initialized");
 		}
+
 		await sendPasswordResetEmail(auth, arg);
+
 		return { success: AUTH_SUCCESS.PASSWORD_RESET };
 	} catch (error) {
 		console.error("Error sending password reset email:", error);
@@ -37,9 +40,9 @@ export function ForgotPasswordForm() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<ForgotPasswordFormValues>({
-		resolver: zodResolver(forgotPasswordSchema),
+		resolver: zodResolver(forgotPasswordSchema)
 	});
 
 	const { trigger, data, error, isMutating } = useSWRMutation(

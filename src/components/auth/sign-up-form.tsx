@@ -1,21 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Label } from "@components/ui/label";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { ROUTES } from "@constants/routes";
-import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { SignUpSchema } from "@/app/utils/validate/SignUpSchema";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import registerService from "@/app/services/RegisterService";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import { z } from "zod";
+
+import signUpService from "app/services/SignUpService";
+import { SignUpSchema } from "app/utils/validate/SignUpSchema";
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { AUTH_ERRORS, AUTH_SUCCESS } from "constants/auth";
+import { ROUTES } from "constants/routes";
 
 type SignUpFormValues = z.infer<typeof SignUpSchema>;
 
@@ -28,49 +29,49 @@ export function SignUpForm() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<SignUpFormValues>({
-		resolver: zodResolver(SignUpSchema),
+		resolver: zodResolver(SignUpSchema)
 	});
 
 	const onSubmit = async (data: SignUpFormValues) => {
-  setIsLoading(true);
-  setError(null);
-  setSuccess(null);
+		setIsLoading(true);
+		setError(null);
+		setSuccess(null);
 
-  try {
-    await registerService.addUser({
-      email: data.email,
-      password: data.password,
-			confirmPassword: data.confirmPassword,
-      name: data.name,
-    });
+		try {
+			await signUpService.addUser({
+				email: data.email,
+				password: data.password,
+				confirmPassword: data.confirmPassword,
+				name: data.name
+			});
 
-    setSuccess(AUTH_SUCCESS.ACCOUNT_CREATED);
+			setSuccess(AUTH_SUCCESS.ACCOUNT_CREATED);
 
-    const res = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    });
+			const res = await signIn("credentials", {
+				email: data.email,
+				password: data.password,
+				redirect: false
+			});
 
-    if (res?.error) {
-      setError(res.error);
-    } else {
-      router.push(ROUTES.DASHBOARD);
-    }
-  } catch (err) {
-    console.error("Registration error:", err);
+			if (res?.error) {
+				setError(res.error);
+			} else {
+				router.push(ROUTES.DASHBOARD);
+			}
+		} catch (err) {
+			console.error("Registration error:", err);
 
-    if (typeof err === "string" && err.includes("already in use")) {
-      setError(AUTH_ERRORS.EMAIL_EXISTS);
-    } else {
-      setError(AUTH_ERRORS.DEFAULT);
-    }
-  } finally {
-    setIsLoading(false);
-  }
-};
+			if (typeof err === "string" && err.includes("already in use")) {
+				setError(AUTH_ERRORS.EMAIL_EXISTS);
+			} else {
+				setError(AUTH_ERRORS.DEFAULT);
+			}
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	const handleGoogleSignUp = async () => {
 		setIsLoading(true);
@@ -79,7 +80,7 @@ export function SignUpForm() {
 
 		try {
 			await signIn("google", {
-				callbackUrl: ROUTES.DASHBOARD,
+				callbackUrl: ROUTES.DASHBOARD
 			});
 		} catch (error) {
 			console.error("Google Sign-Up error:", error);
@@ -175,9 +176,7 @@ export function SignUpForm() {
 					<span className="w-full border-t" />
 				</div>
 				<div className="relative flex justify-center text-sm">
-					<span className="bg-background px-2 text-muted-foreground">
-						or
-					</span>
+					<span className="bg-background px-2 text-muted-foreground">or</span>
 				</div>
 			</div>
 

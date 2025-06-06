@@ -1,21 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
+
+import { SubscriptionPlan } from "app-types/subscription";
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardFooter,
 	CardHeader,
-	CardTitle,
-} from "@components/ui/card";
-import { Button } from "@components/ui/button";
-import { PLANS } from "@/constants/plans";
-import { SubscriptionPlan } from "@app-types/subscription";
-import Link from "next/link";
-import { ROUTES } from "@constants/routes";
-import { useState } from "react";
-import { Alert, AlertDescription } from "@components/ui/alert";
+	CardTitle
+} from "components/ui/card";
+import { PLANS } from "constants/plans";
+import { ROUTES } from "constants/routes";
 
 export function SubscriptionStatus() {
 	const { data: session } = useSession();
@@ -36,18 +37,18 @@ export function SubscriptionStatus() {
 		setSuccess(null);
 
 		try {
-			const response = await fetch('/api/subscription/cancel', {
-				method: 'POST',
+			const response = await fetch("/api/subscription/cancel", {
+				method: "POST",
 				headers: {
-					'Content-Type': 'application/json',
+					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({
-					userId: session.user.id,
-				}),
+					userId: session.user.id
+				})
 			});
 
 			if (!response.ok) {
-				throw new Error('Failed to cancel subscription');
+				throw new Error("Failed to cancel subscription");
 			}
 
 			setSuccess(

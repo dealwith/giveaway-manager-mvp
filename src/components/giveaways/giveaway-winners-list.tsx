@@ -1,15 +1,16 @@
-import { GiveawayWinner } from "@app-types/giveaway";
+import { format } from "date-fns";
+
+import { GiveawayWinner } from "app-types/giveaway";
+import { Badge } from "components/ui/badge";
 import {
 	Table,
-	TableCaption,
-	TableHeader,
-	TableRow,
-	TableHead,
 	TableBody,
+	TableCaption,
 	TableCell,
-} from "@components/ui/table";
-import { Badge } from "@components/ui/badge";
-import { format } from "date-fns";
+	TableHead,
+	TableHeader,
+	TableRow
+} from "components/ui/table";
 
 interface GiveawayWinnersListProps {
 	winners: GiveawayWinner[];
