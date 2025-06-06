@@ -1,6 +1,7 @@
-import { cva, type VariantProps } from "cva";
-import { cn } from "@lib/utils";
+import { type VariantProps, cva } from "cva";
 import { HTMLAttributes } from "react";
+
+import { cn } from "lib/utils";
 
 const badgeVariants = cva(
 	"inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
@@ -22,12 +23,12 @@ const badgeVariants = cva(
 					"border-transparent bg-purple-500 text-white hover:bg-purple-500/80",
 				red: "border-transparent bg-red-500 text-white hover:bg-red-500/80",
 				green:
-					"border-transparent bg-green-500 text-white hover:bg-green-500/80",
-			},
+					"border-transparent bg-green-500 text-white hover:bg-green-500/80"
+			}
 		},
 		defaultVariants: {
-			variant: "default",
-		},
+			variant: "default"
+		}
 	}
 );
 

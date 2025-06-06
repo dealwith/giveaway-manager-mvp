@@ -1,8 +1,8 @@
-import { ComponentProps } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ComponentProps } from "react";
 import { DayPicker } from "react-day-picker";
-import { cn } from "@lib/utils";
-import { buttonVariants } from "./button";
+
+import { cn } from "lib/utils";
 import "react-day-picker/style.css";
 
 export type CalendarProps = ComponentProps<typeof DayPicker>;
@@ -19,7 +19,7 @@ const Calendar = ({
 			animate
 			className={cn("p-3 bg-white", className)}
 			classNames={{
-				...classNames,
+				...classNames
 			}}
 			weekStartsOn={1}
 			components={{
@@ -42,7 +42,7 @@ const Calendar = ({
 					>
 						<ChevronRight className="h-4 w-4" />
 					</button>
-				),
+				)
 			}}
 			{...props}
 		/>

@@ -1,34 +1,34 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Label } from "@components/ui/label";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { ROUTES } from "@constants/routes";
-import { AUTH_SUCCESS } from "@constants/auth";
 import { confirmPasswordReset } from "firebase/auth";
-import { auth } from "@config/firebase";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { auth } from "config/firebase";
+import { AUTH_SUCCESS } from "constants/auth";
+import { ROUTES } from "constants/routes";
 
 const resetPasswordSchema = z
 	.object({
 		password: z.string().min(8, "Password must be at least 8 characters"),
-		confirmPassword: z.string().min(1, "Please confirm your password"),
+		confirmPassword: z.string().min(1, "Please confirm your password")
 	})
 	.refine((data) => data.password === data.confirmPassword, {
 		message: "Passwords do not match",
-		path: ["confirmPassword"],
+		path: ["confirmPassword"]
 	});
 
 type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 const DEFAULT_ERROR_STATE = null;
 const DEFAULT_SUCCESS_STATE = null;
-
 
 export function ResetPasswordForm() {
 	const router = useRouter();
@@ -42,14 +42,15 @@ export function ResetPasswordForm() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<ResetPasswordFormValues>({
-		resolver: zodResolver(resetPasswordSchema),
+		resolver: zodResolver(resetPasswordSchema)
 	});
 
 	const onSubmit = async (data: ResetPasswordFormValues) => {
 		if (!token) {
 			setError("Invalid or expired reset link");
+
 			return;
 		}
 
@@ -59,8 +60,9 @@ export function ResetPasswordForm() {
 
 		try {
 			if (!auth) {
-				throw new Error('Authentication not initialized');
+				throw new Error("Authentication not initialized");
 			}
+
 			await confirmPasswordReset(auth, token, data.password);
 			setSuccess(AUTH_SUCCESS.PASSWORD_UPDATED);
 

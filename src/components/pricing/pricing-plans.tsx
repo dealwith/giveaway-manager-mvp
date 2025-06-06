@@ -1,22 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { CheckIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Button } from "@components/ui/button";
+import { useState } from "react";
+
+import { SubscriptionPlan } from "app-types/subscription";
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardFooter,
 	CardHeader,
-	CardTitle,
-} from "@components/ui/card";
-import { PLANS } from "@constants/plans";
-import { SubscriptionPlan } from "@app-types/subscription";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { ROUTES } from "@constants/routes";
-import { CheckIcon } from "lucide-react";
+	CardTitle
+} from "components/ui/card";
+import { PLANS } from "constants/plans";
+import { ROUTES } from "constants/routes";
 
 export function PricingPlans() {
 	const router = useRouter();
@@ -27,11 +28,13 @@ export function PricingPlans() {
 	const handleSubscribe = async (plan: SubscriptionPlan) => {
 		if (!session) {
 			router.push(`${ROUTES.SIGNIN}?callbackUrl=${ROUTES.PRICING}`);
+
 			return;
 		}
 
 		if (plan === SubscriptionPlan.FREE) {
 			router.push(ROUTES.DASHBOARD);
+
 			return;
 		}
 
@@ -39,20 +42,20 @@ export function PricingPlans() {
 		setError(null);
 
 		try {
-			const response = await fetch('/api/subscription/create-checkout', {
-				method: 'POST',
+			const response = await fetch("/api/subscription/create-checkout", {
+				method: "POST",
 				headers: {
-					'Content-Type': 'application/json',
+					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({
 					userId: session.user.id,
 					priceId: PLANS[plan].stripePriceId,
-					returnUrl: `${window.location.origin}${ROUTES.DASHBOARD}`,
-				}),
+					returnUrl: `${window.location.origin}${ROUTES.DASHBOARD}`
+				})
 			});
 
 			if (!response.ok) {
-				throw new Error('Failed to create checkout session');
+				throw new Error("Failed to create checkout session");
 			}
 
 			const { url } = await response.json();

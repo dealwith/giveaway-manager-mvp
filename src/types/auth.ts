@@ -15,3 +15,8 @@ export interface NewPasswordCredentials {
 	password: string;
 	token: string;
 }
+
+export enum AuthProvider {
+	GOOGLE = "google",
+	CREDENTIALS = "credentials"
+}

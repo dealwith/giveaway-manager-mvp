@@ -1,5 +1,6 @@
 const baseAPIUrl = "/api";
 
 export const API = {
-  EMAIL: `${baseAPIUrl}/email`,
-}
+	EMAIL: `${baseAPIUrl}/email`,
+	SIGN_UP: `${baseAPIUrl}/auth/sign-up`
+};

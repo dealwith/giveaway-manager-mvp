@@ -1,10 +1,11 @@
 import { Metadata } from "next";
-import { ResetPasswordForm } from "@components/auth/reset-password-form";
 import { Suspense } from "react";
+
+import { ResetPasswordForm } from "components/auth/reset-password-form";
 
 export const metadata: Metadata = {
 	title: "Reset Password",
-	description: "Reset your password",
+	description: "Reset your password"
 };
 
 export default function ResetPasswordPage() {
@@ -19,7 +20,7 @@ export default function ResetPasswordPage() {
 						Enter your new password below
 					</p>
 				</div>
-				<Suspense fallback='Loading...'>
+				<Suspense fallback="Loading...">
 					<ResetPasswordForm />
 				</Suspense>
 			</div>

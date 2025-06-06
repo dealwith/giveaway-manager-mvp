@@ -1,19 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
-import { ROUTES } from "@constants/routes";
-import { SITE } from "@constants/site";
-import { Button } from "@components/ui/button";
+import { signOut, useSession } from "next-auth/react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar";
+import { Button } from "components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
+	DropdownMenuTrigger
+} from "components/ui/dropdown-menu";
+import { ROUTES } from "constants/routes";
+import { SITE } from "constants/site";
+
 import { MobileMenu } from "./mobile-menu";
 
 export function Header() {

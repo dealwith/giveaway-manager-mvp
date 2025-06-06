@@ -1,7 +1,7 @@
-import 'next-auth';
-import { SubscriptionPlan } from './subscription';
+import "next-auth";
+import { SubscriptionPlan } from "./subscription";
 
-declare module 'next-auth' {
+declare module "next-auth" {
 	interface Session {
 		user: {
 			id: string;
@@ -9,6 +9,7 @@ declare module 'next-auth' {
 			name: string | null;
 			image: string;
 			subscriptionPlan: SubscriptionPlan;
+			provider: "google" | "credentials";
 		};
 	}
 

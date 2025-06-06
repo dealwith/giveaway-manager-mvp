@@ -1,26 +1,27 @@
+import { GiftIcon, PlusIcon, SettingsIcon } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";
-import { Button } from "@components/ui/button";
+import { getServerSession } from "next-auth/next";
+
+import { GiveawayStatus } from "app-types/giveaway";
+import { Button } from "components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardFooter,
 	CardHeader,
-	CardTitle,
-} from "@components/ui/card";
-import { ROUTES } from "@/constants/routes";
-import { getUserGiveaways, countUserGiveaways } from "@/lib/db";
-import { GiftIcon, PlusIcon, SettingsIcon } from "lucide-react";
-import { PLANS } from "@/constants/plans";
-import { GiveawayStatus } from "@app-types/giveaway";
+	CardTitle
+} from "components/ui/card";
+import { PLANS } from "constants/plans";
+import { ROUTES } from "constants/routes";
+import { authOptions } from "lib/auth";
+import { countUserGiveaways, getUserGiveaways } from "lib/db";
 
 export const metadata: Metadata = {
 	title: "Dashboard",
-	description: "Manage your Instagram giveaways",
+	description: "Manage your Instagram giveaways"
 };
 
 export default async function DashboardPage() {

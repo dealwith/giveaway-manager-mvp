@@ -1,20 +1,21 @@
+import { format, formatDistanceToNow } from "date-fns";
 import Link from "next/link";
-import { formatDistanceToNow, format } from "date-fns";
-import { Giveaway, GiveawayStatus } from "@app-types/giveaway";
-import { ROUTES } from "@/constants/routes";
-import {
-	GIVEAWAY_STATUS_LABELS,
-	GIVEAWAY_STATUS_COLORS,
-} from "@/constants/giveaway";
+
+import { Giveaway, GiveawayStatus } from "app-types/giveaway";
+import { Badge } from "components/ui/badge";
+import { Button } from "components/ui/button";
 import {
 	Card,
 	CardContent,
 	CardFooter,
 	CardHeader,
-	CardTitle,
-} from "@components/ui/card";
-import { Badge } from "@components/ui/badge";
-import { Button } from "@components/ui/button";
+	CardTitle
+} from "components/ui/card";
+import {
+	GIVEAWAY_STATUS_COLORS,
+	GIVEAWAY_STATUS_LABELS
+} from "constants/giveaway";
+import { ROUTES } from "constants/routes";
 
 interface GiveawayCardProps {
 	giveaway: Giveaway;
@@ -65,7 +66,7 @@ export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 							<span className="font-medium mr-2">Active for:</span>
 							<span>
 								{formatDistanceToNow(new Date(giveaway.endTime), {
-									addSuffix: true,
+									addSuffix: true
 								})}
 							</span>
 						</div>
