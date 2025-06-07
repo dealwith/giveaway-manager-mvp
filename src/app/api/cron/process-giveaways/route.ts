@@ -7,7 +7,6 @@ import { processGiveaway } from '@/lib/instagram';
 import { EmailTemplates } from '@/lib/email';
 import { getUser } from '@/lib/db';
 
-// This route should be protected with a cron secret in production
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get('authorization');
 
