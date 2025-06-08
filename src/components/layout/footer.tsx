@@ -11,8 +11,13 @@ export function Footer() {
 			<div className="container py-8 md:py-12">
 				<div className="flex flex-col md:flex-row justify-between gap-8">
 					<div className="space-y-4">
-						<Link href={ROUTES.HOME} className="text-xl font-bold">
-							{SITE.NAME}
+						<Link href={ROUTES.HOME} className="flex items-center space-x-2">
+							<div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+								<span className="text-white font-bold text-sm">G</span>
+							</div>
+							<span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+								GiveawayManager
+							</span>
 						</Link>
 						<p className="text-sm text-muted-foreground max-w-md">
 							{SITE.DESCRIPTION}
