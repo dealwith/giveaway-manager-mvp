@@ -6,6 +6,8 @@ import { SITE } from "constants/site";
 
 import { EmailTemplates } from "./template/email-templates";
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const sendWelcomeEmail = async (email: string, name?: string) => {
 	if (!email || email.trim() === "") {
 		console.error("Error sending email: Email is required");
@@ -23,7 +25,7 @@ export const sendWelcomeEmail = async (email: string, name?: string) => {
 	};
 
 	try {
-		const response = await axios.post(API.EMAIL, data);
+		const response = await axios.post(`${BASE_URL}${API.EMAIL}`, data);
 
 		if (response.status !== 200) {
 			return NextResponse.json(

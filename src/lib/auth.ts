@@ -32,7 +32,9 @@ export const authOptions: NextAuthOptions = {
 				password: { label: "Password", type: "password" }
 			},
 			async authorize(credentials) {
-				if (!credentials?.email || !credentials?.password) return null;
+				if (!credentials?.email || !credentials?.password) {
+					return null;
+				}
 
 				if (!auth) {
 					console.error("Firebase auth not initialized");
@@ -47,9 +49,15 @@ export const authOptions: NextAuthOptions = {
 						credentials.password
 					);
 
+					if (!userCredential?.user) {
+						return null;
+					}
+
 					const userEmail = userCredential.user.email;
 
-					if (!userEmail) return null;
+					if (!userEmail) {
+						return null;
+					}
 
 					const user = await getUser(userEmail);
 
@@ -85,7 +93,7 @@ export const authOptions: NextAuthOptions = {
 	pages: {
 		signIn: ROUTES.DASHBOARD,
 		signOut: ROUTES.HOME,
-		error: ROUTES.SIGNIN + "?error=ProviderMismatch"
+		error: ROUTES.SIGNIN
 	},
 
 	callbacks: {

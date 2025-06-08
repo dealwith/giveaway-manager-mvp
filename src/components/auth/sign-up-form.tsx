@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { z } from "zod";
 
-import signUpService from "app/services/SignUpService";
+import { useSignUp } from "app/hooks/useSignUp";
 import { SignUpSchema } from "app/utils/validate/SignUpSchema";
 import { Alert, AlertDescription } from "components/ui/alert";
 import { Button } from "components/ui/button";
@@ -21,10 +21,13 @@ import { ROUTES } from "constants/routes";
 type SignUpFormValues = z.infer<typeof SignUpSchema>;
 
 export function SignUpForm() {
+	const { signUp, isLoading, error: signUpError } = useSignUp();
+
 	const router = useRouter();
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+	const isFormLoading = isLoading || isGoogleLoading;
 
 	const {
 		register,
@@ -35,12 +38,11 @@ export function SignUpForm() {
 	});
 
 	const onSubmit = async (data: SignUpFormValues) => {
-		setIsLoading(true);
 		setError(null);
 		setSuccess(null);
 
 		try {
-			await signUpService.addUser({
+			await signUp({
 				email: data.email,
 				password: data.password,
 				confirmPassword: data.confirmPassword,
@@ -68,13 +70,11 @@ export function SignUpForm() {
 			} else {
 				setError(AUTH_ERRORS.DEFAULT);
 			}
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
 	const handleGoogleSignUp = async () => {
-		setIsLoading(true);
+		setIsGoogleLoading(true);
 		setError(null);
 		setSuccess(null);
 
@@ -86,7 +86,7 @@ export function SignUpForm() {
 			console.error("Google Sign-Up error:", error);
 			setError(AUTH_ERRORS.DEFAULT);
 		} finally {
-			setIsLoading(false);
+			setIsGoogleLoading(false);
 		}
 	};
 
@@ -99,9 +99,9 @@ export function SignUpForm() {
 				</p>
 			</div>
 
-			{error && (
+			{(error || signUpError) && (
 				<Alert variant="destructive">
-					<AlertDescription>{error}</AlertDescription>
+					<AlertDescription>{error || signUpError?.message}</AlertDescription>
 				</Alert>
 			)}
 
@@ -118,7 +118,7 @@ export function SignUpForm() {
 						id="name"
 						placeholder="John Doe"
 						{...register("name")}
-						disabled={isLoading}
+						disabled={isFormLoading}
 					/>
 					{errors.name && (
 						<p className="text-sm text-red-500">{errors.name.message}</p>
@@ -131,7 +131,7 @@ export function SignUpForm() {
 						id="email"
 						placeholder="name@example.com"
 						{...register("email")}
-						disabled={isLoading}
+						disabled={isFormLoading}
 					/>
 					{errors.email && (
 						<p className="text-sm text-red-500">{errors.email.message}</p>
@@ -144,7 +144,7 @@ export function SignUpForm() {
 						id="password"
 						type="password"
 						{...register("password")}
-						disabled={isLoading}
+						disabled={isFormLoading}
 					/>
 					{errors.password && (
 						<p className="text-sm text-red-500">{errors.password.message}</p>
@@ -157,7 +157,7 @@ export function SignUpForm() {
 						id="confirmPassword"
 						type="password"
 						{...register("confirmPassword")}
-						disabled={isLoading}
+						disabled={isFormLoading}
 					/>
 					{errors.confirmPassword && (
 						<p className="text-sm text-red-500">
@@ -166,8 +166,8 @@ export function SignUpForm() {
 					)}
 				</div>
 
-				<Button type="submit" className="w-full" disabled={isLoading}>
-					{isLoading ? "Creating account..." : "Sign Up"}
+				<Button type="submit" className="w-full" disabled={isFormLoading}>
+					{isFormLoading ? "Creating account..." : "Sign Up"}
 				</Button>
 			</form>
 
@@ -184,10 +184,10 @@ export function SignUpForm() {
 				variant="outline"
 				className="w-full flex items-center gap-2 justify-center"
 				onClick={handleGoogleSignUp}
-				disabled={isLoading}
+				disabled={isFormLoading}
 			>
 				<FcGoogle className="text-xl" />
-				{isLoading ? "Signing in..." : "Sign Up with Google"}
+				{isFormLoading ? "Signing in..." : "Sign Up with Google"}
 			</Button>
 
 			<div className="text-center">
