@@ -1,41 +1,43 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Giveaway, GiveawayStatus, GiveawayWinner } from "@app-types/giveaway";
-import { ROUTES } from "@constants/routes";
+import { format, formatDistanceToNow } from "date-fns";
 import {
-	GIVEAWAY_STATUS_LABELS,
-	GIVEAWAY_STATUS_COLORS,
-} from "@/constants/giveaway";
-import { formatDistanceToNow, format } from "date-fns";
-import { Button } from "@components/ui/button";
-import { Badge } from "@components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-import {
-	PencilIcon,
-	TrashIcon,
-	ExternalLinkIcon,
-	ClockIcon,
 	CalendarIcon,
+	ClockIcon,
+	ExternalLinkIcon,
+	PencilIcon,
 	TagIcon,
-	UsersIcon,
+	TrashIcon,
+	UsersIcon
 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { Giveaway, GiveawayStatus, GiveawayWinner } from "app-types/giveaway";
+import { Alert, AlertDescription } from "components/ui/alert";
 import {
 	AlertDialog,
-	AlertDialogTrigger,
+	AlertDialogAction,
+	AlertDialogCancel,
 	AlertDialogContent,
-	AlertDialogHeader,
-	AlertDialogTitle,
 	AlertDialogDescription,
 	AlertDialogFooter,
-	AlertDialogCancel,
-	AlertDialogAction,
-} from "@components/ui/alert-dialog";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { updateGiveaway, deleteGiveaway } from "@lib/db";
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger
+} from "components/ui/alert-dialog";
+import { Badge } from "components/ui/badge";
+import { Button } from "components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import {
+	GIVEAWAY_STATUS_COLORS,
+	GIVEAWAY_STATUS_LABELS
+} from "constants/giveaway";
+import { ROUTES } from "constants/routes";
+import { deleteGiveaway, updateGiveaway } from "lib/db";
+
 import { GiveawayWinnersList } from "./giveaway-winners-list";
-import Link from "next/link";
 
 interface GiveawayDetailProps {
 	giveaway: Giveaway;
@@ -62,7 +64,7 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 
 		try {
 			await updateGiveaway(giveaway.id, {
-				status: GiveawayStatus.CANCELED,
+				status: GiveawayStatus.CANCELED
 			});
 
 			router.refresh();
@@ -108,7 +110,7 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 							<span className="text-sm text-gray-500">
 								Ends{" "}
 								{formatDistanceToNow(new Date(giveaway.endTime), {
-									addSuffix: true,
+									addSuffix: true
 								})}
 							</span>
 						)}

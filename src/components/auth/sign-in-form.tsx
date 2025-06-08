@@ -1,35 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { z } from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { FcGoogle } from "react-icons/fc";
 import useSWRMutation from "swr/mutation";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Label } from "@components/ui/label";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { ROUTES } from "@constants/routes";
-import { AUTH_ERRORS } from "@constants/auth";
-import Link from "next/link";
+import { z } from "zod";
+
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { AUTH_ERRORS } from "constants/auth";
+import { ROUTES } from "constants/routes";
 
 const signInSchema = z.object({
 	email: z.string().email("Please enter a valid email address"),
-	password: z.string().min(1, "Password is required"),
+	password: z.string().min(1, "Password is required")
 });
 
 type SignInFormValues = z.infer<typeof signInSchema>;
 
-async function signInRequest(
-	_key: string,
-	{ arg }: { arg: SignInFormValues }
-) {
+async function signInRequest(_key: string, { arg }: { arg: SignInFormValues }) {
 	const result = await signIn("credentials", {
 		email: arg.email,
 		password: arg.password,
-		redirect: false,
+		redirect: false
 	});
 
 	if (result?.error) {
@@ -46,9 +45,9 @@ export function SignInForm() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<SignInFormValues>({
-		resolver: zodResolver(signInSchema),
+		resolver: zodResolver(signInSchema)
 	});
 
 	const { trigger, error, isMutating, reset } = useSWRMutation(
@@ -61,7 +60,7 @@ export function SignInForm() {
 					router.push(ROUTES.DASHBOARD);
 					router.refresh();
 				}, 1000);
-			},
+			}
 		}
 	);
 
@@ -69,6 +68,10 @@ export function SignInForm() {
 		reset();
 		setShowSuccess(false);
 		await trigger(data);
+	};
+
+	const handleGoogleSignIn = async () => {
+		await signIn("google", { callbackUrl: ROUTES.DASHBOARD });
 	};
 
 	return (
@@ -85,6 +88,28 @@ export function SignInForm() {
 					</AlertDescription>
 				</Alert>
 			)}
+
+			<Button
+				type="button"
+				variant="outline"
+				className="w-full flex items-center justify-center gap-2"
+				onClick={handleGoogleSignIn}
+			>
+				<FcGoogle size={20} />
+				Sign in with Google
+			</Button>
+
+			<div className="relative">
+				<div className="absolute inset-0 flex items-center">
+					<span className="w-full border-t" />
+				</div>
+				<div className="relative flex justify-center text-sm">
+					<span className="bg-background px-2 text-muted-foreground">
+						or continue with email
+					</span>
+				</div>
+			</div>
+
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div className="space-y-2">
 					<Label htmlFor="email">Email</Label>
@@ -124,7 +149,7 @@ export function SignInForm() {
 					type="submit"
 					className="w-full"
 					disabled={isMutating || showSuccess}
-					variant='default'
+					variant="default"
 				>
 					{isMutating ? "Signing in..." : "Sign In"}
 				</Button>
@@ -133,10 +158,7 @@ export function SignInForm() {
 			<div className="text-center">
 				<p className="text-sm text-muted-foreground">
 					Don&apos;t have an account?{" "}
-					<Link
-						href={ROUTES.SIGNUP}
-						className="text-primary hover:underline"
-					>
+					<Link href={ROUTES.SIGNUP} className="text-primary hover:underline">
 						Sign up
 					</Link>
 				</p>

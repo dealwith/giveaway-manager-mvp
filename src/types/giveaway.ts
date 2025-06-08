@@ -1,9 +1,9 @@
 export enum GiveawayStatus {
-	DRAFT = 'draft',
-	SCHEDULED = 'scheduled',
-	ACTIVE = 'active',
-	COMPLETED = 'completed',
-	CANCELED = 'canceled',
+	DRAFT = "draft",
+	SCHEDULED = "scheduled",
+	ACTIVE = "active",
+	COMPLETED = "completed",
+	CANCELED = "canceled"
 }
 
 export interface Giveaway {
@@ -29,8 +29,8 @@ export interface GiveawayWinner {
 	giveawayId: string;
 	username: string;
 	commentId: string;
-	messageStatus: 'pending' | 'sent' | 'failed';
-	likeStatus: 'pending' | 'sent' | 'failed';
+	messageStatus: "pending" | "sent" | "failed";
+	likeStatus: "pending" | "sent" | "failed";
 
 	createdAt: Date;
 }

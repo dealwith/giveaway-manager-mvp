@@ -1,12 +1,13 @@
 "use client";
 
-import { ReactNode } from "react";
+import { DollarSignIcon, GiftIcon, HomeIcon, SettingsIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ROUTES } from "@constants/routes";
-import { cn } from "@lib/utils";
-import { Button } from "@components/ui/button";
-import { GiftIcon, HomeIcon, SettingsIcon, DollarSignIcon } from "lucide-react";
+import { ReactNode } from "react";
+
+import { Button } from "components/ui/button";
+import { ROUTES } from "constants/routes";
+import { cn } from "lib/utils";
 
 interface DashboardLayoutProps {
 	children: ReactNode;
@@ -19,23 +20,23 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 		{
 			title: "Dashboard",
 			href: ROUTES.DASHBOARD,
-			icon: HomeIcon,
+			icon: HomeIcon
 		},
 		{
 			title: "Giveaways",
 			href: ROUTES.GIVEAWAYS,
-			icon: GiftIcon,
+			icon: GiftIcon
 		},
 		{
 			title: "Settings",
 			href: ROUTES.SETTINGS,
-			icon: SettingsIcon,
+			icon: SettingsIcon
 		},
 		{
 			title: "Pricing",
 			href: ROUTES.PRICING,
-			icon: DollarSignIcon,
-		},
+			icon: DollarSignIcon
+		}
 	];
 
 	return (

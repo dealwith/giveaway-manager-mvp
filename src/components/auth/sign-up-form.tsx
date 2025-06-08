@@ -1,104 +1,92 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Label } from "@components/ui/label";
-import { Alert, AlertDescription } from "@components/ui/alert";
-import { ROUTES } from "@constants/routes";
-import { AUTH_ERRORS, AUTH_SUCCESS } from "@constants/auth";
 import Link from "next/link";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "@config/firebase";
-import { createUser } from "@lib/db";
-import { sendWelcomeEmail } from "@lib/sendWelcomeEmail";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import { z } from "zod";
 
-const signUpSchema = z
-	.object({
-		name: z.string().min(2, "Name must be at least 2 characters").optional(),
-		email: z.string().email("Please enter a valid email address"),
-		password: z.string().min(8, "Password must be at least 8 characters"),
-		confirmPassword: z.string().min(1, "Please confirm your password"),
-	})
-	.refine((data) => data.password === data.confirmPassword, {
-		message: "Passwords do not match",
-		path: ["confirmPassword"],
-	});
+import { useSignUp } from "app/hooks/useSignUp";
+import { SignUpSchema } from "app/utils/validate/SignUpSchema";
+import { Alert, AlertDescription } from "components/ui/alert";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { AUTH_ERRORS, AUTH_SUCCESS } from "constants/auth";
+import { ROUTES } from "constants/routes";
 
-type SignUpFormValues = z.infer<typeof signUpSchema>;
+type SignUpFormValues = z.infer<typeof SignUpSchema>;
 
 export function SignUpForm() {
+	const { signUp, isLoading, error: signUpError } = useSignUp();
+
 	const router = useRouter();
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+	const isFormLoading = isLoading || isGoogleLoading;
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<SignUpFormValues>({
-		resolver: zodResolver(signUpSchema),
+		resolver: zodResolver(SignUpSchema)
 	});
 
 	const onSubmit = async (data: SignUpFormValues) => {
-		setIsLoading(true);
 		setError(null);
 		setSuccess(null);
 
 		try {
-			// Create user in Firebase Auth
-			if (!auth) {
-				throw new Error("Authentication not initialized");
-			}
-			const userCredential = await createUserWithEmailAndPassword(
-				auth,
-				data.email,
-				data.password
-			);
-
-			const user = userCredential.user;
-
-			// Update profile if name is provided
-			if (data.name) {
-				await updateProfile(user, {
-					displayName: data.name,
-				});
-			}
-
-			// Create user in Firestore
-			await createUser({
+			await signUp({
 				email: data.email,
-				name: data.name,
+				password: data.password,
+				confirmPassword: data.confirmPassword,
+				name: data.name
 			});
-
-			// Send welcome email
-			await sendWelcomeEmail(data.email, data.name);
 
 			setSuccess(AUTH_SUCCESS.ACCOUNT_CREATED);
 
-			// Redirect to sign in page after a short delay
-			setTimeout(() => {
-				router.push(ROUTES.SIGNIN);
-			}, 2000);
-		} catch (error) {
-			console.error("Error during sign up:", error);
+			const res = await signIn("credentials", {
+				email: data.email,
+				password: data.password,
+				redirect: false
+			});
 
-			if (
-				error instanceof Error &&
-				"code" in error &&
-				error.code === "auth/email-already-in-use"
-			) {
+			if (res?.error) {
+				setError(res.error);
+			} else {
+				router.push(ROUTES.DASHBOARD);
+			}
+		} catch (err) {
+			console.error("Registration error:", err);
+
+			if (typeof err === "string" && err.includes("already in use")) {
 				setError(AUTH_ERRORS.EMAIL_EXISTS);
 			} else {
 				setError(AUTH_ERRORS.DEFAULT);
 			}
+		}
+	};
+
+	const handleGoogleSignUp = async () => {
+		setIsGoogleLoading(true);
+		setError(null);
+		setSuccess(null);
+
+		try {
+			await signIn("google", {
+				callbackUrl: ROUTES.DASHBOARD
+			});
+		} catch (error) {
+			console.error("Google Sign-Up error:", error);
+			setError(AUTH_ERRORS.DEFAULT);
 		} finally {
-			setIsLoading(false);
+			setIsGoogleLoading(false);
 		}
 	};
 
@@ -111,9 +99,9 @@ export function SignUpForm() {
 				</p>
 			</div>
 
-			{error && (
+			{(error || signUpError) && (
 				<Alert variant="destructive">
-					<AlertDescription>{error}</AlertDescription>
+					<AlertDescription>{error || signUpError?.message}</AlertDescription>
 				</Alert>
 			)}
 
@@ -130,7 +118,7 @@ export function SignUpForm() {
 						id="name"
 						placeholder="John Doe"
 						{...register("name")}
-						disabled={isLoading}
+						disabled={isFormLoading}
 					/>
 					{errors.name && (
 						<p className="text-sm text-red-500">{errors.name.message}</p>
@@ -143,7 +131,7 @@ export function SignUpForm() {
 						id="email"
 						placeholder="name@example.com"
 						{...register("email")}
-						disabled={isLoading}
+						disabled={isFormLoading}
 					/>
 					{errors.email && (
 						<p className="text-sm text-red-500">{errors.email.message}</p>
@@ -156,7 +144,7 @@ export function SignUpForm() {
 						id="password"
 						type="password"
 						{...register("password")}
-						disabled={isLoading}
+						disabled={isFormLoading}
 					/>
 					{errors.password && (
 						<p className="text-sm text-red-500">{errors.password.message}</p>
@@ -169,7 +157,7 @@ export function SignUpForm() {
 						id="confirmPassword"
 						type="password"
 						{...register("confirmPassword")}
-						disabled={isLoading}
+						disabled={isFormLoading}
 					/>
 					{errors.confirmPassword && (
 						<p className="text-sm text-red-500">
@@ -178,10 +166,29 @@ export function SignUpForm() {
 					)}
 				</div>
 
-				<Button type="submit" className="w-full" disabled={isLoading}>
-					{isLoading ? "Creating account..." : "Sign Up"}
+				<Button type="submit" className="w-full" disabled={isFormLoading}>
+					{isFormLoading ? "Creating account..." : "Sign Up"}
 				</Button>
 			</form>
+
+			<div className="relative">
+				<div className="absolute inset-0 flex items-center">
+					<span className="w-full border-t" />
+				</div>
+				<div className="relative flex justify-center text-sm">
+					<span className="bg-background px-2 text-muted-foreground">or</span>
+				</div>
+			</div>
+
+			<Button
+				variant="outline"
+				className="w-full flex items-center gap-2 justify-center"
+				onClick={handleGoogleSignUp}
+				disabled={isFormLoading}
+			>
+				<FcGoogle className="text-xl" />
+				{isFormLoading ? "Signing in..." : "Sign Up with Google"}
+			</Button>
 
 			<div className="text-center">
 				<p className="text-sm text-gray-500">

@@ -1,18 +1,19 @@
 "use client";
-import { useState } from "react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
-import { ROUTES } from "@constants/routes";
-import { Button } from "@components/ui/button";
+import { useState } from "react";
+
+import { Button } from "components/ui/button";
 import {
 	Sheet,
 	SheetContent,
 	SheetHeader,
 	SheetTitle,
-	SheetTrigger,
-} from "@components/ui/sheet";
-import { Menu } from "lucide-react";
+	SheetTrigger
+} from "components/ui/sheet";
+import { ROUTES } from "constants/routes";
 
 interface MobileMenuProps {
 	session: Session | null;
