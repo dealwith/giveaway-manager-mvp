@@ -1,6 +1,6 @@
 {
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit"
-    },
-    "tailwindCSS.classFunctions": ["cva", "cx"]
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	"tailwindCSS.classFunctions": ["cva", "cx"]
 }
