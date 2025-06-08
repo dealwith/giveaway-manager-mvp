@@ -14,7 +14,6 @@ import {
 	DropdownMenuTrigger
 } from "components/ui/dropdown-menu";
 import { ROUTES } from "constants/routes";
-import { SITE } from "constants/site";
 
 import { MobileMenu } from "./mobile-menu";
 
@@ -25,8 +24,13 @@ export function Header() {
 		<header className="border-b bg-background">
 			<div className="container flex h-16 items-center justify-between py-4">
 				<div className="flex items-center gap-6">
-					<Link href={ROUTES.HOME} className="flex items-center">
-						<span className="text-xl font-bold text-primary">{SITE.NAME}</span>
+					<Link href={ROUTES.HOME} className="flex items-center space-x-2">
+						<div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+							<span className="text-white font-bold text-sm">G</span>
+						</div>
+						<span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+							GiveawayManager
+						</span>
 					</Link>
 
 					<nav className="hidden md:flex items-center gap-6">
