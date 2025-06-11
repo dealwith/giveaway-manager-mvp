@@ -13,7 +13,7 @@ import { SessionProvider } from "providers/session-provider";
 import { SWRProvider } from "providers/swr-provider";
 import { ThemeProvider } from "providers/theme-provider";
 
-import { routing } from "/i18n/routing";
+import { routing } from "../../i18n/routing";
 import "../globals.css";
 
 const inter = Inter({
