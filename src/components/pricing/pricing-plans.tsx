@@ -3,6 +3,7 @@
 import { CheckIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { SubscriptionPlan } from "app-types/subscription";
@@ -20,6 +21,7 @@ import { PLANS } from "constants/plans";
 import { ROUTES } from "constants/routes";
 
 export function PricingPlans() {
+	const t = useTranslations("pricing.plans");
 	const router = useRouter();
 	const { data: session } = useSession();
 	const [isLoading, setIsLoading] = useState<SubscriptionPlan | null>(null);
@@ -67,7 +69,7 @@ export function PricingPlans() {
 			}
 		} catch (error) {
 			console.error("Error creating checkout session:", error);
-			setError("Failed to create checkout session. Please try again.");
+			setError(t("error"));
 		} finally {
 			setIsLoading(null);
 		}
@@ -95,8 +97,8 @@ export function PricingPlans() {
 							className={isCurrentPlan ? "border-primary" : ""}
 						>
 							<CardHeader>
-								<CardTitle>{plan.name}</CardTitle>
-								<CardDescription>{plan.description}</CardDescription>
+								<CardTitle>{t(`${planKey}.name`)}</CardTitle>
+								<CardDescription>{t(`${planKey}.description`)}</CardDescription>
 							</CardHeader>
 							<CardContent className="space-y-6">
 								<div className="flex items-baseline">
@@ -105,11 +107,12 @@ export function PricingPlans() {
 										<span className="text-muted-foreground ml-1">/month</span>
 									)}
 								</div>
+
 								<div className="space-y-2">
-									{plan.features.map((feature, i) => (
-										<div key={i} className="flex items-center">
+									{plan.features.map((feature, index) => (
+										<div key={index} className="flex items-center">
 											<CheckIcon className="h-4 w-4 text-green-500 mr-2" />
-											<span>{feature}</span>
+											<span>{t(`${planKey}.features.${index}`)}</span>
 										</div>
 									))}
 								</div>
@@ -122,12 +125,12 @@ export function PricingPlans() {
 									variant={isFreePlan ? "outline" : "default"}
 								>
 									{isLoading === planType
-										? "Loading..."
+										? t("loading")
 										: isCurrentPlan
-											? "Current Plan"
+											? t("currentPlan")
 											: isFreePlan
-												? "Get Started"
-												: "Subscribe"}
+												? t("getStarted")
+												: t("subscribe")}
 								</Button>
 							</CardFooter>
 						</Card>

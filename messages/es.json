@@ -1,0 +1,238 @@
+{
+	"home": {
+		"title": "Organiza increíbles sorteos sin esfuerzo",
+		"subtitle": "Automatiza tus sorteos en Instagram. Rastrea palabras clave, selecciona ganadores y envía premios automáticamente.",
+		"cta": {
+			"startFreeTrial": "Comienza tu prueba gratuita",
+			"watchDemo": "Ver demostración",
+			"final": {
+				"title": "¿Listo para lanzar tu próximo sorteo?",
+				"description": "Únete a miles de creadores que confían en GiveawayManager para sus campañas",
+				"getStarted": "Empieza gratis"
+			}
+		},
+		"stats": {
+			"giveaways": "Sorteos creados",
+			"participants": "Participantes",
+			"uptime": "Tiempo de actividad"
+		},
+		"features": {
+			"title": "Todo lo que necesitas",
+			"description": "Potentes funciones diseñadas para hacer tus sorteos exitosos y atractivos"
+		},
+		"feature1": {
+			"title": "Configuración fácil",
+			"description": "Crea sorteos en minutos con nuestra interfaz intuitiva"
+		},
+		"feature2": {
+			"title": "Selección justa",
+			"description": "La selección automática de ganadores garantiza equidad"
+		},
+		"feature3": {
+			"title": "Integración social",
+			"description": "Conéctate con Twitter, Instagram y Discord"
+		},
+		"feature4": {
+			"title": "Analítica",
+			"description": "Rastrea métricas de participación y compromiso"
+		}
+	},
+	"header": {
+		"navigation": {
+			"pricing": "Precios",
+			"dashboard": "Panel de control"
+		},
+		"dropdown": {
+			"account": "Mi cuenta",
+			"dashboard": "Panel de control",
+			"giveaways": "Sorteos",
+			"settings": "Configuración",
+			"signOut": "Cerrar sesión"
+		},
+		"auth": {
+			"signIn": "Iniciar sesión",
+			"signUp": "Registrarse"
+		}
+	},
+	"mobile": {
+		"menu": "Menú",
+		"home": "Inicio",
+		"pricing": "Precios",
+		"dashboard": "Panel de control",
+		"giveaways": "Sorteos",
+		"settings": "Configuración",
+		"signIn": "Iniciar sesión",
+		"signUp": "Registrarse",
+		"signOut": "Cerrar sesión"
+	},
+	"footer": {
+		"description": "Automatiza tus sorteos en Instagram",
+		"links": {
+			"title": "Enlaces",
+			"home": "Inicio",
+			"pricing": "Precios",
+			"dashboard": "Panel de control"
+		},
+		"legal": {
+			"title": "Legal",
+			"privacyPolicy": "Política de privacidad",
+			"termsOfService": "Términos de servicio"
+		},
+		"rights": "Todos los derechos reservados."
+	},
+	"pricing": {
+		"title": "Planes de precios",
+		"description": "Elige el plan que mejor se adapte a tus sorteos en Instagram",
+		"plans": {
+			"free": {
+				"name": "Gratis",
+				"description": "Empieza con un sorteo gratuito",
+				"features": [
+					"1 sorteo",
+					"Analítica básica",
+					"Soporte por correo electrónico"
+				]
+			},
+			"pro": {
+				"name": "Pro",
+				"description": "Todo lo que necesitas para realizar múltiples sorteos",
+				"features": [
+					"10 sorteos",
+					"Analítica avanzada",
+					"Soporte prioritario",
+					"Palabras clave personalizadas",
+					"Ganadores ilimitados"
+				]
+			},
+			"error": "No se pudo crear la sesión de pago. Inténtalo de nuevo.",
+			"loading": "Cargando...",
+			"currentPlan": "Plan actual",
+			"getStarted": "Empezar",
+			"subscribe": "Suscribirse"
+		}
+	},
+	"auth": {
+		"signUp": {
+			"title": "Registro",
+			"description": "Crea una cuenta para empezar a gestionar tus sorteos",
+			"divider": "o",
+			"buttons": {
+				"signUp": "Registrarse",
+				"loading": "Creando cuenta...",
+				"google": "Regístrate con Google"
+			},
+			"signInPrompt": "¿Ya tienes cuenta?",
+			"signInLink": "Inicia sesión",
+			"fields": {
+				"name": {
+					"label": "Nombre (opcional)",
+					"placeholder": "Juan Pérez"
+				},
+				"email": {
+					"label": "Correo electrónico",
+					"placeholder": "name@example.com"
+				},
+				"password": {
+					"label": "Contraseña",
+					"placeholder": "••••••••"
+				},
+				"confirmPassword": {
+					"label": "Confirma la contraseña",
+					"placeholder": "••••••••"
+				}
+			},
+			"errors": {
+				"emailExists": "Este correo ya está en uso",
+				"default": "Ocurrió un error durante el registro"
+			},
+			"success": {
+				"accountCreated": "¡Tu cuenta ha sido creada exitosamente!"
+			}
+		},
+		"signIn": {
+			"title": "Iniciar sesión",
+			"description": "Introduce tu correo y contraseña para iniciar sesión en tu cuenta",
+			"form": {
+				"divider": "o continuar con email",
+				"buttons": {
+					"signIn": "Iniciar sesión",
+					"loading": "Iniciando sesión...",
+					"google": "Inicia sesión con Google"
+				},
+				"fields": {
+					"email": {
+						"label": "Correo electrónico",
+						"placeholder": "name@example.com"
+					},
+					"password": {
+						"label": "Contraseña",
+						"placeholder": "••••••••"
+					}
+				},
+				"errors": {
+					"default": "Error de autenticación"
+				},
+				"success": {
+					"redirecting": "¡Inicio de sesión exitoso! Redirigiendo al panel..."
+				},
+				"forgotPassword": "¿Olvidaste tu contraseña?",
+				"signUpPrompt": "¿No tienes una cuenta?",
+				"signUpLink": "Regístrate"
+			}
+		},
+		"resetPassword": {
+			"title": "Restablecer contraseña",
+			"description": "Restablece tu contraseña",
+			"loading": "Cargando...",
+			"form": {
+				"title": "Restablecer contraseña",
+				"subtitle": "Ingresa tu nueva contraseña abajo",
+				"fields": {
+					"newPassword": {
+						"label": "Nueva contraseña"
+					},
+					"confirmPassword": {
+						"label": "Confirma la contraseña"
+					}
+				},
+				"buttons": {
+					"resetPassword": "Restablecer contraseña",
+					"loading": "Actualizando..."
+				},
+				"errors": {
+					"invalidLink": "Enlace inválido o expirado",
+					"expiredLink": "Enlace inválido o expirado. Por favor, solicita uno nuevo."
+				},
+				"success": {
+					"passwordUpdated": "Tu contraseña ha sido actualizada exitosamente."
+				}
+			},
+			"invalid": {
+				"title": "Restablecer contraseña",
+				"subtitle": "Enlace inválido"
+			}
+		},
+		"forgotPassword": {
+			"title": "¿Olvidaste tu contraseña?",
+			"description": "Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña",
+			"buttons": {
+				"sendResetLink": "Enviar enlace",
+				"loading": "Enviando..."
+			},
+			"fields": {
+				"email": {
+					"label": "Correo electrónico",
+					"placeholder": "name@example.com"
+				}
+			},
+			"signInPrompt": "¿Recuerdas tu contraseña?",
+			"signInLink": "Inicia sesión",
+			"errors": {
+				"default": "Ha ocurrido un error. Inténtalo de nuevo."
+			},
+			"success": {
+				"passwordReset": "¡Hemos enviado el enlace a tu correo electrónico!"
+			}
+		}
+	}
+}

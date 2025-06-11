@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
+import { LanguageSelect } from "components/select/language-select";
 import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar";
 import { Button } from "components/ui/button";
 import {
@@ -18,6 +20,7 @@ import { ROUTES } from "constants/routes";
 import { MobileMenu } from "./mobile-menu";
 
 export function Header() {
+	const t = useTranslations("header");
 	const { data: session } = useSession();
 
 	return (
@@ -38,14 +41,14 @@ export function Header() {
 							href={ROUTES.PRICING}
 							className="text-sm font-medium transition-colors hover:text-primary"
 						>
-							Pricing
+							{t("navigation.pricing")}
 						</Link>
 						{session && (
 							<Link
 								href={ROUTES.DASHBOARD}
 								className="text-sm font-medium transition-colors hover:text-primary"
 							>
-								Dashboard
+								{t("navigation.dashboard")}
 							</Link>
 						)}
 					</nav>
@@ -71,36 +74,36 @@ export function Header() {
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
-								<DropdownMenuLabel>My Account</DropdownMenuLabel>
+								<DropdownMenuLabel>{t("dropdown.account")}</DropdownMenuLabel>
 								<DropdownMenuSeparator />
 								<DropdownMenuItem asChild>
-									<Link href={ROUTES.DASHBOARD}>Dashboard</Link>
+									<Link href={ROUTES.DASHBOARD}>{t("dropdown.dashboard")}</Link>
 								</DropdownMenuItem>
 								<DropdownMenuItem asChild>
-									<Link href={ROUTES.GIVEAWAYS}>Giveaways</Link>
+									<Link href={ROUTES.GIVEAWAYS}>{t("dropdown.giveaways")}</Link>
 								</DropdownMenuItem>
 								<DropdownMenuItem asChild>
-									<Link href={ROUTES.SETTINGS}>Settings</Link>
+									<Link href={ROUTES.SETTINGS}>{t("dropdown.settings")}</Link>
 								</DropdownMenuItem>
 								<DropdownMenuSeparator />
 								<DropdownMenuItem
 									onClick={() => signOut({ callbackUrl: ROUTES.HOME })}
 								>
-									Sign Out
+									{t("dropdown.signOut")}
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
 					) : (
 						<div className="hidden md:flex items-center gap-2">
 							<Link href={ROUTES.SIGNIN}>
-								<Button variant="outline">Sign In</Button>
+								<Button variant="outline">{t("auth.signIn")}</Button>
 							</Link>
 							<Link href={ROUTES.SIGNUP}>
-								<Button>Sign Up</Button>
+								<Button>{t("auth.signUp")}</Button>
 							</Link>
 						</div>
 					)}
-
+					<LanguageSelect />
 					<MobileMenu session={session} />
 				</div>
 			</div>

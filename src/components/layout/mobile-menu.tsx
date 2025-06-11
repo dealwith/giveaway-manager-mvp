@@ -3,6 +3,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Button } from "components/ui/button";
@@ -20,6 +21,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ session }: MobileMenuProps) {
+	const t = useTranslations("mobile");
 	const [isOpen, setIsOpen] = useState(false);
 
 	const closeMenu = () => setIsOpen(false);
@@ -34,7 +36,7 @@ export function MobileMenu({ session }: MobileMenuProps) {
 			</SheetTrigger>
 			<SheetContent side="right" className="w-[300px] sm:w-[400px]">
 				<SheetHeader>
-					<SheetTitle>Menu</SheetTitle>
+					<SheetTitle>{t("menu")}</SheetTitle>
 				</SheetHeader>
 				<nav className="flex flex-col gap-4 mt-8">
 					<Link
@@ -42,14 +44,14 @@ export function MobileMenu({ session }: MobileMenuProps) {
 						className="text-lg font-medium px-2 py-2 hover:bg-muted rounded-md"
 						onClick={closeMenu}
 					>
-						Home
+						{t("home")}
 					</Link>
 					<Link
 						href={ROUTES.PRICING}
 						className="text-lg font-medium px-2 py-2 hover:bg-muted rounded-md"
 						onClick={closeMenu}
 					>
-						Pricing
+						{t("pricing")}
 					</Link>
 
 					{session ? (
@@ -59,21 +61,21 @@ export function MobileMenu({ session }: MobileMenuProps) {
 								className="text-lg font-medium px-2 py-2 hover:bg-muted rounded-md"
 								onClick={closeMenu}
 							>
-								Dashboard
+								{t("dashboard")}
 							</Link>
 							<Link
 								href={ROUTES.GIVEAWAYS}
 								className="text-lg font-medium px-2 py-2 hover:bg-muted rounded-md"
 								onClick={closeMenu}
 							>
-								Giveaways
+								{t("giveaways")}
 							</Link>
 							<Link
 								href={ROUTES.SETTINGS}
 								className="text-lg font-medium px-2 py-2 hover:bg-muted rounded-md"
 								onClick={closeMenu}
 							>
-								Settings
+								{t("settings")}
 							</Link>
 							<Button
 								variant="ghost"
@@ -83,18 +85,18 @@ export function MobileMenu({ session }: MobileMenuProps) {
 									closeMenu();
 								}}
 							>
-								Sign Out
+								{t("signOut")}
 							</Button>
 						</>
 					) : (
 						<div className="flex flex-col gap-2 mt-4">
 							<Link href={ROUTES.SIGNIN} onClick={closeMenu}>
 								<Button variant="outline" className="w-full">
-									Sign In
+									{t("signIn")}
 								</Button>
 							</Link>
 							<Link href={ROUTES.SIGNUP} onClick={closeMenu}>
-								<Button className="w-full">Sign Up</Button>
+								<Button className="w-full">{t("signUp")}</Button>
 							</Link>
 						</div>
 					)}

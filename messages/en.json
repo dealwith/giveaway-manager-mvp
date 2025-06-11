@@ -1,0 +1,238 @@
+{
+	"home": {
+		"title": "Run Amazing",
+		"subtitle": "Automate your Instagram giveaways with ease. Track keywords, select winners, and send prizes automatically.",
+		"cta": {
+			"startFreeTrial": "Start Free Trial",
+			"watchDemo": "Watch Demo",
+			"final": {
+				"title": "Ready to Launch Your Next Giveaway?",
+				"description": "Join thousands of creators who trust GiveawayManager for their campaigns",
+				"getStarted": "Get Started for Free"
+			}
+		},
+		"stats": {
+			"giveaways": "Giveaways Created",
+			"participants": "Participants",
+			"uptime": "Uptime"
+		},
+		"features": {
+			"title": "Everything You Need",
+			"description": "Powerful features designed to make your giveaways successful and engaging"
+		},
+		"feature1": {
+			"title": "Easy Setup",
+			"description": "Create giveaways in minutes with our intuitive interface"
+		},
+		"feature2": {
+			"title": "Fair Selection",
+			"description": "Automated random winner selection ensures fairness"
+		},
+		"feature3": {
+			"title": "Social Integration",
+			"description": "Connect with Twitter, Instagram, and Discord"
+		},
+		"feature4": {
+			"title": "Analytics",
+			"description": "Track engagement and participation metrics"
+		}
+	},
+	"header": {
+		"navigation": {
+			"pricing": "Pricing",
+			"dashboard": "Dashboard"
+		},
+		"dropdown": {
+			"account": "My Account",
+			"dashboard": "Dashboard",
+			"giveaways": "Giveaways",
+			"settings": "Settings",
+			"signOut": "Sign Out"
+		},
+		"auth": {
+			"signIn": "Sign In",
+			"signUp": "Sign Up"
+		}
+	},
+	"mobile": {
+		"menu": "Menu",
+		"home": "Home",
+		"pricing": "Pricing",
+		"dashboard": "Dashboard",
+		"giveaways": "Giveaways",
+		"settings": "Settings",
+		"signIn": "Sign In",
+		"signUp": "Sign Up",
+		"signOut": "Sign Out"
+	},
+	"footer": {
+		"description": "Automate your Instagram giveaways with ease",
+		"links": {
+			"title": "Links",
+			"home": "Home",
+			"pricing": "Pricing",
+			"dashboard": "Dashboard"
+		},
+		"legal": {
+			"title": "Legal",
+			"privacyPolicy": "Privacy Policy",
+			"termsOfService": "Terms of Service"
+		},
+		"rights": "All rights reserved."
+	},
+	"pricing": {
+		"title": "Pricing Plans",
+		"description": "Choose the plan that works best for your Instagram giveaways",
+		"plans": {
+			"free": {
+				"name": "Free",
+				"description": "Get started with 1 free giveaway",
+				"features": [
+					"1 giveaway",
+					"Basic analytics",
+					"Email support"
+				]
+			},
+			"pro": {
+				"name": "Pro",
+				"description": "Everything you need for running multiple giveaways",
+				"features": [
+					"10 giveaways",
+					"Advanced analytics",
+					"Priority support",
+					"Custom keywords",
+					"Unlimited winners"
+				]
+			},
+			"error": "Failed to create checkout session. Please try again.",
+			"loading": "Loading...",
+			"currentPlan": "Current Plan",
+			"getStarted": "Get Started",
+			"subscribe": "Subscribe"
+		}
+	},
+	"auth": {
+		"signUp": {
+			"title": "Sign Up",
+			"description": "Create an account to start managing your giveaways",
+			"divider": "or",
+			"buttons": {
+				"signUp": "Sign Up",
+				"loading": "Creating account...",
+				"google": "Sign Up with Google"
+			},
+			"signInPrompt": "Already have an account?",
+			"signInLink": "Sign in",
+			"fields": {
+				"name": {
+					"label": "Name (Optional)",
+					"placeholder": "John Doe"
+				},
+				"email": {
+					"label": "Email",
+					"placeholder": "name@example.com"
+				},
+				"password": {
+					"label": "Password",
+					"placeholder": "••••••••"
+				},
+				"confirmPassword": {
+					"label": "Confirm Password",
+					"placeholder": "••••••••"
+				}
+			},
+			"errors": {
+				"emailExists": "This email is already in use",
+				"default": "An error occurred during registration"
+			},
+			"success": {
+				"accountCreated": "Your account has been successfully created!"
+			}
+		},
+		"signIn": {
+			"title": "Sign In",
+			"description": "Enter your email and password to sign in to your account",
+			"form": {
+				"divider": "or continue with email",
+				"buttons": {
+					"signIn": "Sign In",
+					"loading": "Signing in...",
+					"google": "Sign In with Google"
+				},
+				"fields": {
+					"email": {
+						"label": "Email",
+						"placeholder": "name@example.com"
+					},
+					"password": {
+						"label": "Password",
+						"placeholder": "••••••••"
+					}
+				},
+				"errors": {
+					"default": "Authentication failed"
+				},
+				"success": {
+					"redirecting": "Sign in successful! Redirecting to dashboard..."
+				},
+				"forgotPassword": "Forgot password?",
+				"signUpPrompt": "Don't have an account?",
+				"signUpLink": "Sign up"
+			}
+		},
+		"resetPassword": {
+			"title": "Reset Password",
+			"description": "Reset your password",
+			"loading": "Loading...",
+			"form": {
+				"title": "Reset Password",
+				"subtitle": "Enter your new password below",
+				"fields": {
+					"newPassword": {
+						"label": "New Password"
+					},
+					"confirmPassword": {
+						"label": "Confirm New Password"
+					}
+				},
+				"buttons": {
+					"resetPassword": "Reset Password",
+					"loading": "Updating..."
+				},
+				"errors": {
+					"invalidLink": "Invalid or expired reset link",
+					"expiredLink": "Invalid or expired reset link. Please request a new one."
+				},
+				"success": {
+					"passwordUpdated": "Your password has been successfully updated!"
+				}
+			},
+			"invalid": {
+				"title": "Reset Password",
+				"subtitle": "Invalid reset link"
+			}
+		},
+		"forgotPassword": {
+			"title": "Forgot Password",
+			"description": "Enter your email address and we'll send you a link to reset your password",
+			"buttons": {
+				"sendResetLink": "Send Reset Link",
+				"loading": "Sending..."
+			},
+			"fields": {
+				"email": {
+					"label": "Email",
+					"placeholder": "name@example.com"
+				}
+			},
+			"signInPrompt": "Remember your password?",
+			"signInLink": "Sign in",
+			"errors": {
+				"default": "Something went wrong. Please try again."
+			},
+			"success": {
+				"passwordReset": "We've sent a password reset link to your email!"
+			}
+		}
+	}
+}
