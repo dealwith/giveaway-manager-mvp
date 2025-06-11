@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
@@ -14,7 +15,6 @@ import { Alert, AlertDescription } from "components/ui/alert";
 import { Button } from "components/ui/button";
 import { Input } from "components/ui/input";
 import { Label } from "components/ui/label";
-import { AUTH_ERRORS } from "constants/auth";
 import { ROUTES } from "constants/routes";
 
 const signInSchema = z.object({
@@ -32,13 +32,14 @@ async function signInRequest(_key: string, { arg }: { arg: SignInFormValues }) {
 	});
 
 	if (result?.error) {
-		throw new Error(AUTH_ERRORS.DEFAULT);
+		throw new Error("Authentication failed");
 	}
 
 	return { success: true };
 }
 
 export function SignInForm() {
+	const t = useTranslations("auth.signIn.form");
 	const router = useRouter();
 	const [showSuccess, setShowSuccess] = useState(false);
 
@@ -78,14 +79,12 @@ export function SignInForm() {
 		<div className="space-y-6">
 			{error && (
 				<Alert variant="destructive">
-					<AlertDescription>{error.message}</AlertDescription>
+					<AlertDescription>{t("errors.default")}</AlertDescription>
 				</Alert>
 			)}
 			{showSuccess && (
 				<Alert variant="success">
-					<AlertDescription>
-						Sign in successful! Redirecting to dashboard...
-					</AlertDescription>
+					<AlertDescription>{t("success.redirecting")}</AlertDescription>
 				</Alert>
 			)}
 
@@ -94,9 +93,10 @@ export function SignInForm() {
 				variant="outline"
 				className="w-full flex items-center justify-center gap-2"
 				onClick={handleGoogleSignIn}
+				disabled={isMutating || showSuccess}
 			>
 				<FcGoogle size={20} />
-				Sign in with Google
+				{isMutating ? t("buttons.loading") : t("buttons.google")}
 			</Button>
 
 			<div className="relative">
@@ -105,18 +105,18 @@ export function SignInForm() {
 				</div>
 				<div className="relative flex justify-center text-sm">
 					<span className="bg-background px-2 text-muted-foreground">
-						or continue with email
+						{t("divider")}
 					</span>
 				</div>
 			</div>
 
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div className="space-y-2">
-					<Label htmlFor="email">Email</Label>
+					<Label htmlFor="email">{t("fields.email.label")}</Label>
 					<Input
 						id="email"
 						type="email"
-						placeholder="name@example.com"
+						placeholder={t("fields.email.placeholder")}
 						{...register("email")}
 						disabled={isMutating || showSuccess}
 					/>
@@ -127,12 +127,12 @@ export function SignInForm() {
 
 				<div className="space-y-2">
 					<div className="flex items-center justify-between">
-						<Label htmlFor="password">Password</Label>
+						<Label htmlFor="password">{t("fields.password.label")}</Label>
 						<Link
 							href={ROUTES.FORGOT_PASSWORD}
 							className="text-sm text-primary hover:underline"
 						>
-							Forgot password?
+							{t("forgotPassword")}
 						</Link>
 					</div>
 					<Input
@@ -151,15 +151,15 @@ export function SignInForm() {
 					disabled={isMutating || showSuccess}
 					variant="default"
 				>
-					{isMutating ? "Signing in..." : "Sign In"}
+					{isMutating ? t("buttons.loading") : t("buttons.signIn")}
 				</Button>
 			</form>
 
 			<div className="text-center">
 				<p className="text-sm text-muted-foreground">
-					Don&apos;t have an account?{" "}
+					{t("signUpPrompt")}{" "}
 					<Link href={ROUTES.SIGNUP} className="text-primary hover:underline">
-						Sign up
+						{t("signUpLink")}
 					</Link>
 				</p>
 			</div>

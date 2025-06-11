@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sendPasswordResetEmail } from "firebase/auth";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import useSWRMutation from "swr/mutation";
 import { z } from "zod";
@@ -12,7 +13,6 @@ import { Button } from "components/ui/button";
 import { Input } from "components/ui/input";
 import { Label } from "components/ui/label";
 import { auth } from "config/firebase";
-import { AUTH_ERRORS, AUTH_SUCCESS } from "constants/auth";
 import { ROUTES } from "constants/routes";
 
 const forgotPasswordSchema = z.object({
@@ -29,14 +29,16 @@ async function resetPasswordRequest(_key: string, { arg }: { arg: string }) {
 
 		await sendPasswordResetEmail(auth, arg);
 
-		return { success: AUTH_SUCCESS.PASSWORD_RESET };
+		return { success: "success.passwordReset" };
 	} catch (error) {
 		console.error("Error sending password reset email:", error);
-		throw new Error(AUTH_ERRORS.DEFAULT);
+		throw new Error("errors.default");
 	}
 }
 
 export function ForgotPasswordForm() {
+	const t = useTranslations("auth.forgotPassword");
+
 	const {
 		register,
 		handleSubmit,
@@ -61,31 +63,28 @@ export function ForgotPasswordForm() {
 	return (
 		<div className="space-y-6">
 			<div className="space-y-2 text-center">
-				<h1 className="text-3xl font-bold">Forgot Password</h1>
-				<p className="text-gray-500">
-					Enter your email address and we&apos;ll send you a link to reset your
-					password
-				</p>
+				<h1 className="text-3xl font-bold">{t("title")}</h1>
+				<p className="text-gray-500">{t("description")}</p>
 			</div>
 
 			{error && (
 				<Alert variant="destructive">
-					<AlertDescription>{error.message}</AlertDescription>
+					<AlertDescription>{t(`errors.${error.message}`)}</AlertDescription>
 				</Alert>
 			)}
 
 			{data?.success && (
 				<Alert variant="success">
-					<AlertDescription>{data.success}</AlertDescription>
+					<AlertDescription>{t(`success.${data.success}`)}</AlertDescription>
 				</Alert>
 			)}
 
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div className="space-y-2">
-					<Label htmlFor="email">Email</Label>
+					<Label htmlFor="email">{t("fields.email.label")}</Label>
 					<Input
 						id="email"
-						placeholder="name@example.com"
+						placeholder={t("fields.email.placeholder")}
 						{...register("email")}
 						disabled={isMutating || !!data?.success}
 					/>
@@ -99,18 +98,18 @@ export function ForgotPasswordForm() {
 					className="w-full"
 					disabled={isMutating || !!data?.success}
 				>
-					{isMutating ? "Sending..." : "Send Reset Link"}
+					{isMutating ? t("buttons.loading") : t("buttons.sendResetLink")}
 				</Button>
 			</form>
 
 			<div className="text-center">
 				<p className="text-sm text-gray-500">
-					Remember your password?{" "}
+					{t("signInPrompt")}{" "}
 					<Link
 						href={ROUTES.SIGNIN}
 						className="text-blue-500 hover:text-blue-700"
 					>
-						Sign in
+						{t("signInLink")}
 					</Link>
 				</p>
 			</div>

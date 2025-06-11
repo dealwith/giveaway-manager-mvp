@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { ROUTES } from "constants/routes";
 import { SITE } from "constants/site";
 
 export function Footer() {
+	const t = useTranslations("footer");
 	const currentYear = new Date().getFullYear();
 
 	return (
@@ -20,19 +24,19 @@ export function Footer() {
 							</span>
 						</Link>
 						<p className="text-sm text-muted-foreground max-w-md">
-							{SITE.DESCRIPTION}
+							{t("description")}
 						</p>
 					</div>
 
 					<div className="space-y-4">
-						<h3 className="font-medium">Links</h3>
+						<h3 className="font-medium">{t("links.title")}</h3>
 						<ul className="space-y-2">
 							<li>
 								<Link
 									href={ROUTES.HOME}
 									className="text-sm text-muted-foreground hover:text-foreground"
 								>
-									Home
+									{t("links.home")}
 								</Link>
 							</li>
 							<li>
@@ -40,7 +44,7 @@ export function Footer() {
 									href={ROUTES.PRICING}
 									className="text-sm text-muted-foreground hover:text-foreground"
 								>
-									Pricing
+									{t("links.pricing")}
 								</Link>
 							</li>
 							<li>
@@ -48,21 +52,21 @@ export function Footer() {
 									href={ROUTES.DASHBOARD}
 									className="text-sm text-muted-foreground hover:text-foreground"
 								>
-									Dashboard
+									{t("links.dashboard")}
 								</Link>
 							</li>
 						</ul>
 					</div>
 
 					<div className="space-y-4">
-						<h3 className="font-medium">Legal</h3>
+						<h3 className="font-medium">{t("legal.title")}</h3>
 						<ul className="space-y-2">
 							<li>
 								<Link
 									href="/privacy"
 									className="text-sm text-muted-foreground hover:text-foreground"
 								>
-									Privacy Policy
+									{t("legal.privacyPolicy")}
 								</Link>
 							</li>
 							<li>
@@ -70,7 +74,7 @@ export function Footer() {
 									href="/terms"
 									className="text-sm text-muted-foreground hover:text-foreground"
 								>
-									Terms of Service
+									{t("legal.termsOfService")}
 								</Link>
 							</li>
 						</ul>
@@ -78,7 +82,7 @@ export function Footer() {
 				</div>
 
 				<div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-					&copy; {currentYear} {SITE.NAME}. All rights reserved.
+					&copy; {currentYear} {SITE.NAME}. {t("rights")}
 				</div>
 			</div>
 		</footer>

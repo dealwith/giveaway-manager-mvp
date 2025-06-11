@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
@@ -15,18 +16,17 @@ import { Alert, AlertDescription } from "components/ui/alert";
 import { Button } from "components/ui/button";
 import { Input } from "components/ui/input";
 import { Label } from "components/ui/label";
-import { AUTH_ERRORS, AUTH_SUCCESS } from "constants/auth";
 import { ROUTES } from "constants/routes";
 
 type SignUpFormValues = z.infer<typeof SignUpSchema>;
 
 export function SignUpForm() {
-	const { signUp, isLoading, error: signUpError } = useSignUp();
-
+	const t = useTranslations("auth.signUp");
 	const router = useRouter();
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState<string | null>(null);
 	const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+	const { signUp, isLoading } = useSignUp();
 	const isFormLoading = isLoading || isGoogleLoading;
 
 	const {
@@ -49,7 +49,7 @@ export function SignUpForm() {
 				name: data.name
 			});
 
-			setSuccess(AUTH_SUCCESS.ACCOUNT_CREATED);
+			setSuccess(t("success.accountCreated"));
 
 			const res = await signIn("credentials", {
 				email: data.email,
@@ -66,9 +66,9 @@ export function SignUpForm() {
 			console.error("Registration error:", err);
 
 			if (typeof err === "string" && err.includes("already in use")) {
-				setError(AUTH_ERRORS.EMAIL_EXISTS);
+				setError(t("errors.emailExists"));
 			} else {
-				setError(AUTH_ERRORS.DEFAULT);
+				setError(t("errors.default"));
 			}
 		}
 	};
@@ -84,7 +84,7 @@ export function SignUpForm() {
 			});
 		} catch (error) {
 			console.error("Google Sign-Up error:", error);
-			setError(AUTH_ERRORS.DEFAULT);
+			setError(t("errors.default"));
 		} finally {
 			setIsGoogleLoading(false);
 		}
@@ -93,15 +93,13 @@ export function SignUpForm() {
 	return (
 		<div className="space-y-6">
 			<div className="space-y-2 text-center">
-				<h1 className="text-3xl font-bold">Sign Up</h1>
-				<p className="text-gray-500">
-					Create an account to start managing your giveaways
-				</p>
+				<h1 className="text-3xl font-bold">{t("title")}</h1>
+				<p className="text-gray-500">{t("description")}</p>
 			</div>
 
-			{(error || signUpError) && (
+			{error && (
 				<Alert variant="destructive">
-					<AlertDescription>{error || signUpError?.message}</AlertDescription>
+					<AlertDescription>{error}</AlertDescription>
 				</Alert>
 			)}
 
@@ -113,10 +111,10 @@ export function SignUpForm() {
 
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div className="space-y-2">
-					<Label htmlFor="name">Name (Optional)</Label>
+					<Label htmlFor="name">{t("fields.name.label")}</Label>
 					<Input
 						id="name"
-						placeholder="John Doe"
+						placeholder={t("fields.name.placeholder")}
 						{...register("name")}
 						disabled={isFormLoading}
 					/>
@@ -126,10 +124,10 @@ export function SignUpForm() {
 				</div>
 
 				<div className="space-y-2">
-					<Label htmlFor="email">Email</Label>
+					<Label htmlFor="email">{t("fields.email.label")}</Label>
 					<Input
 						id="email"
-						placeholder="name@example.com"
+						placeholder={t("fields.email.placeholder")}
 						{...register("email")}
 						disabled={isFormLoading}
 					/>
@@ -139,7 +137,7 @@ export function SignUpForm() {
 				</div>
 
 				<div className="space-y-2">
-					<Label htmlFor="password">Password</Label>
+					<Label htmlFor="password">{t("fields.password.label")}</Label>
 					<Input
 						id="password"
 						type="password"
@@ -152,7 +150,9 @@ export function SignUpForm() {
 				</div>
 
 				<div className="space-y-2">
-					<Label htmlFor="confirmPassword">Confirm Password</Label>
+					<Label htmlFor="confirmPassword">
+						{t("fields.confirmPassword.label")}
+					</Label>
 					<Input
 						id="confirmPassword"
 						type="password"
@@ -167,7 +167,7 @@ export function SignUpForm() {
 				</div>
 
 				<Button type="submit" className="w-full" disabled={isFormLoading}>
-					{isFormLoading ? "Creating account..." : "Sign Up"}
+					{isFormLoading ? t("buttons.loading") : t("buttons.signUp")}
 				</Button>
 			</form>
 
@@ -176,7 +176,9 @@ export function SignUpForm() {
 					<span className="w-full border-t" />
 				</div>
 				<div className="relative flex justify-center text-sm">
-					<span className="bg-background px-2 text-muted-foreground">or</span>
+					<span className="bg-background px-2 text-muted-foreground">
+						{t("divider")}
+					</span>
 				</div>
 			</div>
 
@@ -187,17 +189,17 @@ export function SignUpForm() {
 				disabled={isFormLoading}
 			>
 				<FcGoogle className="text-xl" />
-				{isFormLoading ? "Signing in..." : "Sign Up with Google"}
+				{isGoogleLoading ? t("buttons.loading") : t("buttons.google")}
 			</Button>
 
 			<div className="text-center">
 				<p className="text-sm text-gray-500">
-					Already have an account?{" "}
+					{t("signInPrompt")}{" "}
 					<Link
 						href={ROUTES.SIGNIN}
 						className="text-blue-500 hover:text-blue-700"
 					>
-						Sign in
+						{t("signInLink")}
 					</Link>
 				</p>
 			</div>
