@@ -16,7 +16,7 @@ const LANGUAGES = [
 	{ code: "ru", label: "Русский" },
 	{ code: "es", label: "Español" },
 	{ code: "pl", label: "Polski" },
-	{ code: "uk", label: "Українська" }
+	{ code: "ua", label: "Українська" }
 ];
 
 export function LanguageSelect() {
