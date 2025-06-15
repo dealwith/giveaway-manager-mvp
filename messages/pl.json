@@ -1,0 +1,238 @@
+{
+	"home": {
+		"title": "Organizuj świetne konkursy z łatwością",
+		"subtitle": "Automatyzuj swoje konkursy na Instagramie. Śledź słowa kluczowe, wybieraj zwycięzców i wysyłaj nagrody automatycznie.",
+		"cta": {
+			"startFreeTrial": "Zacznij bezpłatny okres próbny",
+			"watchDemo": "Obejrzyj demo",
+			"final": {
+				"title": "Gotowy uruchomić swój kolejny konkurs?",
+				"description": "Dołącz do tysięcy twórców, którzy ufają GiveawayManager we wszystkich kampaniach",
+				"getStarted": "Zacznij za darmo"
+			}
+		},
+		"stats": {
+			"giveaways": "Utworzone konkursy",
+			"participants": "Uczestnicy",
+			"uptime": "Czas działania"
+		},
+		"features": {
+			"title": "Wszystko, czego potrzebujesz",
+			"description": "Potężne funkcje zaprojektowane tak, aby Twoje konkursy były udane i angażujące"
+		},
+		"feature1": {
+			"title": "Łatwa konfiguracja",
+			"description": "Twórz konkursy w kilka minut dzięki intuicyjnemu interfejsowi"
+		},
+		"feature2": {
+			"title": "Sprawiedliwy wybór",
+			"description": "Automatyczny wybór losowego zwycięzcy gwarantuje uczciwość"
+		},
+		"feature3": {
+			"title": "Integracja społecznościowa",
+			"description": "Połącz się z Twitterem, Instagramem i Discordem"
+		},
+		"feature4": {
+			"title": "Analityka",
+			"description": "Śledź wskaźniki zaangażowania i udziału"
+		}
+	},
+	"header": {
+		"navigation": {
+			"pricing": "Cennik",
+			"dashboard": "Panel zarządzania"
+		},
+		"dropdown": {
+			"account": "Moje konto",
+			"dashboard": "Panel zarządzania",
+			"giveaways": "Konkursy",
+			"settings": "Ustawienia",
+			"signOut": "Wyloguj się"
+		},
+		"auth": {
+			"signIn": "Zaloguj się",
+			"signUp": "Zarejestruj się"
+		}
+	},
+	"mobile": {
+		"menu": "Menu",
+		"home": "Strona główna",
+		"pricing": "Cennik",
+		"dashboard": "Panel zarządzania",
+		"giveaways": "Konkursy",
+		"settings": "Ustawienia",
+		"signIn": "Zaloguj się",
+		"signUp": "Zarejestruj się",
+		"signOut": "Wyloguj się"
+	},
+	"footer": {
+		"description": "Automatyzuj swoje konkursy na Instagramie",
+		"links": {
+			"title": "Linki",
+			"home": "Strona główna",
+			"pricing": "Cennik",
+			"dashboard": "Panel zarządzania"
+		},
+		"legal": {
+			"title": "Prawo",
+			"privacyPolicy": "Polityka prywatności",
+			"termsOfService": "Regulamin"
+		},
+		"rights": "Wszelkie prawa zastrzeżone."
+	},
+	"pricing": {
+		"title": "Plany cenowe",
+		"description": "Wybierz plan, który najlepiej odpowiada Twoim konkursom na Instagramie",
+		"plans": {
+			"free": {
+				"name": "Darmowy",
+				"description": "Zacznij od jednego darmowego konkursu",
+				"features": [
+					"1 konkurs",
+					"Podstawowa analityka",
+					"Wsparcie e-mailowe"
+				]
+			},
+			"pro": {
+				"name": "Pro",
+				"description": "Wszystko, co potrzebujesz do prowadzenia wielu konkursów",
+				"features": [
+					"10 konkursów",
+					"Zaawansowana analityka",
+					"Priorytetowe wsparcie",
+					"Niestandardowe słowa kluczowe",
+					"Nieograniczona liczba zwycięzców"
+				]
+			},
+			"error": "Nie udało się utworzyć sesji płatności. Spróbuj ponownie.",
+			"loading": "Ładowanie...",
+			"currentPlan": "Obecny plan",
+			"getStarted": "Rozpocznij",
+			"subscribe": "Subskrybuj"
+		}
+	},
+	"auth": {
+		"signUp": {
+			"title": "Rejestracja",
+			"description": "Utwórz konto, aby rozpocząć zarządzanie swoimi konkursami",
+			"divider": "lub",
+			"buttons": {
+				"signUp": "Zarejestruj się",
+				"loading": "Tworzenie konta...",
+				"google": "Zarejestruj się przez Google"
+			},
+			"signInPrompt": "Masz już konto?",
+			"signInLink": "Zaloguj się",
+			"fields": {
+				"name": {
+					"label": "Imię (opcjonalnie)",
+					"placeholder": "Jan Kowalski"
+				},
+				"email": {
+					"label": "E-mail",
+					"placeholder": "name@example.com"
+				},
+				"password": {
+					"label": "Hasło",
+					"placeholder": "••••••••"
+				},
+				"confirmPassword": {
+					"label": "Potwierdź hasło",
+					"placeholder": "••••••••"
+				}
+			},
+			"errors": {
+				"emailExists": "Ten e-mail jest już zajęty",
+				"default": "Wystąpił błąd podczas rejestracji"
+			},
+			"success": {
+				"accountCreated": "Twoje konto zostało pomyślnie utworzone!"
+			}
+		},
+		"signIn": {
+			"title": "Zaloguj się",
+			"description": "Wprowadź swój adres e-mail i hasło, aby zalogować się do konta",
+			"form": {
+				"divider": "lub kontynuuj przez email",
+				"buttons": {
+					"signIn": "Zaloguj się",
+					"loading": "Logowanie...",
+					"google": "Zaloguj się przez Google"
+				},
+				"fields": {
+					"email": {
+						"label": "Adres e-mail",
+						"placeholder": "name@example.com"
+					},
+					"password": {
+						"label": "Hasło",
+						"placeholder": "••••••••"
+					}
+				},
+				"errors": {
+					"default": "Błąd uwierzytelniania"
+				},
+				"success": {
+					"redirecting": "Pomyślne logowanie! Przekierowanie do panelu..."
+				},
+				"forgotPassword": "Zapomniałeś hasła?",
+				"signUpPrompt": "Nie masz konta?",
+				"signUpLink": "Zarejestruj się"
+			}
+		},
+		"resetPassword": {
+			"title": "Zresetuj hasło",
+			"description": "Zresetuj swoje hasło",
+			"loading": "Ładowanie...",
+			"form": {
+				"title": "Zresetuj hasło",
+				"subtitle": "Wprowadź nowe hasło poniżej",
+				"fields": {
+					"newPassword": {
+						"label": "Nowe hasło"
+					},
+					"confirmPassword": {
+						"label": "Potwierdź hasło"
+					}
+				},
+				"buttons": {
+					"resetPassword": "Zresetuj hasło",
+					"loading": "Aktualizacja..."
+				},
+				"errors": {
+					"invalidLink": "Nieprawidłowy lub wygasły link",
+					"expiredLink": "Nieprawidłowy lub wygasły link. Poproś o nowy."
+				},
+				"success": {
+					"passwordUpdated": "Twoje hasło zostało pomyślnie zaktualizowane!"
+				}
+			},
+			"invalid": {
+				"title": "Zresetuj hasło",
+				"subtitle": "Nieprawidłowy link"
+			}
+		},
+		"forgotPassword": {
+			"title": "Zapomniałeś hasła",
+			"description": "Wprowadź swój adres e-mail, a wyślemy Ci link do zresetowania hasła",
+			"buttons": {
+				"sendResetLink": "Wyślij link",
+				"loading": "Wysyłanie..."
+			},
+			"fields": {
+				"email": {
+					"label": "E-mail",
+					"placeholder": "name@example.com"
+				}
+			},
+			"signInPrompt": "Pamiętasz hasło?",
+			"signInLink": "Zaloguj się",
+			"errors": {
+				"default": "Wystąpił błąd. Spróbuj ponownie."
+			},
+			"success": {
+				"passwordReset": "Wysłaliśmy link do resetu hasła na Twój e-mail!"
+			}
+		}
+	}
+}

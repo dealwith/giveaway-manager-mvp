@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { Button } from "components/ui/button";
@@ -9,6 +10,7 @@ import { ROUTES } from "constants/routes";
 
 export default function HomePage() {
 	const [isVisible, setIsVisible] = useState(false);
+	const t = useTranslations("home");
 
 	useEffect(() => {
 		setIsVisible(true);
@@ -16,23 +18,23 @@ export default function HomePage() {
 
 	const features = [
 		{
-			title: "Easy Setup",
-			description: "Create giveaways in minutes with our intuitive interface",
+			title: t("feature1.title"),
+			description: t("feature1.description"),
 			icon: "⚡"
 		},
 		{
-			title: "Fair Selection",
-			description: "Automated random winner selection ensures fairness",
+			title: t("feature2.title"),
+			description: t("feature2.description"),
 			icon: "🎯"
 		},
 		{
-			title: "Social Integration",
-			description: "Connect with Twitter, Instagram, and Discord",
+			title: t("feature3.title"),
+			description: t("feature3.description"),
 			icon: "🔗"
 		},
 		{
-			title: "Analytics",
-			description: "Track engagement and participation metrics",
+			title: t("feature4.title"),
+			description: t("feature4.description"),
 			icon: "📊"
 		}
 	];
@@ -46,7 +48,7 @@ export default function HomePage() {
 					}`}
 				>
 					<h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
-						Run Amazing
+						{t("title")}
 						<span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent block">
 							Giveaways
 						</span>
@@ -55,7 +57,7 @@ export default function HomePage() {
 
 					<div className="max-w-3xl mx-auto mb-12">
 						<TextGenerateEffect
-							words="Automate your Instagram giveaways with ease. Track keywords, select winners, and send prizes automatically."
+							words={t("subtitle")}
 							className="text-xl text-gray-600 leading-relaxed"
 						/>
 					</div>
@@ -63,12 +65,12 @@ export default function HomePage() {
 					<div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
 						<Link href={ROUTES.SIGNUP}>
 							<Button className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-								Start Free Trial
+								{t("cta.startFreeTrial")}
 							</Button>
 						</Link>
 						<Link href={ROUTES.PRICING}>
 							<Button className="px-8 py-4 border-2 border-gray-200 rounded-full text-lg font-semibold hover:border-purple-300 hover:bg-purple-50 transition-all duration-300">
-								Watch Demo
+								{t("cta.watchDemo")}
 							</Button>
 						</Link>
 					</div>
@@ -77,17 +79,17 @@ export default function HomePage() {
 							<div className="text-3xl font-bold text-purple-600 mb-2">
 								10K+
 							</div>
-							<div className="text-gray-600">Giveaways Created</div>
+							<div className="text-gray-600">{t("stats.giveaways")}</div>
 						</div>
 						<div className="text-center">
 							<div className="text-3xl font-bold text-blue-600 mb-2">500K+</div>
-							<div className="text-gray-600">Participants</div>
+							<div className="text-gray-600">{t("stats.participants")}</div>
 						</div>
 						<div className="text-center">
 							<div className="text-3xl font-bold text-green-600 mb-2">
 								99.9%
 							</div>
-							<div className="text-gray-600">Uptime</div>
+							<div className="text-gray-600">{t("stats.uptime")}</div>
 						</div>
 					</div>
 				</div>
@@ -95,11 +97,10 @@ export default function HomePage() {
 				<section id="features" className="py-20">
 					<div className="text-center mb-16">
 						<h2 className="text-4xl font-bold text-gray-800 mb-4">
-							Everything You Need
+							{t("features.title")}
 						</h2>
 						<p className="text-xl text-gray-600 max-w-2xl mx-auto">
-							Powerful features designed to make your giveaways successful and
-							engaging
+							{t("features.description")}
 						</p>
 					</div>
 
@@ -123,16 +124,13 @@ export default function HomePage() {
 
 				<section className="py-20 text-center">
 					<div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-3xl p-12 text-white">
-						<h2 className="text-4xl font-bold mb-4">
-							Ready to Launch Your Next Giveaway?
-						</h2>
+						<h2 className="text-4xl font-bold mb-4">{t("cta.final.title")}</h2>
 						<p className="text-xl mb-8 opacity-90">
-							Join thousands of creators who trust GiveawayManager for their
-							campaigns
+							{t("cta.final.description")}
 						</p>
 						<Link href={ROUTES.SIGNUP}>
 							<Button className="px-8 py-4 bg-white text-purple-600 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-								Get Started for Free
+								{t("cta.final.getStarted")}
 							</Button>
 						</Link>
 					</div>
