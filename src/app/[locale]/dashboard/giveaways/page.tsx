@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
+import { getTranslations } from "next-intl/server";
 
 import { GiveawayList } from "components/giveaways/giveaway-list";
 import { ROUTES } from "constants/routes";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 
 export default async function GiveawaysPage() {
 	const session = await getServerSession(authOptions);
+	const t = await getTranslations("dashboard.giveaways");
 
 	if (!session) {
 		redirect(ROUTES.SIGNIN);
@@ -25,8 +27,8 @@ export default async function GiveawaysPage() {
 	return (
 		<div className="space-y-6">
 			<div>
-				<h1 className="text-2xl font-bold">Giveaways</h1>
-				<p className="text-muted-foreground">Manage your Instagram giveaways</p>
+				<h1 className="text-2xl font-bold">{t("title")}</h1>
+				<p className="text-muted-foreground">{t("description")}</p>
 			</div>
 
 			<GiveawayList

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { SubscriptionPlan } from "app-types/subscription";
@@ -19,6 +20,7 @@ import { PLANS } from "constants/plans";
 import { ROUTES } from "constants/routes";
 
 export function SubscriptionStatus() {
+	const t = useTranslations("dashboard.settings.subscription");
 	const { data: session } = useSession();
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -51,12 +53,10 @@ export function SubscriptionStatus() {
 				throw new Error("Failed to cancel subscription");
 			}
 
-			setSuccess(
-				"Your subscription has been canceled. You will continue to have access until the end of your billing period."
-			);
+			setSuccess(t("success.canceled"));
 		} catch (error) {
 			console.error("Error canceling subscription:", error);
-			setError("Failed to cancel subscription. Please try again.");
+			setError(t("errors.default"));
 		} finally {
 			setIsLoading(false);
 		}
@@ -65,8 +65,8 @@ export function SubscriptionStatus() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Your Subscription</CardTitle>
-				<CardDescription>Manage your subscription plan</CardDescription>
+				<CardTitle>{t("title")}</CardTitle>
+				<CardDescription>{t("description")}</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{error && (
@@ -82,7 +82,7 @@ export function SubscriptionStatus() {
 				)}
 
 				<div className="space-y-1">
-					<div className="font-medium">Current Plan</div>
+					<div className="font-medium">{t("currentPlan.label")}</div>
 					<div className="flex items-center gap-2">
 						<span className="text-lg">{planDetails.name}</span>
 						{plan === SubscriptionPlan.PRO && (
@@ -94,10 +94,10 @@ export function SubscriptionStatus() {
 				</div>
 
 				<div className="space-y-1">
-					<div className="font-medium">Features</div>
+					<div className="font-medium">{t("features.label")}</div>
 					<ul className="list-disc pl-5 space-y-1">
-						{planDetails.features.map((feature: string, i: number) => (
-							<li key={i}>{feature}</li>
+						{planDetails.features.map((feature, i) => (
+							<li key={i}>{t(`features.items.${feature}`)}</li>
 						))}
 					</ul>
 				</div>
@@ -105,7 +105,7 @@ export function SubscriptionStatus() {
 			<CardFooter className="flex justify-between">
 				{plan === SubscriptionPlan.FREE ? (
 					<Link href={ROUTES.PRICING}>
-						<Button>Upgrade</Button>
+						<Button>{t("upgradeButton")}</Button>
 					</Link>
 				) : (
 					<Button
@@ -113,7 +113,7 @@ export function SubscriptionStatus() {
 						onClick={handleCancelSubscription}
 						disabled={isLoading}
 					>
-						{isLoading ? "Canceling..." : "Cancel Subscription"}
+						{isLoading ? t("buttons.loading") : t("buttons.cancel")}
 					</Button>
 				)}
 			</CardFooter>

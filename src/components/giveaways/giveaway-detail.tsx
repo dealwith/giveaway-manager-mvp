@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Giveaway, GiveawayStatus, GiveawayWinner } from "app-types/giveaway";
@@ -45,6 +46,7 @@ interface GiveawayDetailProps {
 }
 
 export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
+	const t = useTranslations("dashboard.giveaways.detail");
 	const router = useRouter();
 	const [error, setError] = useState<string | null>(null);
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -70,7 +72,7 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 			router.refresh();
 		} catch (error) {
 			console.error("Error canceling giveaway:", error);
-			setError("Failed to cancel giveaway");
+			setError(t("errors.cantCancel"));
 		} finally {
 			setIsCanceling(false);
 		}
@@ -85,7 +87,8 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 			router.push(ROUTES.GIVEAWAYS);
 		} catch (error) {
 			console.error("Error deleting giveaway:", error);
-			setError("Failed to delete giveaway");
+			setError(t("errors.cantDelete"));
+		} finally {
 			setIsDeleting(false);
 		}
 	};
@@ -103,14 +106,15 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 					<h1 className="text-2xl font-bold">{giveaway.title}</h1>
 					<div className="flex items-center gap-2 mt-2">
 						<Badge variant={GIVEAWAY_STATUS_COLORS[giveaway.status]}>
-							{GIVEAWAY_STATUS_LABELS[giveaway.status]}
+							{t(GIVEAWAY_STATUS_LABELS[giveaway.status])}
 						</Badge>
 
 						{isActive && (
 							<span className="text-sm text-gray-500">
-								Ends{" "}
-								{formatDistanceToNow(new Date(giveaway.endTime), {
-									addSuffix: true
+								{t("endsIn", {
+									time: formatDistanceToNow(new Date(giveaway.endTime), {
+										addSuffix: true
+									})
 								})}
 							</span>
 						)}
@@ -122,7 +126,7 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 						<Link href={ROUTES.EDIT_GIVEAWAY(giveaway.id)}>
 							<Button variant="outline" size="sm">
 								<PencilIcon className="h-4 w-4 mr-2" />
-								Edit
+								{t("buttons.edit")}
 							</Button>
 						</Link>
 					)}
@@ -131,45 +135,54 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<Button variant="outline" size="sm" disabled={isCanceling}>
-									{isCanceling ? "Canceling..." : "Cancel Giveaway"}
+									{isCanceling
+										? t("buttons.canceling")
+										: t("buttons.cancelGiveaway")}
 								</Button>
 							</AlertDialogTrigger>
 							<AlertDialogContent>
 								<AlertDialogHeader>
-									<AlertDialogTitle>Cancel Giveaway?</AlertDialogTitle>
+									<AlertDialogTitle>
+										{t("confirmDialog.cancel.title")}
+									</AlertDialogTitle>
 									<AlertDialogDescription>
-										This will permanently cancel the giveaway. This action
-										cannot be undone.
+										{t("confirmDialog.cancel.description")}
 									</AlertDialogDescription>
 								</AlertDialogHeader>
 								<AlertDialogFooter>
-									<AlertDialogCancel>Go Back</AlertDialogCancel>
+									<AlertDialogCancel>
+										{t("confirmDialog.actions.goBack")}
+									</AlertDialogCancel>
 									<AlertDialogAction onClick={handleCancel}>
-										Cancel Giveaway
+										{t("confirmDialog.actions.cancel")}
 									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>
 						</AlertDialog>
 					)}
+
 					<AlertDialog>
 						<AlertDialogTrigger asChild>
 							<Button variant="destructive" size="sm" disabled={isDeleting}>
 								<TrashIcon className="h-4 w-4 mr-2" />
-								{isDeleting ? "Deleting..." : "Delete"}
+								{isDeleting ? t("buttons.deleting") : t("buttons.delete")}
 							</Button>
 						</AlertDialogTrigger>
 						<AlertDialogContent>
 							<AlertDialogHeader>
-								<AlertDialogTitle>Delete Giveaway?</AlertDialogTitle>
+								<AlertDialogTitle>
+									{t("confirmDialog.delete.title")}
+								</AlertDialogTitle>
 								<AlertDialogDescription>
-									This will permanently delete the giveaway and all associated
-									data. This action cannot be undone.
+									{t("confirmDialog.delete.description")}
 								</AlertDialogDescription>
 							</AlertDialogHeader>
 							<AlertDialogFooter>
-								<AlertDialogCancel>Cancel</AlertDialogCancel>
+								<AlertDialogCancel>
+									{t("confirmDialog.actions.cancel")}
+								</AlertDialogCancel>
 								<AlertDialogAction onClick={handleDelete}>
-									Delete
+									{t("confirmDialog.actions.delete")}
 								</AlertDialogAction>
 							</AlertDialogFooter>
 						</AlertDialogContent>
@@ -188,13 +201,13 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<Card>
 					<CardHeader>
-						<CardTitle>Details</CardTitle>
+						<CardTitle>{t("details.title")}</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-4">
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<TagIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
-								<div className="font-medium">Keyword</div>
+								<div className="font-medium">{t("details.keyword.label")}</div>
 								<div className="text-sm text-gray-500">{giveaway.keyword}</div>
 							</div>
 						</div>
@@ -202,7 +215,9 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<CalendarIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
-								<div className="font-medium">Start Time</div>
+								<div className="font-medium">
+									{t("details.startTime.label")}
+								</div>
 								<div className="text-sm text-gray-500">
 									{format(new Date(giveaway.startTime), "PPP p")}
 								</div>
@@ -212,7 +227,7 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<ClockIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
-								<div className="font-medium">End Time</div>
+								<div className="font-medium">{t("details.endTime.label")}</div>
 								<div className="text-sm text-gray-500">
 									{format(new Date(giveaway.endTime), "PPP p")}
 								</div>
@@ -222,14 +237,14 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<ExternalLinkIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
-								<div className="font-medium">Instagram Post</div>
+								<div className="font-medium">{t("details.post.label")}</div>
 								<a
 									href={giveaway.postUrl}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="text-sm text-blue-500 hover:underline"
 								>
-									View Post
+									{t("details.post.viewPost")}
 								</a>
 							</div>
 						</div>
@@ -237,14 +252,14 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<ExternalLinkIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
-								<div className="font-medium">Prize Document</div>
+								<div className="font-medium">{t("details.document.label")}</div>
 								<a
 									href={giveaway.documentUrl}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="text-sm text-blue-500 hover:underline"
 								>
-									View Document
+									{t("details.document.viewDocument")}
 								</a>
 							</div>
 						</div>
@@ -253,38 +268,39 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 
 				<Card>
 					<CardHeader>
-						<CardTitle>Stats</CardTitle>
+						<CardTitle>{t("stats.title")}</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-4">
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<UsersIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
-								<div className="font-medium">Winners</div>
+								<div className="font-medium">{t("stats.winners.label")}</div>
 								<div className="text-sm text-gray-500">
-									{winners.length} {winners.length === 1 ? "user" : "users"}
+									{winners.length}{" "}
+									{winners.length === 1
+										? t("stats.winners.single")
+										: t("stats.winners.multiple")}
 								</div>
 							</div>
 						</div>
 
 						{(isActive || isCompleted) && (
 							<p className="text-sm text-gray-500 pt-2">
-								Users who commented with{" "}
-								<span className="font-medium">{giveaway.keyword}</span> will
-								automatically receive a direct message with the prize document
-								link.
+								{t("description.autoMessage", { keyword: giveaway.keyword })}
 							</p>
 						)}
 
 						{isScheduled && (
 							<p className="text-sm text-gray-500 pt-2">
-								This giveaway is scheduled to start on{" "}
-								{format(new Date(giveaway.startTime), "PPP p")}.
+								{t("description.scheduled", {
+									date: format(new Date(giveaway.startTime), "PPP p")
+								})}
 							</p>
 						)}
 
 						{isCanceled && (
 							<p className="text-sm text-gray-500 pt-2">
-								This giveaway was canceled.
+								{t("description.canceled")}
 							</p>
 						)}
 					</CardContent>

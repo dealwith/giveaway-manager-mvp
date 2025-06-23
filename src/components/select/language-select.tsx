@@ -10,6 +10,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger
 } from "components/ui/dropdown-menu";
+import { cn } from "lib/utils";
 
 const LANGUAGES = [
 	{ code: "en", label: "English" },
@@ -39,18 +40,21 @@ export function LanguageSelect() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" className="text-sm">
+				<Button variant="outline" className="text-sm">
 					🌐{" "}
 					{LANGUAGES.find((l) => l.code === currentLocale)?.label ??
 						currentLocale}
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="bg-white">
+			<DropdownMenuContent align="end">
 				{LANGUAGES.map(({ code, label }) => (
 					<DropdownMenuItem
 						key={code}
 						onClick={() => handleChange(code)}
-						className={code === currentLocale ? "font-semibold" : ""}
+						className={cn(
+							"cursor-pointer",
+							code === currentLocale ? "font-semibold" : ""
+						)}
 					>
 						{label}
 					</DropdownMenuItem>

@@ -1,5 +1,8 @@
+"use client";
+
 import { format, formatDistanceToNow } from "date-fns";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { Giveaway, GiveawayStatus } from "app-types/giveaway";
 import { Badge } from "components/ui/badge";
@@ -22,6 +25,8 @@ interface GiveawayCardProps {
 }
 
 export function GiveawayCard({ giveaway }: GiveawayCardProps) {
+	const t = useTranslations("dashboard.giveaways.card");
+
 	const isActive = giveaway.status === GiveawayStatus.ACTIVE;
 	const isCompleted = giveaway.status === GiveawayStatus.COMPLETED;
 
@@ -31,7 +36,7 @@ export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 				<div className="flex justify-between items-start">
 					<CardTitle className="text-lg font-bold">{giveaway.title}</CardTitle>
 					<Badge variant={GIVEAWAY_STATUS_COLORS[giveaway.status]}>
-						{GIVEAWAY_STATUS_LABELS[giveaway.status]}
+						{t(GIVEAWAY_STATUS_LABELS[giveaway.status])}
 					</Badge>
 				</div>
 			</CardHeader>
@@ -43,19 +48,19 @@ export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 
 				<div className="space-y-2">
 					<div className="flex items-center text-sm">
-						<span className="font-medium mr-2">Keyword:</span>
+						<span className="font-medium mr-2">{t("keyword")}</span>
 						<span className="text-blue-600">{giveaway.keyword}</span>
 					</div>
 
 					<div className="flex items-center text-sm">
-						<span className="font-medium mr-2">Start:</span>
+						<span className="font-medium mr-2">{t("start")}</span>
 						<span>
 							{format(new Date(giveaway.startTime), "MMM d, yyyy h:mm a")}
 						</span>
 					</div>
 
 					<div className="flex items-center text-sm">
-						<span className="font-medium mr-2">End:</span>
+						<span className="font-medium mr-2">{t("end")}</span>
 						<span>
 							{format(new Date(giveaway.endTime), "MMM d, yyyy h:mm a")}
 						</span>
@@ -63,9 +68,9 @@ export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 
 					{isActive && (
 						<div className="flex items-center text-sm mt-2">
-							<span className="font-medium mr-2">Active for:</span>
+							<span className="font-medium mr-2">{t("activeFor")}</span>
 							<span>
-								{formatDistanceToNow(new Date(giveaway.endTime), {
+								{formatDistanceToNow(new Date(giveaway.startTime), {
 									addSuffix: true
 								})}
 							</span>
@@ -74,7 +79,7 @@ export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 
 					{isCompleted && giveaway.winnerCount && (
 						<div className="flex items-center text-sm mt-2">
-							<span className="font-medium mr-2">Winners:</span>
+							<span className="font-medium mr-2">{t("winners")}</span>
 							<span>{giveaway.winnerCount}</span>
 						</div>
 					)}
@@ -84,7 +89,7 @@ export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 			<CardFooter>
 				<Link href={ROUTES.VIEW_GIVEAWAY(giveaway.id)} className="w-full">
 					<Button variant="default" className="w-full">
-						View Details
+						{t("buttons.viewDetails")}
 					</Button>
 				</Link>
 			</CardFooter>
