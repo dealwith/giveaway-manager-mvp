@@ -40,10 +40,12 @@ export function LanguageSelect() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="outline" className="text-sm">
+				<Button variant="outline" className="text-sm gap-1.5">
 					🌐{" "}
-					{LANGUAGES.find((l) => l.code === currentLocale)?.label ??
-						currentLocale}
+					<span className="max-md:hidden">
+						{LANGUAGES.find((l) => l.code === currentLocale)?.label ??
+							currentLocale}
+					</span>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
