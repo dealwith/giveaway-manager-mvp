@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
+import { getTranslations } from "next-intl/server";
 
 import { GiveawayStatus } from "app-types/giveaway";
 import { GiveawayForm } from "components/giveaways/giveaway-form";
@@ -36,6 +37,7 @@ export default async function EditGiveawayPage({
 	params
 }: EditGiveawayPageProps) {
 	const session = await getServerSession(authOptions);
+	const t = await getTranslations("dashboard.editGiveaway");
 
 	if (!session) {
 		redirect(ROUTES.SIGNIN);
@@ -61,8 +63,8 @@ export default async function EditGiveawayPage({
 	return (
 		<div className="space-y-6">
 			<div>
-				<h1 className="text-2xl font-bold">Edit Giveaway</h1>
-				<p className="text-muted-foreground">Update your giveaway details</p>
+				<h1 className="text-2xl font-bold">{t("title")}</h1>
+				<p className="text-muted-foreground">{t("description")}</p>
 			</div>
 
 			<GiveawayForm giveaway={giveaway} />

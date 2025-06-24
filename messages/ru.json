@@ -234,5 +234,259 @@
 				"passwordReset": "Мы отправили ссылку для сброса пароля на ваш email!"
 			}
 		}
+	},
+	"dashboard": {
+		"title": "Панель управления",
+		"welcome": "Добро пожаловать, {name}",
+		"createGiveawayButton": "Создать розыгрыш",
+		"upgradePlanButton": "Обновить план",
+		"manageSubscriptionButton": "Управление подпиской",
+		"keywordLabel": "Ключевое слово",
+		"viewDetails": "Подробнее",
+		"viewAllGiveaways": "Все розыгрыши",
+		"stats": {
+			"totalGiveaways": "Всего розыгрышей",
+			"remainingGiveaways": "Осталось: {count}",
+			"activeGiveaways": "Активные розыгрыши",
+			"runningNow": "Идёт сейчас",
+			"currentPlan": "Текущий план",
+			"giveawaysIncluded": "Розыгрышей включено: {count}"
+		},
+		"recentGiveaways": {
+			"title": "Недавние розыгрыши",
+			"empty": "Вы еще не создали ни одного розыгрыша.",
+			"createFirst": "Создайте первый розыгрыш"
+		},
+		"status": {
+			"ACTIVE": "Активный",
+			"SCHEDULED": "Запланированный",
+			"COMPLETED": "Завершён",
+			"ENDED": "Законченный"
+		},
+		"nav": {
+			"dashboard": "Главная",
+			"giveaways": "Розыгрыши",
+			"settings": "Настройки",
+			"pricing": "Тарифы"
+		},
+		"settings": {
+			"title": "Настройки",
+			"description": "Управление аккаунтом и подпиской",
+			"subscription": {
+				"title": "Ваша подписка",
+				"description": "Управление подпиской",
+				"currentPlan": {
+					"label": "Текущий план"
+				},
+				"features": {
+					"label": "Функции",
+					"items": {
+						"1 giveaway": "1 розыгрыш",
+						"Basic analytics": "Базовая аналитика",
+						"Email support": "Поддержка сообщества",
+						"Unlimited giveaways": "Неограниченное количество розыгрышей",
+						"Advanced analytics": "Расширенная аналитика",
+						"Priority support": "Приоритетная поддержка",
+						"Custom integrations": "Настраиваемые интеграции"
+					}
+				},
+				"buttons": {
+					"cancel": "Отменить подписку",
+					"loading": "Отмена..."
+				},
+				"upgradeButton": "Обновить",
+				"success": {
+					"canceled": "Ваша подписка отменена. Доступ будет доступен до конца оплаченного периода."
+				},
+				"errors": {
+					"default": "Не удалось отменить подписку. Попробуйте ещё раз."
+				}
+			}
+		},
+		"createGiveaway": {
+			"title": "Создать розыгрыш",
+			"description": "Настройте новый розыгрыш в Instagram",
+			"limit": {
+				"reached": "Вы достигли лимита розыгрышей. Пожалуйста, обновите ваш план, чтобы создавать больше розыгрышей.",
+				"upgradeButton": "Обновить план"
+			},
+			"form": {
+				"fields": {
+					"title": {
+						"label": "Заголовок",
+						"placeholder": "Мой невероятный розыгрыш"
+					},
+					"description": {
+						"label": "Описание (необязательно)",
+						"placeholder": "Опишите свой розыгрыш..."
+					},
+					"postUrl": {
+						"label": "URL поста в Instagram",
+						"placeholder": "https://www.instagram.com/p/..."
+					},
+					"documentUrl": {
+						"label": "URL документа с призом",
+						"placeholder": "https://docs.google.com/..."
+					},
+					"keyword": {
+						"label": "Ключевое слово",
+						"placeholder": "победитель"
+					},
+					"startTime": {
+						"label": "Время начала"
+					},
+					"endTime": {
+						"label": "Время окончания"
+					}
+				},
+				"validation": {
+					"titleMin": "Заголовок должен быть минимум из 3 символов",
+					"titleMax": "Заголовок может содержать максимум 100 символов",
+					"descriptionMax": "Описание может содержать максимум 500 символов",
+					"enterValidUrl": "Пожалуйста, введите корректный URL",
+					"instagramUrl": "Пожалуйста, введите корректный URL поста в Instagram",
+					"keywordMin": "Ключевое слово должно быть минимум из 2 символов",
+					"keywordMax": "Ключевое слово может содержать максимум 50 символов",
+					"futureStart": "Время начала должно быть в будущем",
+					"futureEnd": "Время окончания должно быть в будущем",
+					"endAfterStart": "Время окончания должно быть после времени начала"
+				},
+				"buttons": {
+					"cancel": "Отмена",
+					"create": "Создать розыгрыш",
+					"update": "Обновить розыгрыш",
+					"creating": "Создание...",
+					"updating": "Обновление..."
+				},
+				"errors": {
+					"notSignedIn": "Вы должны войти, чтобы создать розыгрыш",
+					"saveFailed": "Не удалось сохранить розыгрыш. Попробуйте ещё раз."
+				}
+			}
+		},
+		"editGiveaway": {
+			"title": "Редактировать розыгрыш",
+			"description": "Обновите данные своего розыгрыша",
+			"metadata": {
+				"title": "Редактировать",
+				"notFound": {
+					"title": "Розыгрыш не найден"
+				}
+			}
+		},
+		"giveaways": {
+			"title": "Розыгрыши",
+			"description": "Управление своими розыгрышами в Instagram",
+			"list": {
+				"yourGiveaways": "Ваши розыгрыши",
+				"usedGiveaways": "{count} из {limit} использовано",
+				"empty": {
+					"title": "Нет розыгрышей",
+					"description": "Создайте первый розыгрыш, чтобы начать"
+				},
+				"sections": {
+					"active": "Активные",
+					"upcoming": "Предстоящие",
+					"completed": "Завершенные",
+					"other": "Другое"
+				},
+				"buttons": {
+					"create": "Создать розыгрыш",
+					"upgrade": "Обновить план"
+				}
+			},
+			"card": {
+				"keyword": "Ключевое слово",
+				"start": "Начало",
+				"end": "Конец",
+				"activeFor": "Активен",
+				"winners": "Победители",
+				"buttons": {
+					"viewDetails": "Подробнее"
+				},
+				"status": {
+					"draft": "Черновик",
+					"scheduled": "Запланировано",
+					"active": "Активный",
+					"completed": "Завершено"
+				}
+			},
+			"detail": {
+				"buttons": {
+					"edit": "Редактировать",
+					"cancelGiveaway": "Отменить розыгрыш",
+					"canceling": "Отмена...",
+					"delete": "Удалить",
+					"deleting": "Удаление..."
+				},
+				"confirmDialog": {
+					"cancel": {
+						"title": "Отменить розыгрыш?",
+						"description": "Это приведет к окончательной отмене розыгрыша. Это действие нельзя отменить."
+					},
+					"delete": {
+						"title": "Удалить розыгрыш?",
+						"description": "Это удалит розыгрыш и все связанные данные навсегда. Это действие нельзя отменить."
+					},
+					"actions": {
+						"goBack": "Назад",
+						"cancel": "Отменить",
+						"delete": "Удалить"
+					}
+				},
+				"details": {
+					"keyword": "Ключевое слово",
+					"startTime": {
+						"label": "Время начала"
+					},
+					"endTime": {
+						"label": "Время окончания"
+					},
+					"post": {
+						"label": "Пост в Instagram",
+						"viewPost": "Смотреть пост"
+					},
+					"document": {
+						"label": "Документ с призом",
+						"viewDocument": "Посмотреть документ"
+					}
+				},
+				"stats": {
+					"title": "Статистика",
+					"winners": {
+						"label": "Победители",
+						"single": "пользователь",
+						"multiple": "пользователей"
+					}
+				},
+				"description": {
+					"autoMessage": "Пользователи, которые оставили комментарий с {keyword}, автоматически получат сообщение с ссылкой на документ.",
+					"scheduled": "Этот розыгрыш запланирован на {date}.",
+					"canceled": "Этот розыгрыш был отменен."
+				},
+				"endsIn": "Заканчивается через {time}",
+				"errors": {
+					"cantCancel": "Не удалось отменить розыгрыш. Попробуйте еще раз.",
+					"cantDelete": "Не удалось удалить розыгрыш. Попробуйте еще раз."
+				}
+			},
+			"giveaway": {
+				"winners": {
+					"title": "Победители",
+					"description": "Список пользователей, выигравших этот розыгрыш",
+					"columns": {
+						"username": "Имя пользователя",
+						"date": "Дата",
+						"messageStatus": "Статус сообщения",
+						"likeStatus": "Статус лайка"
+					},
+					"status": {
+						"sent": "Отправлено",
+						"failed": "Ошибка"
+					},
+					"dateFormat": "dd.MM.yyyy HH:mm"
+				}
+			}
+		}
 	}
 }

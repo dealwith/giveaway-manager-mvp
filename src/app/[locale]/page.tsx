@@ -69,7 +69,7 @@ export default function HomePage() {
 							</Button>
 						</Link>
 						<Link href={ROUTES.PRICING}>
-							<Button className="px-8 py-4 border-2 border-gray-200 rounded-full text-lg font-semibold hover:border-purple-300 hover:bg-purple-50 transition-all duration-300">
+							<Button className="px-8 py-4 border-2 border-gray-200 rounded-full text-lg font-semibold hover:border-purple-300 hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
 								{t("cta.watchDemo")}
 							</Button>
 						</Link>
@@ -129,7 +129,7 @@ export default function HomePage() {
 							{t("cta.final.description")}
 						</p>
 						<Link href={ROUTES.SIGNUP}>
-							<Button className="px-8 py-4 bg-white text-purple-600 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+							<Button className="px-8 py-4 bg-white text-purple-600 rounded-full text-lg font-semibold hover:bg-white hover:shadow-xl transition-all duration-300 transform hover:scale-105">
 								{t("cta.final.getStarted")}
 							</Button>
 						</Link>

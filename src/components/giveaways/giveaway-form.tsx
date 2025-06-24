@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -92,6 +93,7 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 	const { data: session } = useSession();
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
+	const t = useTranslations("dashboard.createGiveaway.form");
 
 	const {
 		register,
@@ -123,7 +125,7 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 
 	const onSubmit = async (data: GiveawayFormValues) => {
 		if (!session?.user) {
-			setError("You must be signed in to create a giveaway");
+			setError(t("errors.notSignedIn"));
 
 			return;
 		}
@@ -133,7 +135,6 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 
 		try {
 			if (!giveaway) {
-				// Check if user has reached their giveaway limit
 				const reachedLimit = await hasReachedGiveawayLimit(
 					session.user.id,
 					session.user.subscriptionPlan || SubscriptionPlan.FREE
@@ -141,19 +142,19 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 
 				if (reachedLimit) {
 					setError(
-						`You've reached your limit of ${
-							PLANS[session.user.subscriptionPlan || SubscriptionPlan.FREE]
-								.giveawayLimit
-						} giveaways. Please upgrade your plan to create more.`
+						t("errors.limitReached", {
+							limit:
+								PLANS[session.user.subscriptionPlan || SubscriptionPlan.FREE]
+									.giveawayLimit
+						})
 					);
 					setIsLoading(false);
 
 					return;
 				}
+			}
 
-				router.push(ROUTES.GIVEAWAYS);
-			} else {
-				// Update existing giveaway
+			if (giveaway) {
 				await updateGiveaway(giveaway.id, {
 					title: data.title,
 					description: data.description,
@@ -165,10 +166,12 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 				});
 
 				router.push(ROUTES.VIEW_GIVEAWAY(giveaway.id));
+			} else {
+				router.push(ROUTES.GIVEAWAYS);
 			}
 		} catch (error) {
 			console.error("Error saving giveaway:", error);
-			setError("Failed to save giveaway. Please try again.");
+			setError(t("errors.saveFailed"));
 		} finally {
 			setIsLoading(false);
 		}
@@ -184,92 +187,100 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div className="space-y-2">
-					<Label htmlFor="title">Title</Label>
+					<Label htmlFor="title">{t("fields.title.label")}</Label>
 					<Input
 						id="title"
-						placeholder="My Amazing Giveaway"
+						placeholder={t("fields.title.placeholder")}
 						{...register("title")}
 						disabled={isLoading}
 					/>
-					{errors.title && (
-						<p className="text-sm text-red-500">{errors.title.message}</p>
+					{errors.title && errors.title.message && (
+						<p className="text-sm text-red-500">{t(errors.title.message)}</p>
 					)}
 				</div>
 
 				<div className="space-y-2">
-					<Label htmlFor="description">Description (Optional)</Label>
+					<Label htmlFor="description">{t("fields.description.label")}</Label>
 					<Textarea
 						id="description"
-						placeholder="Describe your giveaway..."
+						placeholder={t("fields.description.placeholder")}
 						{...register("description")}
 						disabled={isLoading}
 					/>
-					{errors.description && (
-						<p className="text-sm text-red-500">{errors.description.message}</p>
+					{errors.description && errors.description.message && (
+						<p className="text-sm text-red-500">
+							{t(errors.description.message)}
+						</p>
 					)}
 				</div>
 
 				<div className="space-y-2">
-					<Label htmlFor="postUrl">Instagram Post URL</Label>
+					<Label htmlFor="postUrl">{t("fields.postUrl.label")}</Label>
 					<Input
 						id="postUrl"
-						placeholder="https://www.instagram.com/p/..."
+						placeholder={t("fields.postUrl.placeholder")}
 						{...register("postUrl")}
 						disabled={isLoading}
 					/>
-					{errors.postUrl && (
-						<p className="text-sm text-red-500">{errors.postUrl.message}</p>
+					{errors.postUrl && errors.postUrl.message && (
+						<p className="text-sm text-red-500">{t(errors.postUrl.message)}</p>
 					)}
 				</div>
 
 				<div className="space-y-2">
-					<Label htmlFor="documentUrl">Prize Document URL</Label>
+					<Label htmlFor="documentUrl">{t("fields.documentUrl.label")}</Label>
 					<Input
 						id="documentUrl"
-						placeholder="https://docs.google.com/..."
+						placeholder={t("fields.documentUrl.placeholder")}
 						{...register("documentUrl")}
 						disabled={isLoading}
 					/>
-					{errors.documentUrl && (
-						<p className="text-sm text-red-500">{errors.documentUrl.message}</p>
+					{errors.documentUrl && errors.documentUrl.message && (
+						<p className="text-sm text-red-500">
+							{t(errors.documentUrl.message)}
+						</p>
 					)}
 				</div>
 
 				<div className="space-y-2">
-					<Label htmlFor="keyword">Keyword</Label>
+					<Label htmlFor="keyword">{t("fields.keyword.label")}</Label>
 					<Input
 						id="keyword"
-						placeholder="winner"
+						placeholder={t("fields.keyword.placeholder")}
 						{...register("keyword")}
 						disabled={isLoading}
 					/>
-					{errors.keyword && (
-						<p className="text-sm text-red-500">{errors.keyword.message}</p>
+					{errors.keyword && errors.keyword.message && (
+						<p className="text-sm text-red-500">{t(errors.keyword.message)}</p>
 					)}
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					<div className="space-y-2">
-						<Label htmlFor="startTime">Start Time</Label>
+						<Label htmlFor="startTime">{t("fields.startTime.label")}</Label>
 						<DateTimePicker
 							control={control}
 							name="startTime"
 							disabled={isLoading}
 						/>
-						{errors.startTime && (
-							<p className="text-sm text-red-500">{errors.startTime.message}</p>
+						{errors.startTime && errors.startTime.message && (
+							<p className="text-sm text-red-500">
+								{t(errors.startTime.message)}
+							</p>
 						)}
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="endTime">End Time</Label>
+						<Label htmlFor="endTime">{t("fields.endTime.label")}</Label>
 						<DateTimePicker
 							control={control}
 							name="endTime"
 							disabled={isLoading}
 						/>
-						{errors.endTime && (
-							<p className="text-sm text-red-500">{errors.endTime.message}</p>
+						{errors.endTime && errors.endTime.message && (
+							<p className="text-sm text-red-500">
+								{t(errors.endTime.message)}
+							</p>
 						)}
 					</div>
 				</div>
@@ -281,16 +292,16 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 						onClick={() => router.back()}
 						disabled={isLoading}
 					>
-						Cancel
+						{t("buttons.cancel")}
 					</Button>
 					<Button variant="outline" type="submit" disabled={isLoading}>
 						{isLoading
 							? giveaway
-								? "Updating..."
-								: "Creating..."
+								? t("buttons.updating")
+								: t("buttons.creating")
 							: giveaway
-								? "Update Giveaway"
-								: "Create Giveaway"}
+								? t("buttons.update")
+								: t("buttons.create")}
 					</Button>
 				</div>
 			</form>

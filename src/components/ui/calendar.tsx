@@ -17,7 +17,7 @@ const Calendar = ({
 		<DayPicker
 			showOutsideDays={showOutsideDays}
 			animate
-			className={cn("p-3 bg-white", className)}
+			className={cn("p-3 bg-background", className)}
 			classNames={{
 				...classNames
 			}}

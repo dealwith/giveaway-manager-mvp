@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
+import { getTranslations } from "next-intl/server";
 
 import { GiveawayForm } from "components/giveaways/giveaway-form";
 import { Alert, AlertDescription } from "components/ui/alert";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
 
 export default async function CreateGiveawayPage() {
 	const session = await getServerSession(authOptions);
+	const t = await getTranslations("dashboard.createGiveaway");
 
 	if (!session) {
 		redirect(ROUTES.SIGNIN);
@@ -31,21 +33,16 @@ export default async function CreateGiveawayPage() {
 		return (
 			<div className="space-y-6">
 				<div>
-					<h1 className="text-2xl font-bold">Create Giveaway</h1>
-					<p className="text-muted-foreground">
-						Set up a new Instagram giveaway
-					</p>
+					<h1 className="text-2xl font-bold">{t("title")}</h1>
+					<p className="text-muted-foreground">{t("description")}</p>
 				</div>
 
 				<Alert variant="destructive">
-					<AlertDescription>
-						You have reached your giveaway limit. Please upgrade your plan to
-						create more giveaways.
-					</AlertDescription>
+					<AlertDescription>{t("limit.reached")}</AlertDescription>
 				</Alert>
 
 				<Link href={ROUTES.PRICING}>
-					<Button>Upgrade Plan</Button>
+					<Button>{t("limit.upgradeButton")}</Button>
 				</Link>
 			</div>
 		);
@@ -54,8 +51,8 @@ export default async function CreateGiveawayPage() {
 	return (
 		<div className="space-y-6">
 			<div>
-				<h1 className="text-2xl font-bold">Create Giveaway</h1>
-				<p className="text-muted-foreground">Set up a new Instagram giveaway</p>
+				<h1 className="text-2xl font-bold">{t("title")}</h1>
+				<p className="text-muted-foreground">{t("description")}</p>
 			</div>
 
 			<GiveawayForm />

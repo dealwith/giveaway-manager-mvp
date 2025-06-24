@@ -1,4 +1,7 @@
+"use client";
+
 import { format } from "date-fns";
+import { useTranslations } from "next-intl";
 
 import { GiveawayWinner } from "app-types/giveaway";
 import { Badge } from "components/ui/badge";
@@ -17,32 +20,38 @@ interface GiveawayWinnersListProps {
 }
 
 export function GiveawayWinnersList({ winners }: GiveawayWinnersListProps) {
+	const t = useTranslations("dashboard.giveaways.winners");
+
 	return (
 		<div className="space-y-4">
-			<h2 className="text-xl font-semibold">Winners</h2>
+			<h2 className="text-xl font-semibold">{t("title")}</h2>
 
 			<Table>
-				<TableCaption>List of users who won this giveaway</TableCaption>
+				<TableCaption>{t("description")}</TableCaption>
 				<TableHeader>
 					<TableRow>
-						<TableHead>Username</TableHead>
-						<TableHead>Date</TableHead>
-						<TableHead>Message Status</TableHead>
-						<TableHead>Like Status</TableHead>
+						<TableHead>{t("columns.username")}</TableHead>
+						<TableHead>{t("columns.date")}</TableHead>
+						<TableHead>{t("columns.messageStatus")}</TableHead>
+						<TableHead>{t("columns.likeStatus")}</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{winners.map((winner) => (
 						<TableRow key={winner.id}>
 							<TableCell className="font-medium">@{winner.username}</TableCell>
-							<TableCell>{format(new Date(winner.createdAt), "PP")}</TableCell>
+							<TableCell>
+								{format(new Date(winner.createdAt), t("dateFormat"))}
+							</TableCell>
 							<TableCell>
 								<Badge
 									variant={
 										winner.messageStatus === "sent" ? "success" : "destructive"
 									}
 								>
-									{winner.messageStatus === "sent" ? "Sent" : "Failed"}
+									{winner.messageStatus === "sent"
+										? t("status.sent")
+										: t("status.failed")}
 								</Badge>
 							</TableCell>
 							<TableCell>
@@ -51,7 +60,9 @@ export function GiveawayWinnersList({ winners }: GiveawayWinnersListProps) {
 										winner.likeStatus === "sent" ? "success" : "destructive"
 									}
 								>
-									{winner.likeStatus === "sent" ? "Sent" : "Failed"}
+									{winner.likeStatus === "sent"
+										? t("status.sent")
+										: t("status.failed")}
 								</Badge>
 							</TableCell>
 						</TableRow>

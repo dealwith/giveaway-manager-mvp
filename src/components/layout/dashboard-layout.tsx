@@ -3,6 +3,7 @@
 import { DollarSignIcon, GiftIcon, HomeIcon, SettingsIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 
 import { Button } from "components/ui/button";
@@ -15,25 +16,26 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
 	const pathname = usePathname();
+	const t = useTranslations("dashboard.nav");
 
 	const navItems = [
 		{
-			title: "Dashboard",
+			title: t("dashboard"),
 			href: ROUTES.DASHBOARD,
 			icon: HomeIcon
 		},
 		{
-			title: "Giveaways",
+			title: t("giveaways"),
 			href: ROUTES.GIVEAWAYS,
 			icon: GiftIcon
 		},
 		{
-			title: "Settings",
+			title: t("settings"),
 			href: ROUTES.SETTINGS,
 			icon: SettingsIcon
 		},
 		{
-			title: "Pricing",
+			title: t("pricing"),
 			href: ROUTES.PRICING,
 			icon: DollarSignIcon
 		}

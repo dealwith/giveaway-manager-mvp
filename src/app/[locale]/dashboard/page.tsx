@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
+import { getTranslations } from "next-intl/server";
 
 import { GiveawayStatus } from "app-types/giveaway";
 import { Button } from "components/ui/button";
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
 
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);
+	const t = await getTranslations("dashboard");
 
 	if (!session) {
 		redirect(ROUTES.SIGNIN);
@@ -45,9 +47,9 @@ export default async function DashboardPage() {
 		<div className="space-y-6">
 			<div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
 				<div>
-					<h1 className="text-2xl font-bold">Dashboard</h1>
+					<h1 className="text-2xl font-bold">{t("title")}</h1>
 					<p className="text-muted-foreground">
-						Welcome back, {session.user.name || session.user.email}
+						{t("welcome", { name: session.user.name || session.user.email })}
 					</p>
 				</div>
 
@@ -55,12 +57,12 @@ export default async function DashboardPage() {
 					<Link href={ROUTES.CREATE_GIVEAWAY}>
 						<Button>
 							<PlusIcon className="mr-2 h-4 w-4" />
-							Create Giveaway
+							{t("createGiveawayButton")}
 						</Button>
 					</Link>
 				) : (
 					<Link href={ROUTES.PRICING}>
-						<Button>Upgrade Plan</Button>
+						<Button>{t("upgradePlanButton")}</Button>
 					</Link>
 				)}
 			</div>
@@ -69,14 +71,16 @@ export default async function DashboardPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							Total Giveaways
+							{t("stats.totalGiveaways")}
 						</CardTitle>
 						<GiftIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{giveawayCount}</div>
 						<p className="text-xs text-muted-foreground">
-							{planDetails.giveawayLimit - giveawayCount} remaining in your plan
+							{t("stats.remainingGiveaways", {
+								count: planDetails.giveawayLimit - giveawayCount
+							})}
 						</p>
 					</CardContent>
 				</Card>
@@ -84,31 +88,37 @@ export default async function DashboardPage() {
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">
-							Active Giveaways
+							{t("stats.activeGiveaways")}
 						</CardTitle>
 						<GiftIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{activeGiveaways.length}</div>
-						<p className="text-xs text-muted-foreground">Running right now</p>
+						<p className="text-xs text-muted-foreground">
+							{t("stats.runningNow")}
+						</p>
 					</CardContent>
 				</Card>
 
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Current Plan</CardTitle>
+						<CardTitle className="text-sm font-medium">
+							{t("stats.currentPlan")}
+						</CardTitle>
 						<SettingsIcon className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{planDetails.name}</div>
 						<p className="text-xs text-muted-foreground">
-							{planDetails.giveawayLimit} giveaways included
+							{t("stats.giveawaysIncluded", {
+								count: planDetails.giveawayLimit
+							})}
 						</p>
 					</CardContent>
 					<CardFooter>
 						<Link href={ROUTES.SETTINGS} className="w-full">
 							<Button variant="outline" className="w-full">
-								Manage Subscription
+								{t("manageSubscriptionButton")}
 							</Button>
 						</Link>
 					</CardFooter>
@@ -116,14 +126,14 @@ export default async function DashboardPage() {
 			</div>
 
 			<div className="space-y-4">
-				<h2 className="text-xl font-semibold">Recent Giveaways</h2>
+				<h2 className="text-xl font-semibold">{t("recentGiveaways.title")}</h2>
 
 				{giveaways.length === 0 ? (
 					<Card>
 						<CardContent className="pt-6 pb-6 text-center">
-							<p className="mb-4">You haven&apos;t created any giveaways yet</p>
+							<p className="mb-4">{t("recentGiveaways.empty")}</p>
 							<Link href={ROUTES.CREATE_GIVEAWAY}>
-								<Button>Create Your First Giveaway</Button>
+								<Button>{t("recentGiveaways.createFirst")}</Button>
 							</Link>
 						</CardContent>
 					</Card>
@@ -134,26 +144,20 @@ export default async function DashboardPage() {
 								<CardHeader>
 									<CardTitle>{giveaway.title}</CardTitle>
 									<CardDescription>
-										{giveaway.status === GiveawayStatus.ACTIVE
-											? "Active"
-											: giveaway.status === GiveawayStatus.COMPLETED
-												? "Completed"
-												: giveaway.status === GiveawayStatus.SCHEDULED
-													? "Scheduled"
-													: giveaway.status}
+										{t(`status.${giveaway.status}`)}
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<p className="text-sm">Keyword: {giveaway.keyword}</p>
+									<p className="text-sm">
+										{t("keywordLabel")}: {giveaway.keyword}
+									</p>
 								</CardContent>
 								<CardFooter>
 									<Link
 										href={ROUTES.VIEW_GIVEAWAY(giveaway.id)}
 										className="w-full"
 									>
-										<Button variant="outline" className="w-full">
-											View Details
-										</Button>
+										<Button variant="outline">{t("viewDetails")}</Button>
 									</Link>
 								</CardFooter>
 							</Card>
@@ -164,7 +168,7 @@ export default async function DashboardPage() {
 				{giveaways.length > 3 && (
 					<div className="flex justify-center">
 						<Link href={ROUTES.GIVEAWAYS}>
-							<Button variant="outline">View All Giveaways</Button>
+							<Button variant="outline">{t("viewAllGiveaways")}</Button>
 						</Link>
 					</div>
 				)}

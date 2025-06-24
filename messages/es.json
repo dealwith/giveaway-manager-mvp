@@ -234,5 +234,259 @@
 				"passwordReset": "¡Hemos enviado el enlace a tu correo electrónico!"
 			}
 		}
+	},
+	"dashboard": {
+		"title": "Panel de control",
+		"welcome": "Bienvenido de nuevo, {name}",
+		"createGiveawayButton": "Crear sorteo",
+		"upgradePlanButton": "Mejorar plan",
+		"manageSubscriptionButton": "Gestionar suscripción",
+		"keywordLabel": "Palabra clave",
+		"viewDetails": "Ver detalles",
+		"viewAllGiveaways": "Ver todos los sorteos",
+		"stats": {
+			"totalGiveaways": "Total de sorteos",
+			"remainingGiveaways": "{count} restantes en tu plan",
+			"activeGiveaways": "Sorteos activos",
+			"runningNow": "En ejecución ahora",
+			"currentPlan": "Plan actual",
+			"giveawaysIncluded": "{count} sorteos incluidos"
+		},
+		"recentGiveaways": {
+			"title": "Sorteos recientes",
+			"empty": "No has creado ningún sorteo todavía.",
+			"createFirst": "Crea tu primer sorteo"
+		},
+		"status": {
+			"ACTIVE": "Activo",
+			"SCHEDULED": "Programado",
+			"COMPLETED": "Completado",
+			"ENDED": "Finalizado"
+		},
+		"nav": {
+			"dashboard": "Inicio",
+			"giveaways": "Sorteos",
+			"settings": "Configuración",
+			"pricing": "Precios"
+		},
+		"settings": {
+			"title": "Configuración",
+			"description": "Gestiona tu cuenta y suscripción",
+			"subscription": {
+				"title": "Tu suscripción",
+				"description": "Gestiona tu plan de suscripción",
+				"currentPlan": {
+					"label": "Plan actual"
+				},
+				"features": {
+					"label": "Funciones",
+					"items": {
+						"1 giveaway": "1 sorteo",
+						"Basic analytics": "Analítica básica",
+						"Email support": "Soporte comunitario",
+						"Unlimited giveaways": "Sorteos ilimitados",
+						"Advanced analytics": "Analítica avanzada",
+						"Priority support": "Soporte prioritario",
+						"Custom integrations": "Integraciones personalizadas"
+					}
+				},
+				"buttons": {
+					"cancel": "Cancelar suscripción",
+					"loading": "Cancelando..."
+				},
+				"upgradeButton": "Mejorar",
+				"success": {
+					"canceled": "Tu suscripción ha sido cancelada. Tendrás acceso hasta el final del periodo de facturación."
+				},
+				"errors": {
+					"default": "No se pudo cancelar la suscripción. Inténtalo de nuevo."
+				}
+			}
+		},
+		"createGiveaway": {
+			"title": "Crear sorteo",
+			"description": "Configura un nuevo sorteo en Instagram",
+			"limit": {
+				"reached": "Has alcanzado el límite de sorteos. Por favor, actualiza tu plan para crear más.",
+				"upgradeButton": "Actualizar plan"
+			},
+			"form": {
+				"fields": {
+					"title": {
+						"label": "Título",
+						"placeholder": "Mi increíble sorteo"
+					},
+					"description": {
+						"label": "Descripción (opcional)",
+						"placeholder": "Describe tu sorteo..."
+					},
+					"postUrl": {
+						"label": "URL del post de Instagram",
+						"placeholder": "https://www.instagram.com/p/..."
+					},
+					"documentUrl": {
+						"label": "URL del documento del premio",
+						"placeholder": "https://docs.google.com/..."
+					},
+					"keyword": {
+						"label": "Palabra clave",
+						"placeholder": "ganador"
+					},
+					"startTime": {
+						"label": "Hora de inicio"
+					},
+					"endTime": {
+						"label": "Hora de finalización"
+					}
+				},
+				"validation": {
+					"titleMin": "El título debe tener al menos 3 caracteres",
+					"titleMax": "El título puede tener como máximo 100 caracteres",
+					"descriptionMax": "La descripción puede tener como máximo 500 caracteres",
+					"enterValidUrl": "Por favor, introduce una URL válida",
+					"instagramUrl": "Por favor, introduce una URL válida del post de Instagram",
+					"keywordMin": "La palabra clave debe tener al menos 2 caracteres",
+					"keywordMax": "La palabra clave puede tener hasta 50 caracteres",
+					"futureStart": "La hora de inicio debe estar en el futuro",
+					"futureEnd": "La hora de finalización debe estar en el futuro",
+					"endAfterStart": "La hora de finalización debe ser después de la hora de inicio"
+				},
+				"buttons": {
+					"cancel": "Cancelar",
+					"create": "Crear sorteo",
+					"update": "Actualizar sorteo",
+					"creating": "Creando...",
+					"updating": "Actualizando..."
+				},
+				"errors": {
+					"notSignedIn": "Debes iniciar sesión para crear un sorteo",
+					"saveFailed": "No se pudo guardar el sorteo. Inténtalo de nuevo."
+				}
+			}
+		},
+		"editGiveaway": {
+			"title": "Editar sorteo",
+			"description": "Actualiza los detalles de tu sorteo",
+			"metadata": {
+				"title": "Editar",
+				"notFound": {
+					"title": "Sorteo no encontrado"
+				}
+			}
+		},
+		"giveaways": {
+			"title": "Sorteos",
+			"description": "Gestiona tus sorteos en Instagram",
+			"list": {
+				"yourGiveaways": "Tus sorteos",
+				"usedGiveaways": "{count} de {limit} sorteos usados",
+				"empty": {
+					"title": "Sin sorteos aún",
+					"description": "Crea tu primer sorteo para empezar"
+				},
+				"sections": {
+					"active": "Activos",
+					"upcoming": "Próximos",
+					"completed": "Completados",
+					"other": "Otros"
+				},
+				"buttons": {
+					"create": "Crear sorteo",
+					"upgrade": "Mejorar plan"
+				}
+			},
+			"card": {
+				"keyword": "Palabra clave",
+				"start": "Inicio",
+				"end": "Fin",
+				"activeFor": "Activo desde",
+				"winners": "Ganadores",
+				"buttons": {
+					"viewDetails": "Ver detalles"
+				},
+				"status": {
+					"draft": "Borrador",
+					"scheduled": "Programado",
+					"active": "Activo",
+					"completed": "Completado"
+				}
+			},
+			"detail": {
+				"buttons": {
+					"edit": "Editar",
+					"cancelGiveaway": "Cancelar sorteo",
+					"canceling": "Cancelando...",
+					"delete": "Eliminar",
+					"deleting": "Eliminando..."
+				},
+				"confirmDialog": {
+					"cancel": {
+						"title": "¿Cancelar el sorteo?",
+						"description": "Esto cancelará permanentemente el sorteo. Esta acción no se puede deshacer."
+					},
+					"delete": {
+						"title": "¿Eliminar sorteo?",
+						"description": "Se eliminará permanentemente el sorteo y todos los datos asociados. Esta acción no se puede deshacer."
+					},
+					"actions": {
+						"goBack": "Volver",
+						"cancel": "Cancelar",
+						"delete": "Eliminar"
+					}
+				},
+				"details": {
+					"keyword": "Palabra clave",
+					"startTime": {
+						"label": "Hora de inicio"
+					},
+					"endTime": {
+						"label": "Hora de finalización"
+					},
+					"post": {
+						"label": "Publicación en Instagram",
+						"viewPost": "Ver publicación"
+					},
+					"document": {
+						"label": "Documento del premio",
+						"viewDocument": "Ver documento"
+					}
+				},
+				"stats": {
+					"title": "Estadísticas",
+					"winners": {
+						"label": "Ganadores",
+						"single": "usuario",
+						"multiple": "usuarios"
+					}
+				},
+				"description": {
+					"autoMessage": "Los usuarios que comentaron con {keyword} recibirán automáticamente un mensaje con el enlace al documento.",
+					"scheduled": "Este sorteo está programado para comenzar el {date}.",
+					"canceled": "Este sorteo fue cancelado.",
+					"endsIn": "Termina en {time}"
+				},
+				"errors": {
+					"cantCancel": "No se pudo cancelar el sorteo. Inténtalo de nuevo.",
+					"cantDelete": "No se pudo eliminar el sorteo. Inténtalo de nuevo."
+				}
+			},
+			"giveaway": {
+				"winners": {
+					"title": "Ganadores",
+					"description": "Lista de usuarios que ganaron este sorteo",
+					"columns": {
+						"username": "Nombre de usuario",
+						"date": "Fecha",
+						"messageStatus": "Estado del mensaje",
+						"likeStatus": "Estado del me gusta"
+					},
+					"status": {
+						"sent": "Enviado",
+						"failed": "Fallido"
+					},
+					"dateFormat": "d MMM yyyy HH:mm"
+				}
+			}
+		}
 	}
 }
