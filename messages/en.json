@@ -87,11 +87,7 @@
 			"free": {
 				"name": "Free",
 				"description": "Get started with 1 free giveaway",
-				"features": [
-					"1 giveaway",
-					"Basic analytics",
-					"Email support"
-				]
+				"features": ["1 giveaway", "Basic analytics", "Email support"]
 			},
 			"pro": {
 				"name": "Pro",
