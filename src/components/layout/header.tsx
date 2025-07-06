@@ -31,7 +31,7 @@ export function Header() {
 						<div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
 							<span className="text-white font-bold text-sm">G</span>
 						</div>
-						<span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+						<span className="max-md:hidden text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
 							GiveawayManager
 						</span>
 					</Link>

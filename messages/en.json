@@ -234,5 +234,257 @@
 				"passwordReset": "We've sent a password reset link to your email!"
 			}
 		}
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"welcome": "Welcome back, {name}",
+		"createGiveawayButton": "Create Giveaway",
+		"upgradePlanButton": "Upgrade Plan",
+		"manageSubscriptionButton": "Manage Subscription",
+		"keywordLabel": "Keyword",
+		"viewDetails": "View Details",
+		"viewAllGiveaways": "View All Giveaways",
+		"stats": {
+			"totalGiveaways": "Total Giveaways",
+			"remainingGiveaways": "{count} remaining in your plan",
+			"activeGiveaways": "Active Giveaways",
+			"runningNow": "Running right now",
+			"currentPlan": "Current Plan",
+			"giveawaysIncluded": "{count} giveaways included"
+		},
+		"recentGiveaways": {
+			"title": "Recent Giveaways",
+			"empty": "You haven't created any giveaways yet.",
+			"createFirst": "Create Your First Giveaway"
+		},
+		"status": {
+			"ACTIVE": "Active",
+			"SCHEDULED": "Scheduled",
+			"COMPLETED": "Completed",
+			"ENDED": "Ended"
+		},
+		"nav": {
+			"dashboard": "Dashboard",
+			"giveaways": "Giveaways",
+			"settings": "Settings",
+			"pricing": "Pricing"
+		},
+		"settings": {
+			"title": "Settings",
+			"description": "Manage your account and subscription",
+			"subscription": {
+				"title": "Your Subscription",
+				"description": "Manage your subscription plan",
+				"currentPlan": {
+					"label": "Current Plan"
+				},
+				"features": {
+					"label": "Features",
+					"items": {
+						"1 giveaway": "1 giveaway",
+						"Basic analytics": "Basic analytics",
+						"Email support": "Community support",
+						"Unlimited giveaways": "Unlimited giveaways",
+						"Advanced analytics": "Advanced analytics",
+						"Priority support": "Priority support",
+						"Custom integrations": "Custom integrations"
+					}
+				},
+				"buttons": {
+					"cancel": "Cancel Subscription",
+					"loading": "Canceling..."
+				},
+				"upgradeButton": "Upgrade",
+				"success": {
+					"canceled": "Your subscription has been canceled. You will continue to have access until the end of your billing period."
+				},
+				"errors": {
+					"default": "Failed to cancel subscription. Please try again."
+				}
+			}
+		},
+		"createGiveaway": {
+			"title": "Create Giveaway",
+			"description": "Set up a new Instagram giveaway",
+			"limit": {
+				"reached": "You've reached your giveaway limit. Please upgrade your plan to create more giveaways.",
+				"upgradeButton": "Upgrade Plan"
+			},
+			"form": {
+				"fields": {
+					"title": {
+						"label": "Title",
+						"placeholder": "My Amazing Giveaway"
+					},
+					"description": {
+						"label": "Description (Optional)",
+						"placeholder": "Describe your giveaway..."
+					},
+					"postUrl": {
+						"label": "Instagram Post URL",
+						"placeholder": "https://www.instagram.com/p/..."
+					},
+					"documentUrl": {
+						"label": "Prize Document URL",
+						"placeholder": "https://docs.google.com/..."
+					},
+					"keyword": {
+						"label": "Keyword",
+						"placeholder": "winner"
+					},
+					"startTime": {
+						"label": "Start Time"
+					},
+					"endTime": {
+						"label": "End Time"
+					}
+				},
+				"validation": {
+					"titleMin": "Title must be at least 3 characters",
+					"titleMax": "Title must be at most 100 characters",
+					"descriptionMax": "Description must be at most 500 characters",
+					"enterValidUrl": "Please enter a valid URL",
+					"instagramUrl": "Please enter a valid Instagram post URL",
+					"keywordMin": "Keyword must be at least 2 characters",
+					"keywordMax": "Keyword must be at most 50 characters",
+					"futureStart": "Start time must be in the future",
+					"futureEnd": "End time must be in the future",
+					"endAfterStart": "End time must be after start time"
+				},
+				"buttons": {
+					"cancel": "Cancel",
+					"create": "Create Giveaway",
+					"update": "Update Giveaway",
+					"creating": "Creating...",
+					"updating": "Updating..."
+				},
+				"errors": {
+					"notSignedIn": "You must be signed in to create a giveaway",
+					"saveFailed": "Failed to save giveaway. Please try again."
+				}
+			}
+		},
+		"editGiveaway": {
+			"title": "Edit Giveaway",
+			"description": "Update your giveaway details",
+			"metadata": {
+				"title": "Edit",
+				"notFound": {
+					"title": "Giveaway Not Found"
+				}
+			}
+		},
+		"giveaways": {
+			"title": "Giveaways",
+			"description": "Manage your Instagram giveaways",
+			"list": {
+				"yourGiveaways": "Your Giveaways",
+				"usedGiveaways": "{count} of {limit} giveaways used",
+				"empty": {
+					"title": "No Giveaways Yet",
+					"description": "Create your first giveaway to get started"
+				},
+				"sections": {
+					"active": "Active",
+					"upcoming": "Upcoming",
+					"completed": "Completed",
+					"other": "Other"
+				},
+				"buttons": {
+					"create": "Create Giveaway",
+					"upgrade": "Upgrade Plan"
+				}
+			},
+			"card": {
+				"keyword": "Keyword",
+				"start": "Start",
+				"end": "End",
+				"activeFor": "Active for",
+				"winners": "Winners",
+				"buttons": {
+					"viewDetails": "View Details"
+				},
+				"status": {
+					"draft": "Draft",
+					"scheduled": "Scheduled",
+					"active": "Active",
+					"completed": "Completed"
+				}
+			},
+			"detail": {
+				"buttons": {
+					"edit": "Edit",
+					"cancelGiveaway": "Cancel Giveaway",
+					"canceling": "Canceling...",
+					"delete": "Delete",
+					"deleting": "Deleting..."
+				},
+				"confirmDialog": {
+					"cancel": {
+						"title": "Cancel Giveaway?",
+						"description": "This will permanently cancel the giveaway. This action cannot be undone."
+					},
+					"delete": {
+						"title": "Delete Giveaway?",
+						"description": "This will permanently delete the giveaway and all associated data. This action cannot be undone."
+					},
+					"actions": {
+						"goBack": "Go Back",
+						"cancel": "Cancel",
+						"delete": "Delete"
+					}
+				},
+				"details": {
+					"keyword": "Keyword",
+					"startTime": {
+						"label": "Start Time"
+					},
+					"endTime": {
+						"label": "End Time"
+					},
+					"post": {
+						"label": "Instagram Post",
+						"viewPost": "View Post"
+					},
+					"document": {
+						"label": "Prize Document",
+						"viewDocument": "View Document"
+					}
+				},
+				"stats": {
+					"title": "Stats",
+					"winners": {
+						"label": "Winners",
+						"single": "user",
+						"multiple": "users"
+					}
+				},
+				"description": {
+					"autoMessage": "Users who commented with {keyword} will automatically receive a direct message with the prize document link.",
+					"scheduled": "This giveaway is scheduled to start on {date}.",
+					"canceled": "This giveaway was canceled."
+				},
+				"endsIn": "Ends in {time}",
+				"errors": {
+					"cantCancel": "Failed to cancel giveaway. Please try again.",
+					"cantDelete": "Failed to delete giveaway. Please try again."
+				}
+			},
+			"winners": {
+				"title": "Winners",
+				"description": "List of users who won this giveaway",
+				"columns": {
+					"username": "Username",
+					"date": "Date",
+					"messageStatus": "Message Status",
+					"likeStatus": "Like Status"
+				},
+				"status": {
+					"sent": "Sent",
+					"failed": "Failed"
+				},
+				"dateFormat": "MMM d, yyyy h:mm a"
+			}
+		}
 	}
 }

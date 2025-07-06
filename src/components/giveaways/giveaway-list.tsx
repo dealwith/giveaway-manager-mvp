@@ -2,6 +2,7 @@
 
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 import { Giveaway, GiveawayStatus } from "app-types/giveaway";
@@ -23,6 +24,8 @@ export function GiveawayList({
 	giveawayCount,
 	userSubscriptionPlan
 }: GiveawayListProps) {
+	const t = useTranslations("dashboard.giveaways.list");
+
 	const { active, scheduled, completed, other } = useMemo(() => {
 		const active = giveaways.filter(
 			(giveaway) => giveaway.status === GiveawayStatus.ACTIVE
@@ -53,15 +56,13 @@ export function GiveawayList({
 	if (giveaways.length === 0) {
 		return (
 			<div className="text-center py-12">
-				<h2 className="text-xl font-semibold mb-4">No Giveaways Yet</h2>
-				<p className="text-gray-500 mb-6">
-					Create your first giveaway to get started
-				</p>
+				<h2 className="text-xl font-semibold mb-4">{t("empty.title")}</h2>
+				<p className="text-gray-500 mb-6">{t("empty.description")}</p>
 
 				<Link href={ROUTES.CREATE_GIVEAWAY}>
 					<Button>
 						<PlusIcon className="mr-2 h-4 w-4" />
-						Create Giveaway
+						{t("buttons.create")}
 					</Button>
 				</Link>
 			</div>
@@ -71,29 +72,32 @@ export function GiveawayList({
 	return (
 		<div className="space-y-8">
 			<div className="flex justify-between items-center">
-				<h2 className="text-xl font-semibold">Your Giveaways</h2>
+				<h2 className="text-xl font-semibold">{t("yourGiveaways")}</h2>
 
 				{canCreateMore ? (
 					<Link href={ROUTES.CREATE_GIVEAWAY}>
 						<Button>
 							<PlusIcon className="mr-2 h-4 w-4" />
-							Create Giveaway
+							{t("buttons.create")}
 						</Button>
 					</Link>
 				) : (
 					<Link href={ROUTES.PRICING}>
-						<Button>Upgrade Plan</Button>
+						<Button>{t("buttons.upgrade")}</Button>
 					</Link>
 				)}
 			</div>
 
 			<div className="text-sm text-gray-500">
-				{giveawayCount} of {giveawayLimit} giveaways used
+				{t("usedGiveaways", {
+					count: giveawayCount,
+					limit: giveawayLimit
+				})}
 			</div>
 
 			{active.length > 0 && (
 				<section>
-					<h3 className="text-lg font-medium mb-4">Active</h3>
+					<h3 className="text-lg font-medium mb-4">{t("sections.active")}</h3>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{active.map((giveaway) => (
 							<GiveawayCard key={giveaway.id} giveaway={giveaway} />
@@ -104,7 +108,7 @@ export function GiveawayList({
 
 			{scheduled.length > 0 && (
 				<section>
-					<h3 className="text-lg font-medium mb-4">Upcoming</h3>
+					<h3 className="text-lg font-medium mb-4">{t("sections.upcoming")}</h3>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{scheduled.map((giveaway) => (
 							<GiveawayCard key={giveaway.id} giveaway={giveaway} />
@@ -115,7 +119,9 @@ export function GiveawayList({
 
 			{completed.length > 0 && (
 				<section>
-					<h3 className="text-lg font-medium mb-4">Completed</h3>
+					<h3 className="text-lg font-medium mb-4">
+						{t("sections.completed")}
+					</h3>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{completed.map((giveaway) => (
 							<GiveawayCard key={giveaway.id} giveaway={giveaway} />
@@ -126,7 +132,7 @@ export function GiveawayList({
 
 			{other.length > 0 && (
 				<section>
-					<h3 className="text-lg font-medium mb-4">Other</h3>
+					<h3 className="text-lg font-medium mb-4">{t("sections.other")}</h3>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{other.map((giveaway) => (
 							<GiveawayCard key={giveaway.id} giveaway={giveaway} />

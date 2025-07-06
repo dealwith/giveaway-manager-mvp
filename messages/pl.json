@@ -234,5 +234,259 @@
 				"passwordReset": "Wysłaliśmy link do resetu hasła na Twój e-mail!"
 			}
 		}
+	},
+	"dashboard": {
+		"title": "Panel zarządzania",
+		"welcome": "Witaj ponownie, {name}",
+		"createGiveawayButton": "Utwórz konkurs",
+		"upgradePlanButton": "Zmień plan",
+		"manageSubscriptionButton": "Zarządzaj subskrypcją",
+		"keywordLabel": "Słowo kluczowe",
+		"viewDetails": "Zobacz szczegóły",
+		"viewAllGiveaways": "Zobacz wszystkie konkursy",
+		"stats": {
+			"totalGiveaways": "Wszystkie konkursy",
+			"remainingGiveaways": "{count} pozostało w planie",
+			"activeGiveaways": "Aktywne konkursy",
+			"runningNow": "Trwające teraz",
+			"currentPlan": "Obecny plan",
+			"giveawaysIncluded": "Konkursy w planie: {count}"
+		},
+		"recentGiveaways": {
+			"title": "Najnowsze konkursy",
+			"empty": "Nie utworzyłeś jeszcze żadnego konkursu.",
+			"createFirst": "Utwórz swój pierwszy konkurs"
+		},
+		"status": {
+			"ACTIVE": "Aktywny",
+			"SCHEDULED": "Zaplanowany",
+			"COMPLETED": "Zakończony",
+			"ENDED": "Zakończony"
+		},
+		"nav": {
+			"dashboard": "Strona główna",
+			"giveaways": "Konkursy",
+			"settings": "Ustawienia",
+			"pricing": "Cennik"
+		},
+		"settings": {
+			"title": "Ustawienia",
+			"description": "Zarządzaj kontem i subskrypcją",
+			"subscription": {
+				"title": "Twoja subskrypcja",
+				"description": "Zarządzaj swoim planem subskrypcji",
+				"currentPlan": {
+					"label": "Obecny plan"
+				},
+				"features": {
+					"label": "Funkcje",
+					"items": {
+						"1 giveaway": "1 konkurs",
+						"Basic analytics": "Podstawowa analityka",
+						"Email support": "Wsparcie społeczności",
+						"Unlimited giveaways": "Nieograniczona liczba konkursów",
+						"Advanced analytics": "Zaawansowana analityka",
+						"Priority support": "Priorytetowe wsparcie",
+						"Custom integrations": "Niestandardowe integracje"
+					}
+				},
+				"buttons": {
+					"cancel": "Anuluj subskrypcję",
+					"loading": "Anulowanie..."
+				},
+				"upgradeButton": "Ulepsz",
+				"success": {
+					"canceled": "Twoja subskrypcja została anulowana. Masz dostęp do końca rozliczeniowego okresu."
+				},
+				"errors": {
+					"default": "Nie udało się anulować subskrypcji. Spróbuj ponownie."
+				}
+			}
+		},
+		"createGiveaway": {
+			"title": "Utwórz konkurs",
+			"description": "Skonfiguruj nowy konkurs na Instagramie",
+			"limit": {
+				"reached": "Osiągnąłeś limit konkursów. Uaktualnij swój plan, aby tworzyć więcej.",
+				"upgradeButton": "Zmień plan"
+			},
+			"form": {
+				"fields": {
+					"title": {
+						"label": "Tytuł",
+						"placeholder": "Mój niesamowity konkurs"
+					},
+					"description": {
+						"label": "Opis (opcjonalnie)",
+						"placeholder": "Opisz swój konkurs..."
+					},
+					"postUrl": {
+						"label": "URL posta w Instagramie",
+						"placeholder": "https://www.instagram.com/p/..."
+					},
+					"documentUrl": {
+						"label": "URL dokumentu z nagrodą",
+						"placeholder": "https://docs.google.com/..."
+					},
+					"keyword": {
+						"label": "Słowo kluczowe",
+						"placeholder": "wygrany"
+					},
+					"startTime": {
+						"label": "Czas rozpoczęcia"
+					},
+					"endTime": {
+						"label": "Czas zakończenia"
+					}
+				},
+				"validation": {
+					"titleMin": "Tytuł musi mieć co najmniej 3 znaki",
+					"titleMax": "Tytuł może mieć maksymalnie 100 znaków",
+					"descriptionMax": "Opis może mieć maksymalnie 500 znaków",
+					"enterValidUrl": "Wprowadź poprawny URL",
+					"instagramUrl": "Wprowadź poprawny URL posta w Instagramie",
+					"keywordMin": "Słowo kluczowe musi mieć co najmniej 2 znaki",
+					"keywordMax": "Słowo kluczowe może mieć maksymalnie 50 znaków",
+					"futureStart": "Czas rozpoczęcia musi być w przyszłości",
+					"futureEnd": "Czas zakończenia musi być w przyszłości",
+					"endAfterStart": "Czas zakończenia musi być po czasie rozpoczęcia"
+				},
+				"buttons": {
+					"cancel": "Anuluj",
+					"create": "Utwórz konkurs",
+					"update": "Aktualizuj konkurss",
+					"creating": "Tworzenie...",
+					"updating": "Aktualizacja..."
+				},
+				"errors": {
+					"notSignedIn": "Musisz się zalogować, aby utworzyć konkurs",
+					"saveFailed": "Nie udało się zapisać konkursu. Spróbuj ponownie."
+				}
+			}
+		},
+		"editGiveaway": {
+			"title": "Edytuj konkurs",
+			"description": "Zaktualizuj szczegóły swojego konkursu",
+			"metadata": {
+				"title": "Edytuj",
+				"notFound": {
+					"title": "Nie znaleziono konkursu"
+				}
+			}
+		},
+		"giveaways": {
+			"title": "Konkursy",
+			"description": "Zarządzaj swoimi konkursami na Instagramie",
+			"list": {
+				"yourGiveaways": "Twoje konkursy",
+				"usedGiveaways": "{count} z {limit} wykorzystane",
+				"empty": {
+					"title": "Brak konkursów",
+					"description": "Utwórz swój pierwszy konkurs, aby rozpocząć"
+				},
+				"sections": {
+					"active": "Aktywne",
+					"upcoming": "Nadchodzące",
+					"completed": "Zakończone",
+					"other": "Inne"
+				},
+				"buttons": {
+					"create": "Utwórz konkurs",
+					"upgrade": "Zmień plan"
+				}
+			},
+			"card": {
+				"keyword": "Słowo kluczowe",
+				"start": "Rozpoczęcie",
+				"end": "Zakończenie",
+				"activeFor": "Aktywny przez",
+				"winners": "Zwycięzcy",
+				"buttons": {
+					"viewDetails": "Zobacz szczegóły"
+				},
+				"status": {
+					"draft": "Wersja robocza",
+					"scheduled": "Zaplanowany",
+					"active": "Aktywny",
+					"completed": "Zakończony"
+				}
+			},
+			"detail": {
+				"buttons": {
+					"edit": "Edytuj",
+					"cancelGiveaway": "Anuluj konkurs",
+					"canceling": "Anulowanie...",
+					"delete": "Usuń",
+					"deleting": "Usuwanie..."
+				},
+				"confirmDialog": {
+					"cancel": {
+						"title": "Anulować konkurs?",
+						"description": "Konkurs zostanie anulowany. Nie możesz tego cofnąć."
+					},
+					"delete": {
+						"title": "Usunąć konkurs?",
+						"description": "Wszystkie dane zostaną usunięte. Ta akcja jest nieodwracalna."
+					},
+					"actions": {
+						"goBack": "Cofnij",
+						"cancel": "Anuluj",
+						"delete": "Usuń"
+					}
+				},
+				"details": {
+					"keyword": "Słowo kluczowe",
+					"startTime": {
+						"label": "Czas rozpoczęcia"
+					},
+					"endTime": {
+						"label": "Czas zakończenia"
+					},
+					"post": {
+						"label": "Post na Instagramie",
+						"viewPost": "Zobacz post"
+					},
+					"document": {
+						"label": "Dokument z nagrodą",
+						"viewDocument": "Zobacz dokument"
+					}
+				},
+				"stats": {
+					"title": "Statystyki",
+					"winners": {
+						"label": "Zwycięzcy",
+						"single": "użytkownik",
+						"multiple": "użytkownicy"
+					}
+				},
+				"description": {
+					"autoMessage": "Użytkownicy, którzy skomentowali używając {keyword}, otrzymają automatycznie wiadomość z dokumentem.",
+					"scheduled": "Ten konkurs jest zaplanowany na {date}.",
+					"canceled": "Ten konkurs został anulowany."
+				},
+				"endsIn": "Zakończy się za {time}",
+				"errors": {
+					"cantCancel": "Nie udało się anulować konkursu. Spróbuj ponownie.",
+					"cantDelete": "Nie udało się usunąć konkursu. Spróbuj ponownie."
+				}
+			},
+			"giveaway": {
+				"winners": {
+					"title": "Zwycięzcy",
+					"description": "Lista użytkowników, którzy wygrali ten konkurs",
+					"columns": {
+						"username": "Nazwa użytkownika",
+						"date": "Data",
+						"messageStatus": "Status wiadomości",
+						"likeStatus": "Status polubienia"
+					},
+					"status": {
+						"sent": "Wysłano",
+						"failed": "Niepowodzenie"
+					},
+					"dateFormat": "MMM d, yyyy h:mm a"
+				}
+			}
+		}
 	}
 }

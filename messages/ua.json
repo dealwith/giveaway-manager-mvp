@@ -234,5 +234,259 @@
 				"passwordReset": "Ми відправили посилання для зміни паролю на ваш email!"
 			}
 		}
+	},
+	"dashboard": {
+		"title": "Панель керування",
+		"welcome": "Ласкаво просимо, {name}",
+		"createGiveawayButton": "Створити розіграш",
+		"upgradePlanButton": "Поліпшити план",
+		"manageSubscriptionButton": "Керування підпискою",
+		"keywordLabel": "Ключове слово",
+		"viewDetails": "Переглянути деталі",
+		"viewAllGiveaways": "Переглянути всі розіграші",
+		"stats": {
+			"totalGiveaways": "Всього розіграшів",
+			"remainingGiveaways": "{count} залишилося за вашим тарифом",
+			"activeGiveaways": "Активні розіграші",
+			"runningNow": "Триває прямо зараз",
+			"currentPlan": "Поточний план",
+			"giveawaysIncluded": "Розіграшів включено: {count}"
+		},
+		"recentGiveaways": {
+			"title": "Останні розіграші",
+			"empty": "Ви ще не створили жодного розіграшу.",
+			"createFirst": "Створіть перший розіграш"
+		},
+		"status": {
+			"ACTIVE": "Активний",
+			"SCHEDULED": "Запланований",
+			"COMPLETED": "Завершений",
+			"ENDED": "Закінчився"
+		},
+		"nav": {
+			"dashboard": "Головна",
+			"giveaways": "Розіграші",
+			"settings": "Налаштування",
+			"pricing": "Ціни"
+		},
+		"settings": {
+			"title": "Налаштування",
+			"description": "Керування акаунтом та підпискою",
+			"subscription": {
+				"title": "Ваша підписка",
+				"description": "Керування вашим тарифним планом",
+				"currentPlan": {
+					"label": "Поточний план"
+				},
+				"features": {
+					"label": "Можливості",
+					"items": {
+						"1 giveaway": "1 розіграш",
+						"Basic analytics": "Базова аналітика",
+						"Email support": "Підтримка спільноти",
+						"Unlimited giveaways": "Невмічене кількість розіграшів",
+						"Advanced analytics": "Розширена аналітика",
+						"Priority support": "Пріоритетна підтримка",
+						"Custom integrations": "Налаштовувані інтеграції"
+					}
+				},
+				"buttons": {
+					"cancel": "Скасувати підписку",
+					"loading": "Скасовується..."
+				},
+				"upgradeButton": "Оновити",
+				"success": {
+					"canceled": "Ваша підписка скасована. Ви зможете користуватися до кінця оплаченого періоду."
+				},
+				"errors": {
+					"default": "Не вдалося скасувати підписку. Спробуйте ще раз."
+				}
+			}
+		},
+		"createGiveaway": {
+			"title": "Створити розіграш",
+			"description": "Налаштуйте новий розіграш в Instagram",
+			"limit": {
+				"reached": "Ви досягли межі розіграшів. Будь ласка, оновіть свій тариф, щоб створювати більше розіграшів.",
+				"upgradeButton": "Оновити тариф"
+			},
+			"form": {
+				"fields": {
+					"title": {
+						"label": "Заголовок",
+						"placeholder": "Мій чудовий розіграш"
+					},
+					"description": {
+						"label": "Опис (необов'язково)",
+						"placeholder": "Опишіть свій розіграш..."
+					},
+					"postUrl": {
+						"label": "URL посту в Instagram",
+						"placeholder": "https://www.instagram.com/p/..."
+					},
+					"documentUrl": {
+						"label": "URL документа з призом",
+						"placeholder": "https://docs.google.com/..."
+					},
+					"keyword": {
+						"label": "Ключове слово",
+						"placeholder": "переможець"
+					},
+					"startTime": {
+						"label": "Час початку"
+					},
+					"endTime": {
+						"label": "Час завершення"
+					}
+				},
+				"validation": {
+					"titleMin": "Заголовок має містити принаймні 3 символи",
+					"titleMax": "Заголовок може містити максимум 100 символів",
+					"descriptionMax": "Опис може містити максимум 500 символів",
+					"enterValidUrl": "Будь ласка, введіть дійсний URL",
+					"instagramUrl": "Будь ласка, введіть дійсний URL посту в Instagram",
+					"keywordMin": "Ключове слово має містити принаймні 2 символи",
+					"keywordMax": "Ключове слово може містити максимум 50 символів",
+					"futureStart": "Час початку має бути у майбутньому",
+					"futureEnd": "Час закінчення має бути у майбутньому",
+					"endAfterStart": "Час закінчення має бути після часу початку"
+				},
+				"buttons": {
+					"cancel": "Скасувати",
+					"create": "Створити розіграш",
+					"update": "Оновити розіграш",
+					"creating": "Створення...",
+					"updating": "Оновлення..."
+				},
+				"errors": {
+					"notSignedIn": "Ви повинні увійти, щоб створити розіграш",
+					"saveFailed": "Не вдалося зберегти розіграш. Спробуйте ще раз."
+				}
+			}
+		},
+		"editGiveaway": {
+			"title": "Редагувати розіграш",
+			"description": "Оновіть дані свого розіграшу",
+			"metadata": {
+				"title": "Редагувати",
+				"notFound": {
+					"title": "Розіграш не знайдено"
+				}
+			}
+		},
+		"giveaways": {
+			"title": "Розіграші",
+			"description": "Керування вашими розіграшами в Instagram",
+			"list": {
+				"yourGiveaways": "Ваші розіграші",
+				"usedGiveaways": "{count} з {limit} розіграшів використано",
+				"empty": {
+					"title": "Ще немає розіграшів",
+					"description": "Створіть свій перший розіграш, щоб почати"
+				},
+				"sections": {
+					"active": "Активні",
+					"upcoming": "Майбутні",
+					"completed": "Завершені",
+					"other": "Інше"
+				},
+				"buttons": {
+					"create": "Створити розіграш",
+					"upgrade": "Оновити тариф"
+				}
+			},
+			"card": {
+				"keyword": "Ключове слово",
+				"start": "Початок",
+				"end": "Кінець",
+				"activeFor": "Активний з",
+				"winners": "Переможці",
+				"buttons": {
+					"viewDetails": "Деталі розіграшу"
+				},
+				"status": {
+					"draft": "Чернетка",
+					"scheduled": "Заплановано",
+					"active": "Активний",
+					"completed": "Завершено"
+				}
+			},
+			"detail": {
+				"buttons": {
+					"edit": "Редагувати",
+					"cancelGiveaway": "Скасувати розіграш",
+					"canceling": "Скасовується...",
+					"delete": "Видалити",
+					"deleting": "Видалення..."
+				},
+				"confirmDialog": {
+					"cancel": {
+						"title": "Скасувати розіграш?",
+						"description": "Це скасує розіграш. Цю дію не можна буде скасувати."
+					},
+					"delete": {
+						"title": "Видалити розіграш?",
+						"description": "Це видалить розіграш і всі пов'язані дані. Цю дію не можна буде скасувати."
+					},
+					"actions": {
+						"goBack": "Назад",
+						"cancel": "Скасувати",
+						"delete": "Видалити"
+					}
+				},
+				"details": {
+					"keyword": "Ключове слово",
+					"startTime": {
+						"label": "Час початку"
+					},
+					"endTime": {
+						"label": "Час завершення"
+					},
+					"post": {
+						"label": "Пост в Instagram",
+						"viewPost": "Переглянути пост"
+					},
+					"document": {
+						"label": "Документ з призом",
+						"viewDocument": "Переглянути документ"
+					}
+				},
+				"stats": {
+					"title": "Статистика",
+					"winners": {
+						"label": "Переможці",
+						"single": "користувач",
+						"multiple": "користувачів"
+					}
+				},
+				"description": {
+					"autoMessage": "Користувачі, які залишили коментарі з {keyword}, автоматично отримають повідомлення з посиланням на документ.",
+					"scheduled": "Цей розіграш заплановано на {date}.",
+					"canceled": "Цей розіграш було скасовано."
+				},
+				"endsIn": "Закінчується через {time}",
+				"errors": {
+					"cantCancel": "Не вдалося скасувати розіграш. Спробуйте ще раз.",
+					"cantDelete": "Не вдалося видалити розіграш. Спробуйте ще раз."
+				}
+			},
+			"giveaway": {
+				"winners": {
+					"title": "Переможці",
+					"description": "Список користувачів, що виграли цей розіграш",
+					"columns": {
+						"username": "Ім’я користувача",
+						"date": "Дата",
+						"messageStatus": "Статус повідомлення",
+						"likeStatus": "Статус лайка"
+					},
+					"status": {
+						"sent": "Відправлено",
+						"failed": "Не вдалося"
+					},
+					"dateFormat": "dd.MM.yyyy HH:mm"
+				}
+			}
+		}
 	}
 }

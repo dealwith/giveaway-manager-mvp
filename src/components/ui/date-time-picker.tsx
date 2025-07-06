@@ -44,7 +44,7 @@ export function DateTimePicker<T extends FieldValues = FieldValues>({
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent className="w-auto p-0" align="start">
-							<div className="bg-white rounded-md">
+							<div className="bg-background rounded-md">
 								<Calendar
 									mode="single"
 									selected={field.value ? new Date(field.value) : undefined}
@@ -60,7 +60,7 @@ export function DateTimePicker<T extends FieldValues = FieldValues>({
 									}}
 									// className="rounded-t-md border-0"
 								/>
-								<div className="p-3 border-t bg-white rounded-b-md">
+								<div className="p-3 border-t bg-background rounded-b-md">
 									<div className="flex items-center justify-between space-x-2">
 										<Input
 											type="time"
