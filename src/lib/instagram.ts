@@ -16,16 +16,19 @@ if (!INSTAGRAM_BUSINESS_ACCOUNT_ID) {
 	);
 }
 
+// Extract Instagram post shortcode from URL
 export function extractPostShortcode(postUrl: string): string | null {
 	const match = postUrl.match(INSTAGRAM_API.POST_REGEX);
 
 	return match ? match[1] : null;
 }
 
+// Validate Instagram Post URL
 export function isValidInstagramPostUrl(url: string): boolean {
 	return INSTAGRAM_API.POST_REGEX.test(url);
 }
 
+// Check if the input is a media ID (numeric string)
 function isMediaId(input: string): boolean {
 	return /^\d+(_\d+)?$/.test(input);
 }
@@ -296,6 +299,7 @@ export async function likeComment(commentId: string): Promise<boolean> {
 	}
 }
 
+// Process winners by sending messages and liking comments
 export async function processWinner(
 	username: string,
 	commentId: string,
@@ -304,8 +308,11 @@ export async function processWinner(
 	messageStatus: "sent" | "failed";
 	likeStatus: "sent" | "failed";
 }> {
+	// Send direct message with document link
 	const message = `Congratulations! You've won our giveaway. Here's your prize: ${documentUrl}`;
 	const messageResult = await sendDirectMessage(username, message);
+
+	// Like the comment
 	const likeResult = await likeComment(commentId);
 
 	return {
@@ -394,10 +401,13 @@ export async function processGiveaway(
 
 	console.log("Processing giveaway with input:", postUrl);
 
+	// Fetch comments
 	const comments = await fetchPostComments(postUrl);
 
+	// Find comments with keyword
 	const matchingComments = findCommentsWithKeyword(comments, keyword);
 
+	// Process winners
 	const winners = [];
 
 	for (const comment of matchingComments) {

@@ -1,10 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSWRConfig } from "swr";
 import { z } from "zod";
 
 import { GiveawayStatus } from "app-types/giveaway";
@@ -15,6 +17,7 @@ import { DateTimePicker } from "components/ui/date-time-picker";
 import { Input } from "components/ui/input";
 import { Label } from "components/ui/label";
 import { Textarea } from "components/ui/textarea";
+import { API } from "constants/api";
 import { GIVEAWAY_VALIDATION } from "constants/giveaway";
 import { PLANS } from "constants/plans";
 import { ROUTES } from "constants/routes";
@@ -90,6 +93,7 @@ interface GiveawayFormProps {
 export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 	const router = useRouter();
 	const { data: session } = useSession();
+	const { mutate } = useSWRConfig();
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -150,6 +154,11 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 
 					return;
 				}
+
+				await axios.post(API.GIVEAWAYS, data);
+
+				// Invalidate SWR cache to refresh giveaways list
+				mutate(API.GIVEAWAYS);
 
 				router.push(ROUTES.GIVEAWAYS);
 			} else {
@@ -220,6 +229,10 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 					{errors.postUrl && (
 						<p className="text-sm text-red-500">{errors.postUrl.message}</p>
 					)}
+					<p className="text-sm text-muted-foreground">
+						Note: The Instagram post must belong to your connected business
+						account to fetch comments.
+					</p>
 				</div>
 
 				<div className="space-y-2">
