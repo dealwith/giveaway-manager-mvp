@@ -87,11 +87,7 @@
 			"free": {
 				"name": "Darmowy",
 				"description": "Zacznij od jednego darmowego konkursu",
-				"features": [
-					"1 konkurs",
-					"Podstawowa analityka",
-					"Wsparcie e-mailowe"
-				]
+				"features": ["1 konkurs", "Podstawowa analityka", "Wsparcie e-mailowe"]
 			},
 			"pro": {
 				"name": "Pro",
