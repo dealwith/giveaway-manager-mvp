@@ -1,11 +1,11 @@
 import { GiveawayStatus } from "app-types/giveaway";
 
 export const GIVEAWAY_STATUS_LABELS = {
-	[GiveawayStatus.DRAFT]: "Draft",
-	[GiveawayStatus.SCHEDULED]: "Scheduled",
-	[GiveawayStatus.ACTIVE]: "Active",
-	[GiveawayStatus.COMPLETED]: "Completed",
-	[GiveawayStatus.CANCELED]: "Canceled"
+	[GiveawayStatus.DRAFT]: "status.draft",
+	[GiveawayStatus.SCHEDULED]: "status.scheduled",
+	[GiveawayStatus.ACTIVE]: "status.active",
+	[GiveawayStatus.COMPLETED]: "status.completed",
+	[GiveawayStatus.CANCELED]: "status.canceled"
 };
 
 export enum StatusColors {

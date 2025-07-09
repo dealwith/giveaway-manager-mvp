@@ -26,6 +26,7 @@ interface GiveawayCardProps {
 
 export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 	const t = useTranslations("dashboard.giveaways.card");
+	const statusT = useTranslations("dashboard.giveaways.card");
 
 	const isActive = giveaway.status === GiveawayStatus.ACTIVE;
 	const isCompleted = giveaway.status === GiveawayStatus.COMPLETED;
@@ -36,11 +37,10 @@ export function GiveawayCard({ giveaway }: GiveawayCardProps) {
 				<div className="flex justify-between items-start">
 					<CardTitle className="text-lg font-bold">{giveaway.title}</CardTitle>
 					<Badge variant={GIVEAWAY_STATUS_COLORS[giveaway.status]}>
-						{t(GIVEAWAY_STATUS_LABELS[giveaway.status])}
+						{statusT(GIVEAWAY_STATUS_LABELS[giveaway.status])}
 					</Badge>
 				</div>
 			</CardHeader>
-
 			<CardContent className="flex-1">
 				{giveaway.description && (
 					<p className="text-sm text-gray-500 mb-4">{giveaway.description}</p>
