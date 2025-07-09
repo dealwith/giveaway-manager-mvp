@@ -47,6 +47,7 @@ interface GiveawayDetailProps {
 
 export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 	const t = useTranslations("dashboard.giveaways.detail");
+	const statusT = useTranslations("dashboard.giveaways.card");
 	const router = useRouter();
 	const [error, setError] = useState<string | null>(null);
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -100,13 +101,12 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 					<AlertDescription>{error}</AlertDescription>
 				</Alert>
 			)}
-
 			<div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
 				<div>
 					<h1 className="text-2xl font-bold">{giveaway.title}</h1>
 					<div className="flex items-center gap-2 mt-2">
 						<Badge variant={GIVEAWAY_STATUS_COLORS[giveaway.status]}>
-							{t(GIVEAWAY_STATUS_LABELS[giveaway.status])}
+							{statusT(GIVEAWAY_STATUS_LABELS[giveaway.status])}
 						</Badge>
 
 						{isActive && (
