@@ -1,11 +1,13 @@
 "use client";
 
+import axios from "axios";
 import { format, formatDistanceToNow } from "date-fns";
 import {
 	CalendarIcon,
 	ClockIcon,
 	ExternalLinkIcon,
 	PencilIcon,
+	RefreshCwIcon,
 	TagIcon,
 	TrashIcon,
 	UsersIcon
@@ -31,6 +33,7 @@ import {
 import { Badge } from "components/ui/badge";
 import { Button } from "components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import { API } from "constants/api";
 import {
 	GIVEAWAY_STATUS_COLORS,
 	GIVEAWAY_STATUS_LABELS
@@ -52,6 +55,7 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 	const [error, setError] = useState<string | null>(null);
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [isCanceling, setIsCanceling] = useState(false);
+	const [isProcessing, setIsProcessing] = useState(false);
 
 	const isActive = giveaway.status === GiveawayStatus.ACTIVE;
 	const isScheduled = giveaway.status === GiveawayStatus.SCHEDULED;
@@ -60,6 +64,7 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 
 	const canEdit = isScheduled;
 	const canCancel = isScheduled || isActive;
+	const canProcess = isScheduled || isActive || isCompleted;
 
 	const handleCancel = async () => {
 		setIsCanceling(true);
@@ -94,6 +99,27 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 		}
 	};
 
+	const handleProcessComments = async () => {
+		setIsProcessing(true);
+		setError(null);
+
+		try {
+			const response = await axios.post(API.PROCESS_GIVEAWAY(giveaway.id));
+
+			if (response.data.success) {
+				router.refresh();
+			}
+		} catch (error: unknown) {
+			console.error("Error processing comments:", error);
+			const errorMessage =
+				(error as { response?: { data?: { error?: string } } })?.response?.data
+					?.error || "Failed to process comments";
+			setError(errorMessage);
+		} finally {
+			setIsProcessing(false);
+		}
+	};
+
 	return (
 		<div className="space-y-6">
 			{error && (
@@ -122,6 +148,18 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 				</div>
 
 				<div className="flex gap-2">
+					{canProcess && (
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={handleProcessComments}
+							disabled={isProcessing}
+						>
+							<RefreshCwIcon className="h-4 w-4 mr-2" />
+							{isProcessing ? "Processing..." : "Check Comments"}
+						</Button>
+					)}
+
 					{canEdit && (
 						<Link href={ROUTES.EDIT_GIVEAWAY(giveaway.id)}>
 							<Button variant="outline" size="sm">
@@ -189,7 +227,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 					</AlertDialog>
 				</div>
 			</div>
-
 			{giveaway.description && (
 				<Card>
 					<CardContent className="pt-6">
@@ -197,7 +234,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 					</CardContent>
 				</Card>
 			)}
-
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<Card>
 					<CardHeader>
@@ -211,7 +247,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 								<div className="text-sm text-gray-500">{giveaway.keyword}</div>
 							</div>
 						</div>
-
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<CalendarIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
@@ -223,7 +258,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 								</div>
 							</div>
 						</div>
-
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<ClockIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
@@ -233,7 +267,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 								</div>
 							</div>
 						</div>
-
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<ExternalLinkIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
@@ -248,7 +281,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 								</a>
 							</div>
 						</div>
-
 						<div className="grid grid-cols-[20px_1fr] gap-x-2 items-start">
 							<ExternalLinkIcon className="h-5 w-5 text-gray-400 mt-0.5" />
 							<div>
@@ -265,7 +297,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 						</div>
 					</CardContent>
 				</Card>
-
 				<Card>
 					<CardHeader>
 						<CardTitle>{t("stats.title")}</CardTitle>
@@ -283,13 +314,11 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 								</div>
 							</div>
 						</div>
-
 						{(isActive || isCompleted) && (
 							<p className="text-sm text-gray-500 pt-2">
 								{t("description.autoMessage", { keyword: giveaway.keyword })}
 							</p>
 						)}
-
 						{isScheduled && (
 							<p className="text-sm text-gray-500 pt-2">
 								{t("description.scheduled", {
@@ -297,7 +326,6 @@ export function GiveawayDetail({ giveaway, winners }: GiveawayDetailProps) {
 								})}
 							</p>
 						)}
-
 						{isCanceled && (
 							<p className="text-sm text-gray-500 pt-2">
 								{t("description.canceled")}
