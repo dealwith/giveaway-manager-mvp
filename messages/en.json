@@ -258,10 +258,10 @@
 			"createFirst": "Create Your First Giveaway"
 		},
 		"status": {
-			"ACTIVE": "Active",
-			"SCHEDULED": "Scheduled",
-			"COMPLETED": "Completed",
-			"ENDED": "Ended"
+			"active": "Active",
+			"scheduled": "Scheduled",
+			"completed": "Completed",
+			"ended": "Ended"
 		},
 		"nav": {
 			"dashboard": "Dashboard",
@@ -408,7 +408,8 @@
 					"draft": "Draft",
 					"scheduled": "Scheduled",
 					"active": "Active",
-					"completed": "Completed"
+					"completed": "Completed",
+					"canceled": "Canceled"
 				}
 			},
 			"detail": {
@@ -435,7 +436,10 @@
 					}
 				},
 				"details": {
-					"keyword": "Keyword",
+					"title": "Details",
+					"keyword": {
+						"label": "Keyword"
+					},
 					"startTime": {
 						"label": "Start Time"
 					},

@@ -15,6 +15,7 @@ import {
 import { Giveaway, GiveawayStatus } from "app-types/giveaway";
 import { SubscriptionPlan } from "app-types/subscription";
 import { db } from "config/firebase";
+import { retryOperation } from "lib/utils/retry";
 
 export async function getUserGiveaways(userId: string): Promise<Giveaway[]> {
 	if (!db) {
@@ -57,30 +58,44 @@ export async function getGiveaway(
 		throw new Error("Firebase database not initialized");
 	}
 
-	const docRef = doc(db, "giveaways", giveawayId);
-	const docSnap = await getDoc(docRef);
+	try {
+		const docRef = doc(db, "giveaways", giveawayId);
+		const docSnap = await retryOperation(() => getDoc(docRef));
 
-	if (!docSnap.exists()) {
-		return null;
+		if (!docSnap.exists()) {
+			return null;
+		}
+
+		const data = docSnap.data();
+
+		return {
+			id: docSnap.id,
+			userId: data.userId,
+			title: data.title,
+			description: data.description,
+			postUrl: data.postUrl,
+			documentUrl: data.documentUrl,
+			keyword: data.keyword,
+			startTime: data.startTime.toDate(),
+			endTime: data.endTime.toDate(),
+			status: data.status,
+			createdAt: data.createdAt.toDate(),
+			updatedAt: data.updatedAt.toDate(),
+			winnerCount: data.winnerCount
+		};
+	} catch (error: unknown) {
+		const firebaseError = error as { code?: string; message?: string };
+		console.error(`Error getting giveaway ${giveawayId}:`, firebaseError);
+
+		// Re-throw with more context for unavailable errors
+		if (firebaseError.code === "unavailable") {
+			throw new Error(
+				"Unable to connect to database. Please check your internet connection and try again."
+			);
+		}
+
+		throw error;
 	}
-
-	const data = docSnap.data();
-
-	return {
-		id: docSnap.id,
-		userId: data.userId,
-		title: data.title,
-		description: data.description,
-		postUrl: data.postUrl,
-		documentUrl: data.documentUrl,
-		keyword: data.keyword,
-		startTime: data.startTime.toDate(),
-		endTime: data.endTime.toDate(),
-		status: data.status,
-		createdAt: data.createdAt.toDate(),
-		updatedAt: data.updatedAt.toDate(),
-		winnerCount: data.winnerCount
-	};
 }
 
 export async function createGiveaway(
