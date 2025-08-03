@@ -5,6 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
 import { LanguageSelect } from "components/select/language-select";
+import { ThemeToggle } from "components/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar";
 import { Button } from "components/ui/button";
 import {
@@ -22,6 +23,8 @@ import { MobileMenu } from "./mobile-menu";
 export function Header() {
 	const t = useTranslations("header");
 	const { data: session } = useSession();
+
+	console.log("this is header");
 
 	return (
 		<header className="border-b bg-background">
@@ -83,6 +86,11 @@ export function Header() {
 									<Link href={ROUTES.GIVEAWAYS}>{t("dropdown.giveaways")}</Link>
 								</DropdownMenuItem>
 								<DropdownMenuItem asChild>
+									<Link href={ROUTES.CONNECTIONS}>
+										{t("dropdown.connections")}
+									</Link>
+								</DropdownMenuItem>
+								<DropdownMenuItem asChild>
 									<Link href={ROUTES.SETTINGS}>{t("dropdown.settings")}</Link>
 								</DropdownMenuItem>
 								<DropdownMenuSeparator />
@@ -103,6 +111,7 @@ export function Header() {
 							</Link>
 						</div>
 					)}
+					<ThemeToggle />
 					<LanguageSelect />
 					<MobileMenu session={session} />
 				</div>

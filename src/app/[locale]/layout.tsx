@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { ThemeProvider } from "next-themes";
 import { ReactNode } from "react";
 
 import { Footer } from "components/layout/footer";
@@ -11,7 +13,6 @@ import { SITE } from "constants/site";
 import { getSession } from "lib/auth";
 import { SessionProvider } from "providers/session-provider";
 import { SWRProvider } from "providers/swr-provider";
-import { ThemeProvider } from "providers/theme-provider";
 
 import { routing } from "../../i18n/routing";
 import "../globals.css";
@@ -46,6 +47,8 @@ export default async function RootLayout({
 		notFound();
 	}
 
+	const messages = await getMessages();
+
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<head>
@@ -69,8 +72,8 @@ export default async function RootLayout({
 				<link rel="manifest" href="/site.webmanifest" />
 			</head>
 			<body className={inter.className}>
-				<NextIntlClientProvider>
-					<ThemeProvider attribute="class" defaultTheme="system">
+				<NextIntlClientProvider messages={messages}>
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 						<SessionProvider session={session}>
 							<SWRProvider>
 								<div className="flex min-h-screen flex-col">

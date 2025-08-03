@@ -1,6 +1,8 @@
 {
 	"home": {
-		"title": "Organizuj świetne konkursy z łatwością",
+		"title1": "Organizuj świetne",
+		"title2": "konkursy",
+		"title3": "z łatwością",
 		"subtitle": "Automatyzuj swoje konkursy na Instagramie. Śledź słowa kluczowe, wybieraj zwycięzców i wysyłaj nagrody automatycznie.",
 		"cta": {
 			"startFreeTrial": "Zacznij bezpłatny okres próbny",
@@ -87,11 +89,7 @@
 			"free": {
 				"name": "Darmowy",
 				"description": "Zacznij od jednego darmowego konkursu",
-				"features": [
-					"1 konkurs",
-					"Podstawowa analityka",
-					"Wsparcie e-mailowe"
-				]
+				"features": ["1 konkurs", "Podstawowa analityka", "Wsparcie e-mailowe"]
 			},
 			"pro": {
 				"name": "Pro",
@@ -266,6 +264,7 @@
 		"nav": {
 			"dashboard": "Strona główna",
 			"giveaways": "Konkursy",
+			"connections": "Połączenia",
 			"settings": "Ustawienia",
 			"pricing": "Cennik"
 		},

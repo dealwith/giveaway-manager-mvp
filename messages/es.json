@@ -1,6 +1,8 @@
 {
 	"home": {
-		"title": "Organiza increíbles sorteos sin esfuerzo",
+		"title1": "Organiza increíbles",
+		"title2": "sorteos",
+		"title3": "sin esfuerzo",
 		"subtitle": "Automatiza tus sorteos en Instagram. Rastrea palabras clave, selecciona ganadores y envía premios automáticamente.",
 		"cta": {
 			"startFreeTrial": "Comienza tu prueba gratuita",
@@ -266,6 +268,7 @@
 		"nav": {
 			"dashboard": "Inicio",
 			"giveaways": "Sorteos",
+			"connections": "Conexiones",
 			"settings": "Configuración",
 			"pricing": "Precios"
 		},

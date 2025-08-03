@@ -71,6 +71,13 @@ export function MobileMenu({ session }: MobileMenuProps) {
 								{t("giveaways")}
 							</Link>
 							<Link
+								href={ROUTES.CONNECTIONS}
+								className="text-lg font-medium px-2 py-2 hover:bg-muted rounded-md"
+								onClick={closeMenu}
+							>
+								{t("connections")}
+							</Link>
+							<Link
 								href={ROUTES.SETTINGS}
 								className="text-lg font-medium px-2 py-2 hover:bg-muted rounded-md"
 								onClick={closeMenu}

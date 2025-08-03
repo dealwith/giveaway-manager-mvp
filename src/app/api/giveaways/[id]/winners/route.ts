@@ -7,6 +7,7 @@ import {
 	createGiveawayWinner,
 	getGiveaway,
 	getGiveawayWinners,
+	getUser,
 	updateGiveaway
 } from "lib/db";
 import { processGiveaway } from "lib/instagram";
@@ -35,7 +36,6 @@ export async function GET(
 			);
 		}
 
-		// Check if the giveaway belongs to the current user
 		if (giveaway.userId !== session.user.id) {
 			return NextResponse.json<ApiResponse>(
 				{ success: false, error: "Unauthorized" },
@@ -88,11 +88,31 @@ export async function POST(
 			);
 		}
 
+		// Get user credentials
+		const user = await getUser(session.user.email);
+
+		if (
+			!user ||
+			!user.instagram?.accessToken ||
+			!user.instagram?.businessAccountId
+		) {
+			return NextResponse.json<ApiResponse>(
+				{ success: false, error: "Instagram account not connected" },
+				{ status: 400 }
+			);
+		}
+
+		const credentials = {
+			accessToken: user.instagram.accessToken,
+			businessAccountId: user.instagram.businessAccountId
+		};
+
 		// Process the giveaway to find winners
 		const result = await processGiveaway(
 			giveaway.postUrl,
 			giveaway.keyword,
-			giveaway.documentUrl
+			giveaway.documentUrl,
+			credentials
 		);
 
 		// Save winners to database

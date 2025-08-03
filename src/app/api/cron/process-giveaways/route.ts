@@ -78,11 +78,32 @@ export async function GET(req: NextRequest) {
 		const endingPromises = endingSnapshot.docs.map(async (doc) => {
 			const giveaway = { id: doc.id, ...doc.data() } as Giveaway;
 
+			// Get user credentials for the giveaway
+			const giveawayUser = await getUser(giveaway.userId);
+
+			if (
+				!giveawayUser ||
+				!giveawayUser.instagram?.accessToken ||
+				!giveawayUser.instagram?.businessAccountId
+			) {
+				console.error(
+					`User ${giveaway.userId} has no Instagram credentials for giveaway ${giveaway.id}`
+				);
+
+				return;
+			}
+
+			const credentials = {
+				accessToken: giveawayUser.instagram.accessToken,
+				businessAccountId: giveawayUser.instagram.businessAccountId
+			};
+
 			// Process the giveaway to find winners
 			const result = await processGiveaway(
 				giveaway.postUrl,
 				giveaway.keyword,
-				giveaway.documentUrl
+				giveaway.documentUrl,
+				credentials
 			);
 
 			// Update giveaway status and winner count
@@ -106,7 +127,7 @@ export async function GET(req: NextRequest) {
 			const user = await getUser(giveaway.userId);
 
 			if (user) {
-				await EmailTemplates.GIVEAWAY_COMPLETED(
+				EmailTemplates.GIVEAWAY_COMPLETED(
 					user.email,
 					giveaway.title,
 					doc.id,

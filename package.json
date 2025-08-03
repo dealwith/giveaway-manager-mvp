@@ -2,15 +2,23 @@
 	"name": "giveaway-manager-min",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
+	"engines": {
+		"npm": ">=8.0.0",
+		"yarn": "please use npm"
+	},
 	"scripts": {
 		"dev": "next dev --turbopack",
+		"prebuild": "npm run format && npm run lint:fix && npm run typecheck",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
+		"lint:fix": "next lint --fix",
 		"typecheck": "tsc --noEmit",
 		"clean": "rimraf .next && rimraf .turbo && rimraf node_modules",
 		"format": "prettier --write .",
-		"format:check": "prettier --check ."
+		"format:check": "prettier --check .",
+		"fix-all": "npm run format && npm run lint:fix"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.4",
@@ -26,6 +34,7 @@
 		"clsx": "^2.1.0",
 		"cva": "npm:class-variance-authority@^0.7.1",
 		"date-fns": "^4.1.0",
+		"dotenv": "^16.5.0",
 		"eslint-config-prettier": "^10.1.5",
 		"eslint-plugin-prettier": "^5.4.1",
 		"eslint-plugin-unused-imports": "^4.1.4",
@@ -35,6 +44,7 @@
 		"next": "15.3.1",
 		"next-auth": "^4.24.11",
 		"next-intl": "^4.1.0",
+		"next-themes": "^0.4.6",
 		"prettier": "^3.5.3",
 		"radix-ui": "^1.4.1",
 		"react": "^19.0.0",
@@ -61,6 +71,5 @@
 		"postcss": "^8.5.3",
 		"rimraf": "^6.0.1",
 		"typescript": "^5"
-	},
-	"packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+	}
 }

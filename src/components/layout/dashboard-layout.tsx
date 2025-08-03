@@ -1,13 +1,18 @@
 "use client";
 
-import { DollarSignIcon, GiftIcon, HomeIcon, SettingsIcon } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import {
+	DollarSignIcon,
+	GiftIcon,
+	HomeIcon,
+	LinkIcon,
+	SettingsIcon
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 
 import { Button } from "components/ui/button";
 import { ROUTES } from "constants/routes";
+import { Link, usePathname } from "i18n/navigation";
 import { cn } from "lib/utils";
 
 interface DashboardLayoutProps {
@@ -30,6 +35,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 			icon: GiftIcon
 		},
 		{
+			title: t("connections"),
+			href: ROUTES.CONNECTIONS,
+			icon: LinkIcon
+		},
+		{
 			title: t("settings"),
 			href: ROUTES.SETTINGS,
 			icon: SettingsIcon
@@ -46,8 +56,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 			<div className="flex-1 container py-6 grid md:grid-cols-[240px_1fr] gap-8">
 				<aside className="hidden md:flex flex-col space-y-6">
 					<nav className="grid gap-2">
-						{navItems.map((item) => (
-							<Link key={item.href} href={item.href}>
+						{navItems.map((item, i) => (
+							<Link key={i} href={item.href}>
 								<Button
 									variant="ghost"
 									className={cn(

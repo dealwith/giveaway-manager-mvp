@@ -29,7 +29,7 @@ async function resetPasswordRequest(_key: string, { arg }: { arg: string }) {
 
 		await sendPasswordResetEmail(auth, arg);
 
-		return { success: "success.passwordReset" };
+		return { success: "passwordReset" };
 	} catch (error) {
 		console.error("Error sending password reset email:", error);
 		throw new Error("errors.default");

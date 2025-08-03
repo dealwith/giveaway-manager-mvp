@@ -1,5 +1,11 @@
 // Re-export all functions from individual modules for backward compatibility
-export { getUser, createUser, updateUser } from "./user";
+export {
+	getUser,
+	createUser,
+	updateUser,
+	updateUserInstagramCredentials,
+	removeUserInstagramCredentials
+} from "./user";
 
 export {
 	getUserSubscription,

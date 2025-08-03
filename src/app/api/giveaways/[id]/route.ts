@@ -32,7 +32,6 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
 			);
 		}
 
-		// Check if the giveaway belongs to the current user
 		if (giveaway.userId !== session.user.id) {
 			return NextResponse.json<ApiResponse>(
 				{ success: false, error: "Unauthorized" },

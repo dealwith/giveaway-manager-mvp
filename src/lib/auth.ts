@@ -135,6 +135,13 @@ export const authOptions: NextAuthOptions = {
 				session.user.subscriptionPlan =
 					(token.plan as SubscriptionPlan) || SubscriptionPlan.FREE;
 				session.user.provider = token.provider as AuthProvider;
+
+				// Fetch Instagram data from database
+				const user = await getUser(session.user.email);
+
+				if (user?.instagram) {
+					session.user.instagram = user.instagram;
+				}
 			}
 
 			return session;
