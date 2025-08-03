@@ -31,9 +31,11 @@ function extractMediaIdFromUrl(url: string): string | null {
 	// https://www.instagram.com/p/ABC123/?img_index=17843534657877730
 	// where 17843534657877730 is the media ID
 	const mediaIdMatch = url.match(/(\d{10,})(?:[^\d]|$)/);
+
 	if (mediaIdMatch && mediaIdMatch[1].length >= 10) {
 		return mediaIdMatch[1];
 	}
+
 	return null;
 }
 
@@ -47,8 +49,10 @@ async function findMediaIdByPermalink(
 		}
 
 		const shortcode = extractPostShortcode(permalink);
+
 		if (!shortcode) {
 			console.error("Invalid Instagram URL format:", permalink);
+
 			return null;
 		}
 
@@ -75,7 +79,10 @@ async function findMediaIdByPermalink(
 			if (axios.isAxiosError(accountError)) {
 				console.error("Account check error:", accountError.response?.data);
 			}
-			throw new Error("Unable to access Instagram Business Account. Please check your connection.");
+
+			throw new Error(
+				"Unable to access Instagram Business Account. Please check your connection."
+			);
 		}
 
 		// Fetch recent media from the business account
@@ -93,23 +100,32 @@ async function findMediaIdByPermalink(
 		// Find the post with matching permalink or shortcode
 		const posts = response.data.data || [];
 		console.log(`Fetched ${posts.length} posts from account`);
-		
+
 		// Log first few posts for debugging
 		if (posts.length > 0) {
-			console.log("Sample posts:", posts.slice(0, 3).map((p: any) => ({
-				id: p.id,
-				shortcode: p.shortcode,
-				permalink: p.permalink
-			})));
+			console.log(
+				"Sample posts:",
+				posts
+					.slice(0, 3)
+					.map((p: { id: string; shortcode?: string; permalink?: string }) => ({
+						id: p.id,
+						shortcode: p.shortcode,
+						permalink: p.permalink
+					}))
+			);
 		}
 
 		const targetPost = posts.find(
 			(post: { id: string; permalink?: string; shortcode?: string }) => {
-				const matches = post.permalink === permalink ||
+				const matches =
+					post.permalink === permalink ||
 					post.shortcode === shortcode ||
 					(post.permalink && post.permalink.includes(shortcode));
-				
-				if (post.permalink && post.permalink.includes(shortcode.substring(0, 5))) {
+
+				if (
+					post.permalink &&
+					post.permalink.includes(shortcode.substring(0, 5))
+				) {
 					console.log("Checking post:", {
 						postId: post.id,
 						postShortcode: post.shortcode,
@@ -118,7 +134,7 @@ async function findMediaIdByPermalink(
 						matches
 					});
 				}
-				
+
 				return matches;
 			}
 		);
@@ -133,7 +149,7 @@ async function findMediaIdByPermalink(
 		let nextPage = response.data.paging?.next;
 		let pagesSearched = 1;
 		const maxPages = 10; // Limit pagination to avoid excessive API calls
-		
+
 		while (nextPage && pagesSearched < maxPages) {
 			const nextResponse = await axios.get(nextPage);
 			const nextPosts = nextResponse.data.data || [];
@@ -156,7 +172,10 @@ async function findMediaIdByPermalink(
 			pagesSearched++;
 		}
 
-		console.log(`Could not find media ID after searching ${pagesSearched} pages`);
+		console.log(
+			`Could not find media ID after searching ${pagesSearched} pages`
+		);
+
 		return null;
 	} catch (error) {
 		console.error("Error finding media ID by permalink:", error);
@@ -198,6 +217,7 @@ export async function fetchPostComments(
 
 			// First, check if the URL contains a media ID
 			const extractedMediaId = extractMediaIdFromUrl(postUrlOrMediaId);
+
 			if (extractedMediaId) {
 				console.log(`Found potential media ID in URL: ${extractedMediaId}`);
 				// Try to use this media ID directly
@@ -211,12 +231,15 @@ export async function fetchPostComments(
 							}
 						}
 					);
+
 					if (testResponse.data && testResponse.data.id) {
 						console.log(`Validated media ID from URL: ${extractedMediaId}`);
 						mediaId = extractedMediaId;
 					}
-				} catch (error) {
-					console.log(`Media ID ${extractedMediaId} from URL is not accessible`);
+				} catch {
+					console.log(
+						`Media ID ${extractedMediaId} from URL is not accessible`
+					);
 				}
 			}
 
@@ -240,15 +263,25 @@ export async function fetchPostComments(
 								}
 							}
 						);
-						
+
 						// If we get here, credentials are valid but post not found
-						throw new Error(`Could not find the Instagram post. Please ensure:\n1. The post URL is correct\n2. The post belongs to your Instagram Business Account (@${testResponse.data.username || 'your account'})\n3. The post has not been deleted\n4. Your account has proper permissions`);
+						throw new Error(
+							`Could not find the Instagram post. Please ensure:\n1. The post URL is correct\n2. The post belongs to your Instagram Business Account (@${testResponse.data.username || "your account"})\n3. The post has not been deleted\n4. Your account has proper permissions`
+						);
 					} catch (testError) {
-						if (axios.isAxiosError(testError) && testError.response?.status === 190) {
-							throw new Error("Your Instagram connection has expired. Please reconnect your account.");
+						if (
+							axios.isAxiosError(testError) &&
+							testError.response?.status === 190
+						) {
+							throw new Error(
+								"Your Instagram connection has expired. Please reconnect your account."
+							);
 						}
+
 						// Original error - post not found
-						throw new Error(`Could not access the Instagram post. Please ensure it belongs to your connected Instagram Business Account.`);
+						throw new Error(
+							"Could not access the Instagram post. Please ensure it belongs to your connected Instagram Business Account."
+						);
 					}
 				}
 

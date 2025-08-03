@@ -41,6 +41,7 @@ export function ConnectInstagram({ className }: ConnectInstagramProps) {
 		if (!facebookAppId) {
 			console.error("Facebook App ID not configured");
 			setIsConnecting(false);
+
 			return;
 		}
 
@@ -53,8 +54,8 @@ export function ConnectInstagram({ className }: ConnectInstagramProps) {
 			`?client_id=${facebookAppId}` +
 			`&redirect_uri=${encodeURIComponent(redirectUri)}` +
 			`&scope=${scope}` +
-			`&response_type=code` +
-			`&state=instagram_connect`;
+			"&response_type=code" +
+			"&state=instagram_connect";
 
 		window.location.href = authUrl;
 	};

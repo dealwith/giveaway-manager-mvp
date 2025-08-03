@@ -138,6 +138,7 @@ export const authOptions: NextAuthOptions = {
 
 				// Fetch Instagram data from database
 				const user = await getUser(session.user.email);
+
 				if (user?.instagram) {
 					session.user.instagram = user.instagram;
 				}

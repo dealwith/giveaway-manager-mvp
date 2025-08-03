@@ -93,14 +93,20 @@ async function handleProcessGiveaway(
 			error instanceof Error ? error.message : "Failed to process giveaway";
 
 		// Return more specific error messages with appropriate status codes
-		if (errorMessage.includes("expired") || errorMessage.includes("connect your Instagram")) {
+		if (
+			errorMessage.includes("expired") ||
+			errorMessage.includes("connect your Instagram")
+		) {
 			return NextResponse.json<ApiResponse>(
 				{ success: false, error: errorMessage },
 				{ status: 401 }
 			);
 		}
 
-		if (errorMessage.includes("Invalid Instagram post URL") || errorMessage.includes("does not belong")) {
+		if (
+			errorMessage.includes("Invalid Instagram post URL") ||
+			errorMessage.includes("does not belong")
+		) {
 			return NextResponse.json<ApiResponse>(
 				{ success: false, error: errorMessage },
 				{ status: 400 }

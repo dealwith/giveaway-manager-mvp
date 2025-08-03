@@ -9,6 +9,7 @@
 	},
 	"scripts": {
 		"dev": "next dev --turbopack",
+		"prebuild": "npm run format && npm run lint:fix && npm run typecheck",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
@@ -16,7 +17,8 @@
 		"typecheck": "tsc --noEmit",
 		"clean": "rimraf .next && rimraf .turbo && rimraf node_modules",
 		"format": "prettier --write .",
-		"format:check": "prettier --check ."
+		"format:check": "prettier --check .",
+		"fix-all": "npm run format && npm run lint:fix"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.4",

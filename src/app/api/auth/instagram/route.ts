@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
 
 		// Get the page access token for the page that has the Instagram account
 		let pageAccessToken = access_token; // Default to user token
-		
+
 		// Try to get the page access token
 		try {
 			const pageTokenResponse = await axios.get(
@@ -110,13 +110,16 @@ export async function GET(req: NextRequest) {
 					}
 				}
 			);
-			
+
 			if (pageTokenResponse.data.access_token) {
 				pageAccessToken = pageTokenResponse.data.access_token;
 				console.log("Successfully obtained page access token");
 			}
 		} catch (pageTokenError) {
-			console.error("Failed to get page access token, using user token:", pageTokenError);
+			console.error(
+				"Failed to get page access token, using user token:",
+				pageTokenError
+			);
 		}
 
 		// Calculate expiration date (Instagram tokens typically last 60 days)
@@ -145,11 +148,12 @@ export async function GET(req: NextRequest) {
 			console.error("Error response status:", error.response?.status);
 			console.error("Error request URL:", error.config?.url);
 			console.error("Error request params:", error.config?.params);
-			
-			errorMessage = error.response?.data?.error_description || 
-						  error.response?.data?.error?.message || 
-						  error.message;
-			
+
+			errorMessage =
+				error.response?.data?.error_description ||
+				error.response?.data?.error?.message ||
+				error.message;
+
 			if (error.response?.data?.error) {
 				errorDetails = ` (${error.response.data.error.type || error.response.data.error})`;
 			}

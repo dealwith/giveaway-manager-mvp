@@ -86,7 +86,7 @@ export async function updateUser(
 	const userRef = doc(db, "users", userId);
 	const now = new Date();
 
-	const updateData: Record<string, any> = {
+	const updateData: { [key: string]: unknown } = {
 		...data,
 		updatedAt: Timestamp.fromDate(now)
 	};
@@ -97,14 +97,15 @@ export async function updateUser(
 			...data.instagram,
 			connectedAt: data.instagram.connectedAt
 				? Timestamp.fromDate(data.instagram.connectedAt)
-				: undefined,
+				: Timestamp.fromDate(now),
 			expiresAt: data.instagram.expiresAt
 				? Timestamp.fromDate(data.instagram.expiresAt)
 				: undefined
 		};
 	}
 
-	await updateDoc(userRef, updateData);
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	await updateDoc(userRef, updateData as any);
 }
 
 export async function updateUserInstagramCredentials(

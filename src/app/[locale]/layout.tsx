@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { ThemeProvider } from "next-themes";
 import { ReactNode } from "react";
 
 import { Footer } from "components/layout/footer";
@@ -12,7 +13,6 @@ import { SITE } from "constants/site";
 import { getSession } from "lib/auth";
 import { SessionProvider } from "providers/session-provider";
 import { SWRProvider } from "providers/swr-provider";
-import { ThemeProvider } from "next-themes";
 
 import { routing } from "../../i18n/routing";
 import "../globals.css";

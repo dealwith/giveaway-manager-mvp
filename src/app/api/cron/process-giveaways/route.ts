@@ -80,8 +80,16 @@ export async function GET(req: NextRequest) {
 
 			// Get user credentials for the giveaway
 			const giveawayUser = await getUser(giveaway.userId);
-			if (!giveawayUser || !giveawayUser.instagram?.accessToken || !giveawayUser.instagram?.businessAccountId) {
-				console.error(`User ${giveaway.userId} has no Instagram credentials for giveaway ${giveaway.id}`);
+
+			if (
+				!giveawayUser ||
+				!giveawayUser.instagram?.accessToken ||
+				!giveawayUser.instagram?.businessAccountId
+			) {
+				console.error(
+					`User ${giveaway.userId} has no Instagram credentials for giveaway ${giveaway.id}`
+				);
+
 				return;
 			}
 

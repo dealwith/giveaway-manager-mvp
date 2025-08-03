@@ -7,12 +7,12 @@ import {
 	LinkIcon,
 	SettingsIcon
 } from "lucide-react";
-import { Link, usePathname } from "i18n/navigation";
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 
 import { Button } from "components/ui/button";
 import { ROUTES } from "constants/routes";
+import { Link, usePathname } from "i18n/navigation";
 import { cn } from "lib/utils";
 
 interface DashboardLayoutProps {

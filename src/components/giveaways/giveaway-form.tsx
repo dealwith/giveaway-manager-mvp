@@ -41,9 +41,11 @@ const giveawaySchema = z
 				if (/^\d+(_\d+)?$/.test(value)) {
 					return true;
 				}
+
 				// Otherwise, it should be a valid Instagram URL
 				try {
-					const url = new URL(value);
+					new URL(value);
+
 					return isValidInstagramPostUrl(value);
 				} catch {
 					return false;
@@ -216,7 +218,9 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 						{...register("postUrl")}
 						disabled={isLoading}
 					/>
-					<p className="text-sm text-muted-foreground">{t("fields.postUrl.helper")}</p>
+					<p className="text-sm text-muted-foreground">
+						{t("fields.postUrl.helper")}
+					</p>
 					{errors.postUrl && errors.postUrl.message && (
 						<p className="text-sm text-red-500">{t(errors.postUrl.message)}</p>
 					)}

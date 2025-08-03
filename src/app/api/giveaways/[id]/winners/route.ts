@@ -7,8 +7,8 @@ import {
 	createGiveawayWinner,
 	getGiveaway,
 	getGiveawayWinners,
-	updateGiveaway,
-	getUser
+	getUser,
+	updateGiveaway
 } from "lib/db";
 import { processGiveaway } from "lib/instagram";
 
@@ -90,7 +90,12 @@ export async function POST(
 
 		// Get user credentials
 		const user = await getUser(session.user.email);
-		if (!user || !user.instagram?.accessToken || !user.instagram?.businessAccountId) {
+
+		if (
+			!user ||
+			!user.instagram?.accessToken ||
+			!user.instagram?.businessAccountId
+		) {
 			return NextResponse.json<ApiResponse>(
 				{ success: false, error: "Instagram account not connected" },
 				{ status: 400 }
