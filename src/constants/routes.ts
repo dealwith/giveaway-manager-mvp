@@ -10,5 +10,6 @@ export const ROUTES = {
 	EDIT_GIVEAWAY: (id: string) => `/dashboard/giveaways/${id}/edit`,
 	VIEW_GIVEAWAY: (id: string) => `/dashboard/giveaways/${id}`,
 	SETTINGS: "/dashboard/settings",
+	CONNECTIONS: "/dashboard/connections",
 	PRICING: "/pricing"
 };

@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
+import { NextResponse } from "next/server";
 
 import { ApiResponse } from "app-types/api";
-import { authOptions } from "lib/auth";
 import { createGiveawayWinner, getGiveaway, getGiveawayWinners } from "lib/db";
 import { processGiveaway } from "lib/instagram";
+import { withInstagramAuth } from "lib/middleware/instagram-auth";
+import { RequestWithInstagramCredentials } from "lib/middleware/instagram-auth";
 
 interface RouteParams {
 	params: Promise<{
@@ -12,16 +12,10 @@ interface RouteParams {
 	}>;
 }
 
-export async function POST(req: NextRequest, { params }: RouteParams) {
-	const session = await getServerSession(authOptions);
-
-	if (!session) {
-		return NextResponse.json<ApiResponse>(
-			{ success: false, error: "Unauthorized" },
-			{ status: 401 }
-		);
-	}
-
+async function handleProcessGiveaway(
+	req: RequestWithInstagramCredentials,
+	{ params }: RouteParams
+): Promise<NextResponse> {
 	try {
 		const { id } = await params;
 		const giveaway = await getGiveaway(id);
@@ -34,7 +28,7 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
 		}
 
 		// Check if the giveaway belongs to the current user
-		if (giveaway.userId !== session.user.id) {
+		if (giveaway.userId !== req.userId) {
 			return NextResponse.json<ApiResponse>(
 				{ success: false, error: "Unauthorized" },
 				{ status: 403 }
@@ -48,13 +42,15 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
 			postUrl: giveaway.postUrl,
 			keyword: giveaway.keyword,
 			giveawayId: id,
-			existingWinners: existingWinners.length
+			existingWinners: existingWinners.length,
+			userId: req.userId
 		});
 
 		const result = await processGiveaway(
 			giveaway.postUrl,
 			giveaway.keyword,
-			giveaway.documentUrl
+			giveaway.documentUrl,
+			req.instagramCredentials
 		);
 
 		console.log("Process result:", {
@@ -96,15 +92,15 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
 		const errorMessage =
 			error instanceof Error ? error.message : "Failed to process giveaway";
 
-		// Return more specific error messages
-		if (errorMessage.includes("Invalid Instagram access token")) {
+		// Return more specific error messages with appropriate status codes
+		if (errorMessage.includes("expired") || errorMessage.includes("connect your Instagram")) {
 			return NextResponse.json<ApiResponse>(
 				{ success: false, error: errorMessage },
 				{ status: 401 }
 			);
 		}
 
-		if (errorMessage.includes("Invalid Instagram post URL")) {
+		if (errorMessage.includes("Invalid Instagram post URL") || errorMessage.includes("does not belong")) {
 			return NextResponse.json<ApiResponse>(
 				{ success: false, error: errorMessage },
 				{ status: 400 }
@@ -117,3 +113,5 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
 		);
 	}
 }
+
+export const POST = withInstagramAuth(handleProcessGiveaway);

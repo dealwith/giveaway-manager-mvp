@@ -1,6 +1,9 @@
 {
 	"home": {
-		"title": "Run Amazing",
+		"r": "lol",
+		"title1": "Run Amazing",
+		"title2": "Giveaways",
+		"title3": "Effortlessly",
 		"subtitle": "Automate your Instagram giveaways with ease. Track keywords, select winners, and send prizes automatically.",
 		"cta": {
 			"startFreeTrial": "Start Free Trial",
@@ -46,6 +49,7 @@
 			"account": "My Account",
 			"dashboard": "Dashboard",
 			"giveaways": "Giveaways",
+			"connections": "Connections",
 			"settings": "Settings",
 			"signOut": "Sign Out"
 		},
@@ -60,6 +64,7 @@
 		"pricing": "Pricing",
 		"dashboard": "Dashboard",
 		"giveaways": "Giveaways",
+		"connections": "Connections",
 		"settings": "Settings",
 		"signIn": "Sign In",
 		"signUp": "Sign Up",
@@ -262,6 +267,7 @@
 		"nav": {
 			"dashboard": "Dashboard",
 			"giveaways": "Giveaways",
+			"connections": "Connections",
 			"settings": "Settings",
 			"pricing": "Pricing"
 		},
@@ -299,6 +305,17 @@
 				}
 			}
 		},
+		"connections": {
+			"title": "Connections",
+			"description": "Manage your social media integrations and external services",
+			"socialMedia": {
+				"title": "Social Media Integrations"
+			},
+			"comingSoon": {
+				"title": "More Integrations Coming Soon",
+				"description": "We're working on adding support for more platforms to enhance your giveaway experience."
+			}
+		},
 		"createGiveaway": {
 			"title": "Create Giveaway",
 			"description": "Set up a new Instagram giveaway",
@@ -317,8 +334,9 @@
 						"placeholder": "Describe your giveaway..."
 					},
 					"postUrl": {
-						"label": "Instagram Post URL",
-						"placeholder": "https://www.instagram.com/p/..."
+						"label": "Instagram Post URL or Media ID",
+						"placeholder": "https://www.instagram.com/p/... or media ID",
+						"helper": "Enter the Instagram post URL or the media ID directly"
 					},
 					"documentUrl": {
 						"label": "Prize Document URL",
@@ -341,6 +359,8 @@
 					"descriptionMax": "Description must be at most 500 characters",
 					"enterValidUrl": "Please enter a valid URL",
 					"instagramUrl": "Please enter a valid Instagram post URL",
+					"instagramUrlOrId": "Please enter a valid Instagram post URL or media ID",
+					"required": "This field is required",
 					"keywordMin": "Keyword must be at least 2 characters",
 					"keywordMax": "Keyword must be at most 50 characters",
 					"futureStart": "Start time must be in the future",
@@ -484,6 +504,41 @@
 					"failed": "Failed"
 				},
 				"dateFormat": "MMM d, yyyy h:mm a"
+			}
+		}
+	},
+	"instagram": {
+		"connect": {
+			"title": "Instagram Business Account",
+			"description": "Connect your Instagram Business Account to manage giveaways and fetch comments.",
+			"connected": {
+				"status": "Connected to Instagram account: @{username}",
+				"connectedOn": "Connected on: {date}",
+				"tokenExpires": "Token expires: {date}",
+				"disconnectButton": "Disconnect Instagram",
+				"disconnecting": "Disconnecting..."
+			},
+			"notConnected": {
+				"alert": "You need to connect your Instagram Business Account to process giveaways and fetch comments.",
+				"requirements": {
+					"title": "Requirements:",
+					"businessAccount": "Instagram Business or Creator Account",
+					"facebookPage": "Account must be connected to a Facebook Page",
+					"ownPosts": "You can only fetch comments from your own posts"
+				},
+				"connectButton": "Connect Instagram Business Account",
+				"connecting": "Connecting..."
+			}
+		},
+		"auth": {
+			"errors": {
+				"authFailed": "Instagram authentication failed",
+				"accountNotFound": "No Instagram Business Account found",
+				"accountNotFoundMessage": "Please ensure your Instagram account is connected to a Facebook page and is set as a Business account."
+			},
+			"success": {
+				"connected": "Instagram account connected successfully",
+				"connectedUsername": "Connected as @{username}"
 			}
 		}
 	}

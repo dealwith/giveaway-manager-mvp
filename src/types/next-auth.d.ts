@@ -10,6 +10,13 @@ declare module "next-auth" {
 			image: string;
 			subscriptionPlan: SubscriptionPlan;
 			provider: "google" | "credentials";
+			instagram?: {
+				accessToken: string;
+				businessAccountId: string;
+				connectedAt: Date;
+				expiresAt?: Date;
+				username?: string;
+			};
 		};
 	}
 
@@ -19,5 +26,12 @@ declare module "next-auth" {
 		email: string;
 		image?: string | null;
 		plan: SubscriptionPlan;
+		instagram?: {
+			accessToken: string;
+			businessAccountId: string;
+			connectedAt: Date;
+			expiresAt?: Date;
+			username?: string;
+		};
 	}
 }

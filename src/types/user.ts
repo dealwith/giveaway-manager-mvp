@@ -10,4 +10,11 @@ export interface User {
 	updatedAt: Date;
 	stripeCustomerId?: string;
 	provider: "google" | "credentials";
+	instagram?: {
+		accessToken: string;
+		businessAccountId: string;
+		connectedAt: Date;
+		expiresAt?: Date;
+		username?: string;
+	};
 }

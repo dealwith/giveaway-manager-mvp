@@ -1,13 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSWRConfig } from "swr";
 import { z } from "zod";
 
 import { GiveawayStatus } from "app-types/giveaway";
@@ -18,7 +16,6 @@ import { DateTimePicker } from "components/ui/date-time-picker";
 import { Input } from "components/ui/input";
 import { Label } from "components/ui/label";
 import { Textarea } from "components/ui/textarea";
-import { API } from "constants/api";
 import { GIVEAWAY_VALIDATION } from "constants/giveaway";
 import { PLANS } from "constants/plans";
 import { ROUTES } from "constants/routes";
@@ -30,48 +27,42 @@ const giveawaySchema = z
 	.object({
 		title: z
 			.string()
-			.min(
-				GIVEAWAY_VALIDATION.TITLE_MIN,
-				`Title must be at least ${GIVEAWAY_VALIDATION.TITLE_MIN} characters`
-			)
-			.max(
-				GIVEAWAY_VALIDATION.TITLE_MAX,
-				`Title must be at most ${GIVEAWAY_VALIDATION.TITLE_MAX} characters`
-			),
+			.min(GIVEAWAY_VALIDATION.TITLE_MIN, "validation.titleMin")
+			.max(GIVEAWAY_VALIDATION.TITLE_MAX, "validation.titleMax"),
 		description: z
 			.string()
-			.max(
-				GIVEAWAY_VALIDATION.DESCRIPTION_MAX,
-				`Description must be at most ${GIVEAWAY_VALIDATION.DESCRIPTION_MAX} characters`
-			)
+			.max(GIVEAWAY_VALIDATION.DESCRIPTION_MAX, "validation.descriptionMax")
 			.optional(),
 		postUrl: z
 			.string()
-			.url("Please enter a valid URL")
-			.refine(
-				(url) => isValidInstagramPostUrl(url),
-				"Please enter a valid Instagram post URL"
-			),
-		documentUrl: z.string().url("Please enter a valid URL"),
+			.min(1, "validation.required")
+			.refine((value) => {
+				// Check if it's a media ID (numeric string)
+				if (/^\d+(_\d+)?$/.test(value)) {
+					return true;
+				}
+				// Otherwise, it should be a valid Instagram URL
+				try {
+					const url = new URL(value);
+					return isValidInstagramPostUrl(value);
+				} catch {
+					return false;
+				}
+			}, "validation.instagramUrlOrId"),
+		documentUrl: z.string().url("validation.enterValidUrl"),
 		keyword: z
 			.string()
-			.min(
-				GIVEAWAY_VALIDATION.KEYWORD_MIN,
-				`Keyword must be at least ${GIVEAWAY_VALIDATION.KEYWORD_MIN} character`
-			)
-			.max(
-				GIVEAWAY_VALIDATION.KEYWORD_MAX,
-				`Keyword must be at most ${GIVEAWAY_VALIDATION.KEYWORD_MAX} characters`
-			),
+			.min(GIVEAWAY_VALIDATION.KEYWORD_MIN, "validation.keywordMin")
+			.max(GIVEAWAY_VALIDATION.KEYWORD_MAX, "validation.keywordMax"),
 		startTime: z
 			.date()
-			.refine((date) => date > new Date(), "Start time must be in the future"),
+			.refine((date) => date > new Date(), "validation.futureStart"),
 		endTime: z
 			.date()
-			.refine((date) => date > new Date(), "End time must be in the future")
+			.refine((date) => date > new Date(), "validation.futureEnd")
 	})
 	.refine((data) => data.endTime > data.startTime, {
-		message: "End time must be after start time",
+		message: "validation.endAfterStart",
 		path: ["endTime"]
 	});
 
@@ -94,7 +85,6 @@ interface GiveawayFormProps {
 export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 	const router = useRouter();
 	const { data: session } = useSession();
-	const { mutate } = useSWRConfig();
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const t = useTranslations("dashboard.createGiveaway.form");
@@ -226,13 +216,15 @@ export function GiveawayForm({ giveaway }: GiveawayFormProps) {
 						{...register("postUrl")}
 						disabled={isLoading}
 					/>
+					<p className="text-sm text-muted-foreground">{t("fields.postUrl.helper")}</p>
 					{errors.postUrl && errors.postUrl.message && (
 						<p className="text-sm text-red-500">{t(errors.postUrl.message)}</p>
 					)}
-					<p className="text-sm text-muted-foreground">
-						Note: The Instagram post must belong to your connected business
-						account to fetch comments.
-					</p>
+					{session?.user?.instagram?.username && (
+						<p className="text-sm text-muted-foreground">
+							Only posts from @{session.user.instagram.username} can be used
+						</p>
+					)}
 				</div>
 
 				<div className="space-y-2">

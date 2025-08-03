@@ -2,6 +2,7 @@
 	"name": "giveaway-manager-min",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
 	"engines": {
 		"npm": ">=8.0.0",
 		"yarn": "please use npm"
@@ -11,6 +12,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
+		"lint:fix": "next lint --fix",
 		"typecheck": "tsc --noEmit",
 		"clean": "rimraf .next && rimraf .turbo && rimraf node_modules",
 		"format": "prettier --write .",
@@ -40,6 +42,7 @@
 		"next": "15.3.1",
 		"next-auth": "^4.24.11",
 		"next-intl": "^4.1.0",
+		"next-themes": "^0.4.6",
 		"prettier": "^3.5.3",
 		"radix-ui": "^1.4.1",
 		"react": "^19.0.0",
